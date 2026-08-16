@@ -35,7 +35,10 @@
                         Đơn hàng
                     </a>
                 </li>
-
+                <li class="nav-item">
+                    <a class="nav-link" href="/shippers/">
+                        Nhà vận chuyển
+                    </a>
             </ul>
         </div>
     </div>
