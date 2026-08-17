@@ -11,7 +11,6 @@ $sql = "
         ContactName,
         Address,
         City,
-        Phone,
         PostalCode,
         Country
     FROM customers
@@ -45,14 +44,13 @@ require_once '/var/www/src/includes/navbar.php';
 
                 <tr>
                     <th>ID</th>
-                    <th>Tên khách hàng</th>
-                    <th>Người liên hệ</th>
-                    <th>Địa chỉ</th>
-                    <th>Thành phố</th>
-                    <th>Mã bưu điện</th>
-                    <th>Quốc gia</th>
-                    <th>Số điện thoại</th>
-                    <th>Thao tác</th>
+                 <th>Tên khách hàng</th>
+                 <th>Người liên hệ</th>
+                 <th>Địa chỉ</th>
+                <th>Thành phố</th>
+                <th>Mã bưu điện</th>
+                <th>Quốc gia</th>
+        <th>Thao tác</th>
                 </tr>
 
             </thead>
@@ -91,10 +89,6 @@ require_once '/var/www/src/includes/navbar.php';
 
                             <td>
                                 <?= htmlspecialchars($customer['Country'] ?? '') ?>
-                            </td>
-
-                            <td>
-                                <?= htmlspecialchars($customer['Phone'] ?? '') ?>
                             </td>
 
                             <td>

@@ -1,6 +1,6 @@
 <?php
 
-$pageTitle = 'Sửa nhà vận chuyển';
+$pageTitle = 'Sửa nhân viên giao hàng';
 
 require_once '/var/www/src/config/database.php';
 
@@ -11,11 +11,11 @@ $shipperID = isset($_GET['id'])
     : 0;
 
 if ($shipperID <= 0) {
-    die('Mã nhà vận chuyển không hợp lệ.');
+    die('Mã nhân viên giao hàng không hợp lệ.');
 }
 
 /*
- * Đọc dữ liệu hiện tại của nhà vận chuyển
+ * Đọc dữ liệu hiện tại của nhân viên giao hàng
  */
 $sql = "
     SELECT
@@ -36,7 +36,7 @@ $shipper = $result->fetch_assoc();
 $stmt->close();
 
 if (!$shipper) {
-    die('Không tìm thấy nhà vận chuyển.');
+    die('Không tìm thấy nhân viên giao hàng.');
 }
 
 
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($shipperName === '') {
 
-        $error = 'Tên nhà vận chuyển không được để trống.';
+        $error = 'Tên nhân viên giao hàng không được để trống.';
 
     } else {
 
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         } else {
 
-            $error = 'Không thể cập nhật nhà vận chuyển.';
+            $error = 'Không thể cập nhật nhân viên giao hàng.';
         }
 
         $stmt->close();
@@ -92,7 +92,7 @@ require_once '/var/www/src/includes/navbar.php';
 
 <div class="container mt-4">
 
-    <h2 class="mb-4">Sửa nhà vận chuyển</h2>
+    <h2 class="mb-4">Sửa nhân viên giao hàng</h2>
 
     <?php if ($error !== ''): ?>
 
@@ -107,7 +107,7 @@ require_once '/var/www/src/includes/navbar.php';
         <div class="mb-3">
 
             <label class="form-label">
-                Mã nhà vận chuyển
+                Mã nhân viên giao hàng
             </label>
 
             <input
@@ -122,7 +122,7 @@ require_once '/var/www/src/includes/navbar.php';
         <div class="mb-3">
 
             <label for="shipperName" class="form-label">
-                Tên nhà vận chuyển
+                Tên nhân viên giao hàng
             </label>
 
             <input

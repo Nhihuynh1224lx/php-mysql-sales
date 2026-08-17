@@ -1,6 +1,6 @@
 <?php
 
-$pageTitle = 'Quản lý nhà vận chuyển';
+$pageTitle = 'Quản lý nhân viên giao hàng';
 
 require_once '/var/www/src/config/database.php';
 
@@ -24,10 +24,10 @@ require_once '/var/www/src/includes/navbar.php';
 
     <div class="d-flex justify-content-between align-items-center mb-3">
 
-        <h2>Quản lý nhà vận chuyển</h2>
+        <h2>Quản lý nhân viên giao hàng</h2>
 
         <a href="/shippers/create.php" class="btn btn-primary">
-            Thêm nhà vận chuyển
+            Thêm nhân viên giao hàng
         </a>
 
     </div>
@@ -40,7 +40,7 @@ require_once '/var/www/src/includes/navbar.php';
 
                 <tr>
                     <th>ID</th>
-                    <th>Tên nhà vận chuyển</th>
+                    <th>Tên nhân viên giao hàng</th>
                     <th>Số điện thoại</th>
                     <th>Thao tác</th>
                 </tr>
@@ -80,7 +80,7 @@ require_once '/var/www/src/includes/navbar.php';
                                     action="/shippers/delete.php"
                                     method="post"
                                     class="d-inline"
-                                    onsubmit="return confirm('Bạn có chắc muốn xóa nhà vận chuyển này?');"
+                                    onsubmit="return confirm('Bạn có chắc muốn xóa nhân viên giao hàng này?');"
                                 >
 
                                     <input
@@ -109,7 +109,7 @@ require_once '/var/www/src/includes/navbar.php';
                     <tr>
 
                         <td colspan="4" class="text-center">
-                            Chưa có nhà vận chuyển.
+                            Chưa có nhân viên giao hàng.
                         </td>
 
                     </tr>

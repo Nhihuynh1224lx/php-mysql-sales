@@ -1,6 +1,6 @@
 <?php
 
-$pageTitle = 'Thêm nhà vận chuyển';
+$pageTitle = 'Thêm nhân viên giao hàng';
 
 require_once '/var/www/src/config/database.php';
 
@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($shipperName === '') {
 
-        $error = 'Tên nhà vận chuyển không được để trống.';
+        $error = 'Tên nhân viên giao hàng không được để trống.';
 
     } else {
 
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             } else {
 
-                $error = 'Không thể thêm nhà vận chuyển.';
+                $error = 'Không thể thêm nhân viên giao hàng.';
             }
 
             $stmt->close();
@@ -58,7 +58,7 @@ require_once '/var/www/src/includes/navbar.php';
 
 <div class="container mt-4">
 
-    <h2 class="mb-4">Thêm nhà vận chuyển</h2>
+    <h2 class="mb-4">Thêm nhân viên giao hàng</h2>
 
     <?php if ($error !== ''): ?>
 
@@ -73,7 +73,7 @@ require_once '/var/www/src/includes/navbar.php';
         <div class="mb-3">
 
             <label for="shipperName" class="form-label">
-                Tên nhà vận chuyển
+                Tên nhân viên giao hàng
             </label>
 
             <input
