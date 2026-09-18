@@ -46,7 +46,7 @@
                 <li class="nav-item">
                     <a
                         class="nav-link"
-                        href="#"
+                        href="/products/"
                     >
                         Sản phẩm
                     </a>
@@ -75,7 +75,7 @@
                         class="nav-link"
                         href="/shippers/"
                     >
-                        Nhà vận chuyển
+                        Giao hàng
                     </a>
                 </li>
 
