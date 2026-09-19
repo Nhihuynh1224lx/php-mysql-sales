@@ -37,9 +37,9 @@
                 <li class="nav-item">
                     <a
                         class="nav-link"
-                        href="/categories/"
+                        href="#"
                     >
-                        Danh mục
+                        Đơn hàng
                     </a>
                 </li>
 
@@ -55,9 +55,9 @@
                 <li class="nav-item">
                     <a
                         class="nav-link"
-                        href="#"
+                        href="/categories/"
                     >
-                        Đơn hàng
+                        Danh mục
                     </a>
                 </li>
 
@@ -71,6 +71,13 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link" 
+                        href="/suppliers/">
+                        Nhà cung cấp
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a
                         class="nav-link"
                         href="/shippers/"
@@ -79,15 +86,15 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+				<li class="nav-item">
                     <a
                         class="nav-link"
-                        href="/suppliers/"
+                        href="/employees/"
                     >
-                        Nhà cung cấp
+                        Nhân viên
                     </a>
                 </li>
-
+				
             </ul>
 
         </div>

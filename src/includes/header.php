@@ -20,5 +20,5 @@
 
 <div class="p-5 bg-primary text-white text-center">
     <h1>Hệ thống quản lý bán hàng</h1>
-    <p>Cửa hàng công nghệ – TECHSTORE</p>
+    <p>Bán hàng và phân phối phụ kiện bida Hoàng Nhi</p>
 </div>
