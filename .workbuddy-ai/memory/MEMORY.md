@@ -138,3 +138,39 @@ Dự án đã được **tái cấu trúc** (chưa commit). Đường dẫn th�
 
 **Sao lưu tham chiếu:** `D:\PTUDW-2026\php-mysql-sales - Copy\` (có dashboard + assets cũ).
 
+---
+
+## CẬP NHẬT — có thêm storefront, đã kiểm tra tổng thể
+
+**Storefront (mặt tiền) đã được dựng lại**, không còn là code chết:
+
+- `src/includes/frontend/{header,navbar,footer}.php` — layout Bootstrap 5.3 riêng, đơn giản
+  hơn admin (không FontAwesome, không `admin.css`). `footer.php` chỉ 9 dòng, đóng `</body></html>`.
+- `public/index.php` — trang chủ storefront (placeholder, dùng partial `frontend/`).
+- `public/products.php` — danh sách sản phẩm cho khách xem: JOIN `products` + `categories`,
+  lấy ảnh chính từ `product_images` (`IsPrimary = 1`), lọc `IsActive = 1`. Đọc bằng
+  `$conn->query()` (không có input người dùng nên chấp nhận được).
+- `src/includes/storefront/` **đã bị xoá** (code chết).
+
+**Kết quả kiểm tra (đã đạt):** `php -l` sạch · 18 route tĩnh + 8 route động đều 200,
+0 warning · 31 link nội bộ OK · DB **không đổi** (9 bảng / 57 cột) · cross-check schema
+0 bảng thiếu, mọi "cột lạ" đều là alias SQL.
+
+**Lỗi còn tồn (chờ quyết định):**
+
+- `public/product-detail.php` **đã được tạo** (trang chi tiết sản phẩm, chỉ SELECT):
+  nhận `?id=`, JOIN `categories`, lấy ảnh từ `product_images` sắp theo
+  `IsPrimary DESC, SortOrder ASC`, gallery đổi ảnh bằng JS thuần, xử lý `Rating` NULL
+  và `OldPrice` chỉ hiện khi lớn hơn `Price`. Storefront giờ đã liền mạch:
+  `index.php` → `products.php` → `product-detail.php`.
+- `public/admin/products/upload-test.php` — trang debug còn sót (người dùng chọn giữ lại).
+- `README.md` rỗng 0 byte (người dùng chọn giữ nguyên).
+
+**Kinh nghiệm môi trường:**
+
+- Máy này **chặn headless Edge** (cả `&` và `Start-Process` đều không tạo PNG, không
+  trả exit code, dù đã dùng `--user-data-dir` mới). Để kiểm tra cấu trúc hãy **curl +
+  parse HTML bằng Python**, không cần trình duyệt.
+- Sau khi sửa `navbar.php`/`footer.php` phải **render lại HTML thật rồi grep `href`**
+  để đối chiếu — đã từng sửa link "Đơn hàng" thành `/orders/` rồi bị ghi đè về `/#/`.
+

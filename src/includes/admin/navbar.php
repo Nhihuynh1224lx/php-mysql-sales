@@ -25,7 +25,7 @@ if ($currentPath === '' || $currentPath === '/index.php') {
 /* Danh sách mục menu */
 $navItems = [
     ['href' => '/',                  'label' => 'Trang chủ',           'icon' => 'fa-house'],
-    ['href' => '/#/',           'label' => 'Đơn hàng',            'icon' => 'fa-receipt'],
+    ['href' => '/orders/',           'label' => 'Đơn hàng',            'icon' => 'fa-receipt'],
     ['href' => '/admin/products/',   'label' => 'Sản phẩm',            'icon' => 'fa-box-open'],
     ['href' => '/admin/categories/', 'label' => 'Danh mục',            'icon' => 'fa-tags'],
     ['href' => '/customers/',        'label' => 'Khách hàng',          'icon' => 'fa-users'],

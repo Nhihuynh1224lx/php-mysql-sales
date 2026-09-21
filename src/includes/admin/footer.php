@@ -113,6 +113,12 @@ $footerContacts = [
 
             <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
 
+                <!--
+                    Liên kết mạng xã hội.
+                    Facebook/GitHub hiện để href="#" vì đồ án chưa có trang thật;
+                    khi triển khai chỉ cần thay bằng địa chỉ thật.
+                    Email đã dùng mailto: khớp với mục "Liên hệ" ở trên.
+                -->
                 <a
                     href="#"
                     class="app-footer-social me-2"
@@ -130,7 +136,7 @@ $footerContacts = [
                 </a>
 
                 <a
-                    href="#"
+                    href="mailto:support@quanlybanhang.com"
                     class="app-footer-social"
                     title="Email"
                 >
