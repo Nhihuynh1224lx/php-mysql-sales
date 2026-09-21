@@ -16,10 +16,13 @@
     --admin-header-text: #FFFFFF;              /* Chữ trên header */
     --admin-header-muted: rgba(255, 255, 255, 0.72); /* Chú thích mờ trên header */
 
-    /* ---------- Thanh menu ---------- */
+    /* ---------- Thanh menu dọc ---------- */
+    --admin-sidebar-w: 264px;                  /* Bề rộng thanh menu dọc khi mở */
+    --admin-sidebar-w-collapsed: 76px;         /* Bề rộng khi thu gọn (chỉ còn icon) */
     --admin-nav-bg: #0F172A;                   /* Slate 900 - nền menu */
     --admin-nav-text: #CBD5E1;                 /* Slate 300 - chữ menu */
     --admin-nav-icon: #94A3B8;                 /* Slate 400 - icon menu */
+    --admin-nav-group: #64748B;                /* Slate 500 - tiêu đề từng nhóm menu */
     --admin-nav-line: rgba(148, 163, 184, 0.14); /* Đường kẻ ngăn header/menu */
 
     /* ---------- Menu khi DI CHUỘT vào ---------- */
@@ -58,6 +61,14 @@
     justify-content: space-between;
     gap: 16px;
     flex-wrap: wrap;
+}
+
+/* Nhóm bên trái header: nút mở menu (chỉ có trên màn hình nhỏ) + logo tên hệ thống */
+.app-header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
 }
 
 .app-header-brand {
@@ -122,68 +133,228 @@
 }
 
 /* ==========================================================================
-   2. THANH MENU NGANG
+   2. BỐ CỤC CHÍNH: MENU DỌC (SIDEBAR) + VÙNG NỘI DUNG
    ========================================================================== */
 
-.app-navbar {
+/* Khung ngoài: menu dọc bên trái, nội dung bên phải */
+.app-layout {
+    display: flex;
+    align-items: flex-start;
+}
+
+/* ---------- 2.1 Thanh menu dọc ---------- */
+
+.app-sidebar {
+    flex: 0 0 var(--admin-sidebar-w);
+    width: var(--admin-sidebar-w);
     background-color: var(--admin-nav-bg);
-    border-top: 1px solid var(--admin-nav-line);
-    padding: 6px 0;
+    border-right: 1px solid var(--admin-nav-line);
+
+    /* Bám theo màn hình khi cuộn trang */
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 18px 12px 24px;
+    z-index: 1030;
+
+    /* Trượt đều khi thu gọn / mở rộng ở màn hình lớn.
+       Trên màn hình nhỏ, khối @media bên dưới thay bằng transition transform. */
+    transition: width 0.22s ease, flex-basis 0.22s ease, padding 0.22s ease;
 }
 
-/* Nút mở menu trên màn hình nhỏ (thay icon mặc định của Bootstrap) */
-.app-navbar .navbar-toggler {
-    color: var(--admin-nav-text);
+/* Hàng trên cùng của menu: nhãn nhỏ + nút đóng */
+.app-sidebar-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0 8px 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--admin-nav-line);
+}
+
+.app-sidebar-label {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--admin-nav-icon);
+}
+
+/* Nút đóng menu: chỉ hiện khi menu thành ngăn kéo trên màn hình nhỏ */
+.app-sidebar-close {
+    display: none;
     border: 1px solid var(--admin-nav-line);
-    padding: 6px 12px;
+    background: transparent;
+    color: var(--admin-nav-text);
     border-radius: 8px;
+    padding: 4px 9px;
+    line-height: 1;
 }
 
-.app-navbar .navbar-toggler:focus {
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.35);
+/* ---------- 2.2 Các nhóm mục menu ---------- */
+
+/* Menu chia thành nhiều nhóm (Tổng quan / Bán hàng / Kho hàng / Nhân sự).
+   Mỗi nhóm là một khối gồm tiêu đề nhỏ và danh sách mục bên dưới. */
+.app-nav-group + .app-nav-group {
+    margin-top: 20px;
+}
+
+/* Tiêu đề nhóm: chữ nhỏ, in hoa, màu mờ hơn chữ menu để không tranh chấp thị giác */
+.app-nav-group-title {
+    margin: 0 0 8px;
+    padding: 0 12px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--admin-nav-group);
+}
+
+/* ---------- 2.3 Danh sách mục trong một nhóm ---------- */
+
+.app-nav-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.app-nav-item + .app-nav-item {
+    margin-top: 4px;
 }
 
 /* Mỗi mục menu: flexbox giữ icon và chữ luôn thẳng hàng.
    Thuộc tính gap tạo khoảng cách đều giữa icon và chữ. */
-.app-navbar .navbar-nav .nav-link {
+.app-nav-link {
     display: flex;
     align-items: center;
-    gap: 9px;                       /* khoảng cách icon <-> chữ */
-    padding: 9px 14px;
-    margin: 2px 1px;
+    gap: 11px;                      /* khoảng cách icon <-> chữ */
+    padding: 11px 12px;
     border-radius: 8px;
     color: var(--admin-nav-text);
     font-size: 0.9rem;
     font-weight: 500;
+    text-decoration: none;
     transition: background-color 0.18s ease, color 0.18s ease;
 }
 
-.app-navbar .navbar-nav .nav-link i {
+/* Cố định bề rộng icon để nhãn chữ của các mục thẳng cột với nhau */
+.app-nav-link i {
+    flex: 0 0 18px;
+    text-align: center;
     color: var(--admin-nav-icon);
     font-size: 0.95rem;
     transition: color 0.18s ease;
 }
 
 /* Di chuột: nền sáng lên nhẹ + icon đổi sang màu nhấn */
-.app-navbar .navbar-nav .nav-link:hover,
-.app-navbar .navbar-nav .nav-link:focus {
+.app-nav-link:hover,
+.app-nav-link:focus {
     background-color: var(--admin-nav-hover-bg);
     color: var(--admin-nav-hover-text);
 }
 
-.app-navbar .navbar-nav .nav-link:hover i,
-.app-navbar .navbar-nav .nav-link:focus i {
+.app-nav-link:hover i,
+.app-nav-link:focus i {
     color: var(--admin-nav-hover-icon);
 }
 
 /* Trang đang mở: nền đặc màu nhấn */
-.app-navbar .navbar-nav .nav-link.is-active {
+.app-nav-link.is-active {
     background-color: var(--admin-nav-active-bg);
     color: var(--admin-nav-active-text);
 }
 
-.app-navbar .navbar-nav .nav-link.is-active i {
+.app-nav-link.is-active i {
     color: var(--admin-nav-active-text);
+}
+
+/* ---------- 2.4 Vùng nội dung bên phải ---------- */
+
+.app-main {
+    flex: 1 1 auto;
+    min-width: 0;               /* cho phép co lại, tránh tràn ngang */
+    display: flex;
+    flex-direction: column;
+}
+
+.app-content {
+    flex: 1 1 auto;
+    padding: 8px 24px 0;
+}
+
+/* ---------- 2.5 Nút mở menu + lớp phủ (dùng cho màn hình nhỏ) ---------- */
+
+/* Nút mở/đóng menu: luôn hiện.
+   - Màn hình lớn: bấm để THU GỌN menu thành thanh icon rồi mở rộng lại.
+   - Màn hình nhỏ: bấm để trượt menu ra dạng ngăn kéo. */
+.app-sidebar-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.10);
+    color: var(--admin-header-text);
+    border-radius: 9px;
+    padding: 9px 12px;
+    line-height: 1;
+}
+
+.app-sidebar-toggle:hover,
+.app-sidebar-toggle:focus {
+    background: rgba(255, 255, 255, 0.20);
+}
+
+.app-sidebar-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    z-index: 1040;
+}
+
+/* ---------- 2.6 Thu gọn menu thành thanh icon (chỉ màn hình lớn) ---------- */
+
+/*
+ * Trạng thái này do nút trên header bật/tắt. Lớp "app-nav-collapsed" được gắn
+ * vào <body> nên có thể áp dụng cho cả trang, không chỉ riêng thẻ menu.
+ * Trên màn hình nhỏ không áp dụng: menu ở đó là ngăn kéo và luôn rộng đủ.
+ */
+@media (min-width: 992px) {
+    body.app-nav-collapsed .app-sidebar {
+        flex: 0 0 var(--admin-sidebar-w-collapsed);
+        width: var(--admin-sidebar-w-collapsed);
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /* Giấu hết chữ, chỉ giữ lại icon */
+    body.app-nav-collapsed .app-sidebar-label,
+    body.app-nav-collapsed .app-nav-group-title,
+    body.app-nav-collapsed .app-nav-link span {
+        display: none;
+    }
+
+    /* Đầu menu chỉ còn đường kẻ ngăn cách */
+    body.app-nav-collapsed .app-sidebar-head {
+        justify-content: center;
+        padding: 0 0 12px;
+    }
+
+    /* Mỗi mục là một ô vuông chỉ có icon, canh giữa */
+    body.app-nav-collapsed .app-nav-link {
+        justify-content: center;
+        padding: 12px 0;
+    }
+
+    /* Không còn tiêu đề nhóm nên dùng đường kẻ để phân tách các nhóm */
+    body.app-nav-collapsed .app-nav-group + .app-nav-group {
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid var(--admin-nav-line);
+    }
 }
 
 /* ==========================================================================
@@ -312,6 +483,17 @@
     margin-bottom: 10px;
 }
 
+/*
+ * Cho phép ngắt dòng với chuỗi dài không có khoảng trắng (ví dụ địa chỉ email).
+ * Từ khi có menu dọc, cột nội dung hẹp hơn nên nếu không ngắt dòng thì
+ * "support@quanlybanhang.com" sẽ tràn ra ngoài khung footer.
+ */
+.app-footer-contact li span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
 .app-footer-contact li:last-child {
     margin-bottom: 0;
 }
@@ -363,11 +545,42 @@
    ========================================================================== */
 
 @media (max-width: 991.98px) {
-    /* Menu xổ dọc: các mục xếp thành cột, bỏ bo góc cho gọn */
-    .app-navbar .navbar-nav .nav-link {
-        margin: 0;
-        border-radius: 0;
-        padding: 11px 4px;
+    /* Menu dọc chuyển thành ngăn kéo trượt vào từ bên trái */
+    .app-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        border-right: 0;
+        transform: translateX(-100%);
+        transition: transform 0.22s ease;
+        z-index: 1045;
+    }
+
+    /* Trạng thái mở — do đoạn JS ở cuối footer.php bật/tắt */
+    .app-sidebar.is-open {
+        transform: translateX(0);
+    }
+
+    /* Nút đóng nằm trong menu chỉ dùng ở màn hình nhỏ (nút trên header thì luôn hiện) */
+    .app-sidebar-close {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .app-sidebar-backdrop.is-visible {
+        display: block;
+    }
+
+    /* Ngăn kéo đang mở thì khóa cuộn trang phía sau */
+    body.app-nav-open {
+        overflow: hidden;
+    }
+
+    .app-content {
+        padding-left: 12px;
+        padding-right: 12px;
     }
 }
 

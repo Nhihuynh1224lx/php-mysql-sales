@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
  
             if ($stmt->execute()) { 
  
-                header('Location: /suppliers/'); 
+                header('Location: /admin/suppliers/'); 
                 exit; 
  
             } else { 
@@ -205,7 +205,7 @@ require_once '/var/www/src/includes/admin/navbar.php';
             Lưu 
         </button> 
  
-        <a href="/suppliers/" class="btn btn-secondary"> 
+        <a href="/admin/suppliers/" class="btn btn-secondary"> 
             Hủy 
         </a> 
  

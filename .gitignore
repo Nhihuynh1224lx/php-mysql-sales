@@ -3,3 +3,6 @@
 
 # Thu muc tam khi kiem thu giao dien, khong commit
 .wb-tmp/
+
+# Ghi chu lam viec cua tro ly AI, khong commit vao repo bai tap
+.workbuddy-ai/

@@ -11,17 +11,17 @@ $footerColumns = [
     [
         'title' => 'Danh mục',
         'links' => [
-            ['href' => '/',                  'label' => 'Trang chủ', 'icon' => 'fa-house'],
+            ['href' => '/admin/',            'label' => 'Trang chủ', 'icon' => 'fa-house'],
             ['href' => '/admin/products/',   'label' => 'Sản phẩm',  'icon' => 'fa-box-open'],
             ['href' => '/admin/categories/', 'label' => 'Danh mục',  'icon' => 'fa-tags'],
-            ['href' => '/orders/',           'label' => 'Đơn hàng',  'icon' => 'fa-receipt'],
+            ['href' => '/admin/orders/',           'label' => 'Đơn hàng',  'icon' => 'fa-receipt'],
         ],
     ],
     [
         'title' => 'Đối tác',
         'links' => [
-            ['href' => '/customers/',        'label' => 'Khách hàng',          'icon' => 'fa-users'],
-            ['href' => '/suppliers/',        'label' => 'Nhà cung cấp',        'icon' => 'fa-truck-field'],
+            ['href' => '/admin/customers/',        'label' => 'Khách hàng',          'icon' => 'fa-users'],
+            ['href' => '/admin/suppliers/',        'label' => 'Nhà cung cấp',        'icon' => 'fa-truck-field'],
             ['href' => '/admin/shippers/',   'label' => 'Nhân viên giao hàng', 'icon' => 'fa-truck-fast'],
             ['href' => '/admin/employees/',  'label' => 'Nhân viên',           'icon' => 'fa-user-tie'],
         ],
@@ -43,7 +43,7 @@ $footerContacts = [
         <div class="row g-4">
 
             <!-- Cột 1: logo + giới thiệu hệ thống -->
-            <div class="col-lg-4 col-md-6">
+            <div class="col-lg-3 col-md-6">
 
                 <div class="app-footer-brand">
                     <span class="app-footer-logo">
@@ -83,7 +83,7 @@ $footerContacts = [
             <?php endforeach; ?>
 
             <!-- Cột 4: thông tin liên hệ -->
-            <div class="col-lg-2 col-md-6">
+            <div class="col-lg-3 col-md-6">
 
                 <h6 class="app-footer-heading">Liên hệ</h6>
 
@@ -149,3 +149,114 @@ $footerContacts = [
 
     </div>
 </footer>
+
+</div><!-- /.app-content (mở ở navbar.php) -->
+</div><!-- /.app-main (mở ở navbar.php) -->
+</div><!-- /.app-layout (mở ở header.php) -->
+
+<!-- Lớp phủ mờ, chỉ hiện khi menu dọc mở ra trên màn hình nhỏ -->
+<div class="app-sidebar-backdrop" id="appSidebarBackdrop"></div>
+
+<script>
+/*
+ * Điều khiển menu dọc. Nút trên header làm hai việc tuỳ theo bề rộng màn hình:
+ *
+ *   - Màn hình lớn (>= 992px): THU GỌN menu thành thanh chỉ có icon, bấm lại
+ *     để mở rộng. Trạng thái được ghi vào localStorage nên khi sang trang khác
+ *     menu vẫn giữ nguyên (xem đoạn khôi phục ở đầu header.php).
+ *
+ *   - Màn hình nhỏ (< 992px): TRƯỢT menu ra dạng ngăn kéo, che một phần nội dung.
+ *     Đóng bằng nút X, bấm vùng mờ, hoặc nhấn phím Esc.
+ */
+(function () {
+    var STORAGE_KEY = 'admin.menu.collapsed';
+    var DESKTOP_MIN = 992;
+
+    var sidebar = document.getElementById('appSidebar');
+    var toggle = document.getElementById('appSidebarToggle');
+    var closeButton = document.getElementById('appSidebarClose');
+    var backdrop = document.getElementById('appSidebarBackdrop');
+
+    if (!sidebar || !toggle || !backdrop) {
+        return;
+    }
+
+    function isDesktop() {
+        return window.innerWidth >= DESKTOP_MIN;
+    }
+
+    /* ---------- Màn hình nhỏ: ngăn kéo ---------- */
+
+    function openDrawer() {
+        sidebar.classList.add('is-open');
+        backdrop.classList.add('is-visible');
+        document.body.classList.add('app-nav-open');
+        toggle.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeDrawer() {
+        sidebar.classList.remove('is-open');
+        backdrop.classList.remove('is-visible');
+        document.body.classList.remove('app-nav-open');
+        toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    /* ---------- Màn hình lớn: thu gọn / mở rộng ---------- */
+
+    function setCollapsed(collapsed) {
+        document.body.classList.toggle('app-nav-collapsed', collapsed);
+        toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+        toggle.setAttribute('aria-label', collapsed ? 'Mở rộng menu' : 'Thu gọn menu');
+
+        try {
+            window.localStorage.setItem(STORAGE_KEY, collapsed ? '1' : '0');
+        } catch (e) {
+            /* Trình duyệt chặn localStorage — menu vẫn dùng được, chỉ không ghi nhớ */
+        }
+    }
+
+    /*
+     * Đồng bộ nhãn nút với trạng thái đã khôi phục ở header.php.
+     * (header.php gắn lớp vào <body> trước khi trang vẽ, còn nhãn nút thì phải
+     *  cập nhật ở đây vì lúc đó nút chưa tồn tại.)
+     */
+    if (isDesktop()) {
+        setCollapsed(document.body.classList.contains('app-nav-collapsed'));
+    } else {
+        toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    toggle.addEventListener('click', function () {
+        if (isDesktop()) {
+            setCollapsed(!document.body.classList.contains('app-nav-collapsed'));
+        } else {
+            openDrawer();
+        }
+    });
+
+    if (closeButton) {
+        closeButton.addEventListener('click', closeDrawer);
+    }
+
+    // Bấm ra vùng mờ hoặc nhấn Esc cũng đóng ngăn kéo
+    backdrop.addEventListener('click', closeDrawer);
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+            closeDrawer();
+        }
+    });
+
+    // Đổi bề rộng cửa sổ: đóng ngăn kéo cho khỏi kẹt trạng thái,
+    // đồng thời cập nhật lại nhãn nút cho đúng chế độ đang dùng.
+    window.addEventListener('resize', function () {
+        if (isDesktop()) {
+            closeDrawer();
+            setCollapsed(document.body.classList.contains('app-nav-collapsed'));
+        }
+    });
+})();
+</script>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 require_once '/var/www/src/config/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: /customers/');
+    header('Location: /admin/customers/');
     exit;
 }
 
@@ -12,7 +12,7 @@ $customerID = isset($_POST['id'])
     : 0;
 
 if ($customerID <= 0) {
-    header('Location: /customers/');
+    header('Location: /admin/customers/');
     exit;
 }
 
@@ -29,5 +29,5 @@ $stmt->execute();
 $stmt->close();
 $conn->close();
 
-header('Location: /customers/');
+header('Location: /admin/customers/');
 exit;

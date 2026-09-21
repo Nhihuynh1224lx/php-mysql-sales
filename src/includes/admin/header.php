@@ -53,8 +53,14 @@ $appSubtitle = 'Bán hàng và phân phối phụ kiện bida Hoàng Nhi';
     <!--
         Giao diện admin: bảng màu + bố cục header/menu.
         Đặt SAU Bootstrap để các quy tắc ở đây ghi đè được style mặc định.
+
+        Phần ?v=... là "mã phiên bản" lấy từ thời điểm sửa file lần cuối.
+        Mỗi lần admin.css được sửa, mã này đổi theo, buộc trình duyệt tải bản
+        mới. Nếu không có phần này, trình duyệt có thể vẫn dùng bản CSS cũ
+        trong bộ nhớ đệm (cache) và giao diện sẽ hiển thị sai.
     -->
-    <link rel="stylesheet" href="/assets/css/admin.css">
+    <?php $adminCssFile = ($_SERVER['DOCUMENT_ROOT'] ?? '') . '/assets/css/admin.css'; ?>
+    <link rel="stylesheet" href="/assets/css/admin.css?v=<?= @filemtime($adminCssFile) ?: 1 ?>">
 
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
@@ -63,19 +69,61 @@ $appSubtitle = 'Bán hàng và phân phối phụ kiện bida Hoàng Nhi';
 
 <body>
 
+<?php
+/*
+ * Khôi phục trạng thái thu gọn menu NGAY khi trang bắt đầu dựng.
+ * Phải đặt ở đây (ngay sau <body>) chứ không phải ở footer.php: nếu để cuối
+ * trang, menu sẽ hiện ra dạng mở rồi mới thu lại — nhìn bị "giật".
+ * Trạng thái do đoạn JS ở cuối footer.php ghi vào localStorage.
+ */
+?>
+<script>
+(function () {
+    try {
+        if (window.localStorage.getItem('admin.menu.collapsed') === '1') {
+            document.body.classList.add('app-nav-collapsed');
+        }
+    } catch (e) {
+        /* Trình duyệt chặn localStorage (chế độ riêng tư) — bỏ qua, menu mở bình thường */
+    }
+})();
+</script>
+
 <!-- ===== HEADER: logo + tên hệ thống (bên trái), thông tin nhanh (bên phải) ===== -->
 <header class="app-header">
     <div class="container app-header-inner">
 
-        <div class="app-header-brand">
-            <span class="app-header-logo">
-                <i class="fa-solid fa-store"></i>
-            </span>
+        <div class="app-header-left">
 
-            <div>
-                <h1 class="app-header-title"><?= htmlspecialchars($appName) ?></h1>
-                <p class="app-header-sub"><?= htmlspecialchars($appSubtitle) ?></p>
+            <!--
+                Nút mở/đóng menu dọc:
+                  - Màn hình lớn: thu gọn menu thành thanh icon rồi mở rộng lại.
+                  - Màn hình nhỏ: trượt menu ra dạng ngăn kéo.
+                Trạng thái thu gọn được ghi nhớ trong localStorage nên khi sang
+                trang khác menu vẫn giữ nguyên như bạn đã chọn.
+            -->
+            <button
+                type="button"
+                class="app-sidebar-toggle"
+                id="appSidebarToggle"
+                aria-label="Đóng hoặc mở menu"
+                aria-controls="appSidebar"
+                aria-expanded="true"
+            >
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="app-header-brand">
+                <span class="app-header-logo">
+                    <i class="fa-solid fa-store"></i>
+                </span>
+
+                <div>
+                    <h1 class="app-header-title"><?= htmlspecialchars($appName) ?></h1>
+                    <p class="app-header-sub"><?= htmlspecialchars($appSubtitle) ?></p>
+                </div>
             </div>
+
         </div>
 
         <div class="app-header-meta">
@@ -87,3 +135,16 @@ $appSubtitle = 'Bán hàng và phân phối phụ kiện bida Hoàng Nhi';
 
     </div>
 </header>
+
+<!--
+    KHUNG BỐ CỤC CHÍNH: menu dọc bên trái + vùng nội dung bên phải.
+
+    Thẻ <div class="app-layout"> được MỞ ở đây và ĐÓNG lại trong
+    src/includes/admin/footer.php. Lý do phải tách ra hai file: phần nội dung
+    của từng trang nằm giữa lúc include header.php và footer.php.
+
+    Bên trong .app-layout lần lượt có:
+        <aside class="app-sidebar">  -> do navbar.php in ra
+        <div class="app-main">       -> do navbar.php mở, footer.php đóng
+-->
+<div class="app-layout">

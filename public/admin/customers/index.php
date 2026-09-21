@@ -30,7 +30,7 @@ require_once '/var/www/src/includes/admin/navbar.php';
 
         <h2>Quản lý khách hàng</h2>
 
-        <a href="/customers/create.php" class="btn btn-primary">
+        <a href="/admin/customers/create.php" class="btn btn-primary">
             Thêm khách hàng
         </a>
 
@@ -94,14 +94,14 @@ require_once '/var/www/src/includes/admin/navbar.php';
                             <td>
 
                                 <a
-                                    href="/customers/edit.php?id=<?= $customer['CustomerID'] ?>"
+                                    href="/admin/customers/edit.php?id=<?= $customer['CustomerID'] ?>"
                                     class="btn btn-sm btn-warning"
                                 >
                                     Sửa
                                 </a>
 
                                 <form
-                                    action="/customers/delete.php"
+                                    action="/admin/customers/delete.php"
                                     method="post"
                                     class="d-inline"
                                     onsubmit="return confirm('Bạn có chắc muốn xóa khách hàng này?');"

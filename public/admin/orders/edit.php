@@ -335,7 +335,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $conn->commit();
 
-            header('Location: /orders/show.php?id=' . $orderID . '&updated=1');
+            header('Location: /admin/orders/show.php?id=' . $orderID . '&updated=1');
             exit;
 
         } catch (Throwable $e) {
@@ -364,38 +364,32 @@ require_once '/var/www/src/includes/admin/navbar.php';
 
 ?>
 
-<div class="page">
+<div class="container mt-4">
 
-    <div class="page-head">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h2>Sửa đơn hàng #<?= (int) $orderID ?></h2>
 
         <div>
-            <h2 class="page-title">
-                <i class="fa-solid fa-pen-to-square"></i>
-                Sửa đơn hàng #<?= (int) $orderID ?>
-            </h2>
-            <p class="page-subtitle">
-                Cập nhật thông tin đơn và danh sách mặt hàng
-            </p>
-        </div>
-
-        <div class="page-head-actions">
 
             <a
-                href="/orders/show.php?id=<?= (int) $orderID ?>"
-                class="btn btn-secondary"
+                href="/admin/orders/show.php?id=<?= (int) $orderID ?>"
+                class="btn btn-info"
             >
-                <i class="fa-solid fa-eye"></i>
                 Xem chi tiết
             </a>
 
-            <a href="/orders/" class="btn btn-secondary">
-                <i class="fa-solid fa-arrow-left"></i>
+            <a href="/admin/orders/" class="btn btn-secondary">
                 Danh sách
             </a>
 
         </div>
 
     </div>
+
+    <p class="text-muted">
+        Cập nhật thông tin đơn và danh sách mặt hàng.
+    </p>
 
     <?php if ($errors !== []): ?>
 
@@ -420,14 +414,11 @@ require_once '/var/www/src/includes/admin/navbar.php';
         </div>
     </div>
 
-    <form method="post" class="form-wide">
+    <form method="post">
 
-        <div class="form-section">
+        <div class="mb-4">
 
-            <div class="form-section-title">
-                <i class="fa-solid fa-circle-info"></i>
-                Thông tin đơn hàng
-            </div>
+            <h5 class="mb-3">Thông tin đơn hàng</h5>
 
             <div class="row">
 
@@ -555,18 +546,16 @@ require_once '/var/www/src/includes/admin/navbar.php';
 
         </div>
 
-        <div class="form-section">
+        <div class="mb-4">
 
-            <div class="form-section-title">
-                <i class="fa-solid fa-box-open"></i>
-                Mặt hàng trong đơn
-            </div>
+            <h5 class="mb-3">Mặt hàng trong đơn</h5>
 
-            <div class="table-responsive order-items">
+            <div class="table-responsive">
 
-                <table class="table align-middle">
+                <table class="table table-bordered table-striped">
 
-                    <thead>
+                    <thead class="table-dark">
+
                         <tr>
                             <th style="min-width: 320px;">Sản phẩm</th>
                             <th class="text-end">Đơn giá</th>
@@ -626,7 +615,7 @@ require_once '/var/www/src/includes/admin/navbar.php';
 
                             </td>
 
-                            <td class="text-end cell-muted line-unit">
+                            <td class="text-end line-unit">
                                 <?= $selectedProduct
                                     ? vnd((float) $selectedProduct['Price'])
                                     : '—' ?>
@@ -676,20 +665,20 @@ require_once '/var/www/src/includes/admin/navbar.php';
 
             </div>
 
-            <div class="order-items-foot">
+            <div class="d-flex justify-content-between align-items-center mt-3">
 
                 <button
                     type="button"
-                    class="btn btn-outline-primary btn-sm"
+                    class="btn btn-primary btn-sm"
                     id="addItem"
                 >
                     <i class="fa-solid fa-plus"></i>
                     Thêm dòng
                 </button>
 
-                <div class="order-total">
-                    <span class="order-total-label">Tổng cộng</span>
-                    <span class="order-total-value" id="grandTotal">
+                <div class="fs-5">
+                    <span class="text-muted me-2">Tổng cộng</span>
+                    <span class="fw-bold" id="grandTotal">
                         <?= vnd($previewTotal) ?>
                     </span>
                 </div>
@@ -698,18 +687,16 @@ require_once '/var/www/src/includes/admin/navbar.php';
 
         </div>
 
-        <div class="form-actions-inline">
+        <div class="mt-4">
 
             <button type="submit" class="btn btn-warning">
-                <i class="fa-solid fa-check"></i>
                 Cập nhật đơn hàng
             </button>
 
             <a
-                href="/orders/show.php?id=<?= (int) $orderID ?>"
+                href="/admin/orders/show.php?id=<?= (int) $orderID ?>"
                 class="btn btn-secondary"
             >
-                <i class="fa-solid fa-xmark"></i>
                 Hủy
             </a>
 
@@ -749,7 +736,7 @@ require_once '/var/www/src/includes/admin/navbar.php';
 
         </td>
 
-        <td class="text-end cell-muted line-unit">—</td>
+        <td class="text-end line-unit">—</td>
 
         <td>
 

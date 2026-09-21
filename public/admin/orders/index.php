@@ -67,89 +67,89 @@ require_once '/var/www/src/includes/admin/navbar.php';
 
 ?>
 
-<div class="page">
+<div class="container mt-4">
 
-    <div class="page-head">
+    <div class="d-flex justify-content-between align-items-center mb-3">
 
-        <div>
-            <h2 class="page-title">
-                <i class="fa-solid fa-receipt"></i>
-                Quản lý đơn hàng
-            </h2>
-            <p class="page-subtitle">
-                Theo dõi đơn hàng, khách mua và đơn vị vận chuyển
-            </p>
-        </div>
+        <h2>Quản lý đơn hàng</h2>
 
-        <div class="page-head-actions">
-
-            <a href="/orders/create.php" class="btn btn-primary">
-                <i class="fa-solid fa-plus"></i>
-                Tạo đơn hàng
-            </a>
-
-        </div>
+        <a href="/admin/orders/create.php" class="btn btn-primary">
+            Tạo đơn hàng
+        </a>
 
     </div>
 
-    <div class="stat-grid">
+    <!-- Ba thẻ số liệu tổng quan, dùng thẻ (card) có sẵn của Bootstrap -->
+    <div class="row g-3 mb-4">
 
-        <div class="stat-card">
+        <div class="col-md-4">
 
-            <div class="stat-top">
-                <span class="stat-label">Tổng đơn hàng</span>
-                <span class="stat-icon is-success">
-                    <i class="fa-solid fa-receipt"></i>
-                </span>
-            </div>
+            <div class="card h-100">
 
-            <div class="stat-value">
-                <?= number_format($totalOrders, 0, ',', '.') ?>
-            </div>
+                <div class="card-body">
 
-            <div class="stat-meta">
-                <i class="fa-solid fa-box-open"></i>
-                <?= format_quantity($totalItems) ?> mặt hàng đã bán
-            </div>
+                    <div class="text-muted">
+                        Tổng đơn hàng
+                    </div>
 
-        </div>
+                    <div class="fs-3 fw-bold">
+                        <?= number_format($totalOrders, 0, ',', '.') ?>
+                    </div>
 
-        <div class="stat-card">
+                    <div class="text-muted small">
+                        <?= format_quantity($totalItems) ?> mặt hàng đã bán
+                    </div>
 
-            <div class="stat-top">
-                <span class="stat-label">Doanh thu</span>
-                <span class="stat-icon is-success">
-                    <i class="fa-solid fa-money-bill-wave"></i>
-                </span>
-            </div>
+                </div>
 
-            <div class="stat-value stat-value-sm">
-                <?= vnd($totalRevenue) ?>
-            </div>
-
-            <div class="stat-meta">
-                <i class="fa-solid fa-chart-line"></i>
-                Trên toàn bộ đơn hàng
             </div>
 
         </div>
 
-        <div class="stat-card">
+        <div class="col-md-4">
 
-            <div class="stat-top">
-                <span class="stat-label">Giá trị trung bình</span>
-                <span class="stat-icon is-info">
-                    <i class="fa-solid fa-calculator"></i>
-                </span>
+            <div class="card h-100">
+
+                <div class="card-body">
+
+                    <div class="text-muted">
+                        Doanh thu
+                    </div>
+
+                    <div class="fs-5 fw-bold">
+                        <?= vnd($totalRevenue) ?>
+                    </div>
+
+                    <div class="text-muted small">
+                        Trên toàn bộ đơn hàng
+                    </div>
+
+                </div>
+
             </div>
 
-            <div class="stat-value stat-value-sm">
-                <?= vnd($averageOrder) ?>
-            </div>
+        </div>
 
-            <div class="stat-meta">
-                <i class="fa-solid fa-percent"></i>
-                Mỗi đơn hàng
+        <div class="col-md-4">
+
+            <div class="card h-100">
+
+                <div class="card-body">
+
+                    <div class="text-muted">
+                        Giá trị trung bình
+                    </div>
+
+                    <div class="fs-5 fw-bold">
+                        <?= vnd($averageOrder) ?>
+                    </div>
+
+                    <div class="text-muted small">
+                        Mỗi đơn hàng
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
@@ -158,9 +158,10 @@ require_once '/var/www/src/includes/admin/navbar.php';
 
     <div class="table-responsive">
 
-        <table class="table align-middle">
+        <table class="table table-bordered table-striped">
 
-            <thead>
+            <thead class="table-dark">
+
                 <tr>
                     <th>Mã đơn</th>
                     <th>Ngày đặt</th>
@@ -169,8 +170,9 @@ require_once '/var/www/src/includes/admin/navbar.php';
                     <th>Vận chuyển</th>
                     <th class="text-end">Mặt hàng</th>
                     <th class="text-end">Tổng tiền</th>
-                    <th>Thao tác</th>
+                    <th class="text-nowrap">Thao tác</th>
                 </tr>
+
             </thead>
 
             <tbody>
@@ -182,26 +184,24 @@ require_once '/var/www/src/includes/admin/navbar.php';
                     <tr>
 
                         <td>
-                            <span class="code-chip">
-                                #<?= (int) $order['OrderID'] ?>
-                            </span>
+                            #<?= (int) $order['OrderID'] ?>
                         </td>
 
-                        <td class="cell-muted">
+                        <td>
                             <?= htmlspecialchars(
                                 format_date($order['OrderDate'])
                             ) ?>
                         </td>
 
-                        <td class="cell-strong">
+                        <td>
                             <?= htmlspecialchars($order['CustomerName']) ?>
                         </td>
 
-                        <td class="cell-muted">
+                        <td>
                             <?= htmlspecialchars($order['EmployeeName']) ?>
                         </td>
 
-                        <td class="cell-muted">
+                        <td>
                             <?= htmlspecialchars($order['ShipperName']) ?>
                         </td>
 
@@ -215,28 +215,24 @@ require_once '/var/www/src/includes/admin/navbar.php';
                             <?= vnd((float) $order['OrderTotal']) ?>
                         </td>
 
-                        <td>
+                        <td class="text-nowrap">
 
                             <a
-                                href="/orders/show.php?id=<?= (int) $order['OrderID'] ?>"
-                                class="btn btn-sm btn-outline-primary"
-                                title="Xem chi tiết"
+                                href="/admin/orders/show.php?id=<?= (int) $order['OrderID'] ?>"
+                                class="btn btn-sm btn-info"
                             >
-                                <i class="fa-solid fa-eye"></i>
                                 Xem
                             </a>
 
                             <a
-                                href="/orders/edit.php?id=<?= (int) $order['OrderID'] ?>"
-                                class="btn btn-sm btn-outline-primary"
-                                title="Sửa đơn hàng"
+                                href="/admin/orders/edit.php?id=<?= (int) $order['OrderID'] ?>"
+                                class="btn btn-sm btn-warning"
                             >
-                                <i class="fa-solid fa-pen"></i>
                                 Sửa
                             </a>
 
                             <form
-                                action="/orders/delete.php"
+                                action="/admin/orders/delete.php"
                                 method="post"
                                 class="d-inline"
                                 onsubmit="return confirm('Bạn có chắc muốn xóa đơn hàng này? Toàn bộ mặt hàng trong đơn cũng bị xóa.');"
@@ -249,12 +245,11 @@ require_once '/var/www/src/includes/admin/navbar.php';
 
                                 <button
                                     type="submit"
-                                    class="btn btn-sm btn-outline-danger"
-                                    title="Xóa đơn hàng"
+                                    class="btn btn-sm btn-danger"
                                 >
-                                    <i class="fa-solid fa-trash"></i>
                                     Xóa
                                 </button>
+
                             </form>
 
                         </td>
@@ -267,17 +262,8 @@ require_once '/var/www/src/includes/admin/navbar.php';
 
                 <tr>
 
-                    <td colspan="8" class="empty-cell">
-
-                        <div class="empty-state">
-                            <i class="fa-solid fa-receipt"></i>
-                            <p>Chưa có đơn hàng nào trong hệ thống.</p>
-                            <a href="/orders/create.php" class="btn btn-primary btn-sm">
-                                <i class="fa-solid fa-plus"></i>
-                                Tạo đơn hàng đầu tiên
-                            </a>
-                        </div>
-
+                    <td colspan="8" class="text-center">
+                        Chưa có đơn hàng nào trong hệ thống.
                     </td>
 
                 </tr>

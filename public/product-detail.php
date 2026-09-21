@@ -1,22 +1,8 @@
 <?php
 
-/*
- * Trang chi tiết sản phẩm (Frontend).
- *
- * Nhận ProductID qua query string: /product-detail.php?id=3
- * Chỉ ĐỌC dữ liệu (SELECT), không ghi gì vào database.
- *
- * LƯU Ý: bảng product_images đặt khoá chính là ProductImageID
- * (không phải ImageID), nên câu truy vấn ảnh dùng ProductImageID.
- */
 
 require_once '/var/www/src/config/database.php';
 
-/* ------------------------------------------------------------------
- * 1. Nhận và kiểm tra tham số ?id=
- * ------------------------------------------------------------------
- * (int) giúp loại bỏ ký tự lạ; id không hợp lệ thì quay về danh sách.
- */
 
 $productID = isset($_GET['id'])
     ? (int) $_GET['id']
@@ -27,13 +13,6 @@ if ($productID <= 0) {
     exit;
 }
 
-/* ------------------------------------------------------------------
- * 2. Lấy thông tin chi tiết sản phẩm
- * ------------------------------------------------------------------
- * Nối 3 bảng theo quy ước của bài: liệt kê bảng ở FROM
- * rồi đặt điều kiện khoá ngoại ở WHERE.
- * Dùng prepared statement vì $productID đến từ query string.
- */
 
 $sql = "
     SELECT

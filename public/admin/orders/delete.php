@@ -3,14 +3,14 @@
 require_once '/var/www/src/config/database.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: /orders/');
+    header('Location: /admin/orders/');
     exit;
 }
 
 $orderID = isset($_POST['id']) ? (int) $_POST['id'] : 0;
 
 if ($orderID <= 0) {
-    header('Location: /orders/');
+    header('Location: /admin/orders/');
     exit;
 }
 
@@ -31,5 +31,5 @@ $stmt->execute();
 $stmt->close();
 $conn->close();
 
-header('Location: /orders/');
+header('Location: /admin/orders/');
 exit;

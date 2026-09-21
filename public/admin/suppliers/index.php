@@ -31,7 +31,7 @@ require_once '/var/www/src/includes/admin/navbar.php';
 
         <h2>Quản lý nhà cung cấp</h2> 
 
-        <a href="/suppliers/create.php" class="btn btn-primary"> 
+        <a href="/admin/suppliers/create.php" class="btn btn-primary"> 
             Thêm nhà cung cấp 
         </a> 
 
@@ -100,14 +100,14 @@ require_once '/var/www/src/includes/admin/navbar.php';
                             <td> 
 
                                 <a 
-                                    href="/suppliers/edit.php?id=<?= $supplier['SupplierID'] ?>" 
+                                    href="/admin/suppliers/edit.php?id=<?= $supplier['SupplierID'] ?>" 
                                     class="btn btn-sm btn-warning" 
                                 > 
                                     Sửa 
                                 </a> 
 
                                 <form 
-                                    action="/suppliers/delete.php" 
+                                    action="/admin/suppliers/delete.php" 
                                     method="post" 
                                     class="d-inline" 
                                     onsubmit="return confirm('Bạn có chắc muốn xóa nhà cung cấp này?');" 

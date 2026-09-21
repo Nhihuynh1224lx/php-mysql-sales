@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if ($stmt->execute()) {
 
-                header('Location: /customers/');
+                header('Location: /admin/customers/');
                 exit;
 
             } else {
@@ -305,7 +305,7 @@ require_once '/var/www/src/includes/admin/navbar.php';
         </button>
 
         <a
-            href="/customers/"
+            href="/admin/customers/"
             class="btn btn-secondary"
         >
             Hủy
