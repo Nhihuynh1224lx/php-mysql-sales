@@ -1,0 +1,404 @@
+/* ==========================================================================
+   ADMIN — Giao diện khu vực quản trị
+   --------------------------------------------------------------------------
+   Tông màu: Indigo (xanh tím than) + Slate (xanh đen) — kiểu admin hiện đại.
+
+   TOÀN BỘ MÀU SẮC được khai báo tập trung ở khối :root bên dưới.
+   Muốn đổi tông màu chỉ cần sửa các biến này, KHÔNG phải sửa từng chỗ trong code.
+   Ví dụ muốn đổi sang tông xanh dương: chỉ cần sửa 3 biến
+   --admin-header-from, --admin-header-to và --admin-accent.
+   ========================================================================== */
+
+:root {
+    /* ---------- Header: dải màu chuyển sắc xanh tím than ---------- */
+    --admin-header-from: #312E81;              /* Indigo 900 - đầu dải màu */
+    --admin-header-to: #1E1B4B;                /* Indigo 950 - cuối dải màu */
+    --admin-header-text: #FFFFFF;              /* Chữ trên header */
+    --admin-header-muted: rgba(255, 255, 255, 0.72); /* Chú thích mờ trên header */
+
+    /* ---------- Thanh menu ---------- */
+    --admin-nav-bg: #0F172A;                   /* Slate 900 - nền menu */
+    --admin-nav-text: #CBD5E1;                 /* Slate 300 - chữ menu */
+    --admin-nav-icon: #94A3B8;                 /* Slate 400 - icon menu */
+    --admin-nav-line: rgba(148, 163, 184, 0.14); /* Đường kẻ ngăn header/menu */
+
+    /* ---------- Menu khi DI CHUỘT vào ---------- */
+    --admin-nav-hover-bg: rgba(99, 102, 241, 0.20); /* Nền indigo mờ */
+    --admin-nav-hover-text: #FFFFFF;                /* Chữ trắng */
+    --admin-nav-hover-icon: #A5B4FC;                /* Icon indigo sáng */
+
+    /* ---------- Menu của TRANG ĐANG MỞ ---------- */
+    --admin-nav-active-bg: #6366F1;            /* Indigo 500 */
+    --admin-nav-active-text: #FFFFFF;
+
+    /* ---------- Footer ---------- */
+    --admin-footer-bg: #0B1120;                 /* Nền footer - tối hơn menu một chút */
+    --admin-footer-heading: #E2E8F0;            /* Chữ tiêu đề các cột */
+    --admin-footer-text: #94A3B8;               /* Chữ thường trong footer */
+    --admin-footer-line: rgba(148, 163, 184, 0.14); /* Đường kẻ phân cách */
+
+    /* ---------- Màu nhấn dùng chung ---------- */
+    --admin-accent: #6366F1;                   /* Indigo 500 */
+}
+
+/* ==========================================================================
+   1. HEADER — thanh ngang: logo + tên hệ thống (trái), thông tin nhanh (phải)
+   ========================================================================== */
+
+.app-header {
+    background: linear-gradient(135deg, var(--admin-header-from), var(--admin-header-to));
+    color: var(--admin-header-text);
+    padding: 16px 0;
+}
+
+/* Xếp logo/tên hệ thống và phần thông tin về hai đầu thanh header */
+.app-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.app-header-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+}
+
+/* Ô vuông bo góc chứa icon logo */
+.app-header-logo {
+    flex: 0 0 auto;
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    font-size: 1.15rem;
+}
+
+.app-header-title {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0.2px;
+}
+
+.app-header-sub {
+    margin: 3px 0 0;
+    font-size: 0.8rem;
+    color: var(--admin-header-muted);
+    line-height: 1.3;
+}
+
+/* Nhóm thông tin nhanh bên phải (ngày, ...) */
+.app-header-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.app-header-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    font-size: 0.82rem;
+    color: var(--admin-header-text);
+    white-space: nowrap;
+}
+
+.app-header-chip i {
+    color: var(--admin-nav-hover-icon);
+}
+
+/* ==========================================================================
+   2. THANH MENU NGANG
+   ========================================================================== */
+
+.app-navbar {
+    background-color: var(--admin-nav-bg);
+    border-top: 1px solid var(--admin-nav-line);
+    padding: 6px 0;
+}
+
+/* Nút mở menu trên màn hình nhỏ (thay icon mặc định của Bootstrap) */
+.app-navbar .navbar-toggler {
+    color: var(--admin-nav-text);
+    border: 1px solid var(--admin-nav-line);
+    padding: 6px 12px;
+    border-radius: 8px;
+}
+
+.app-navbar .navbar-toggler:focus {
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.35);
+}
+
+/* Mỗi mục menu: flexbox giữ icon và chữ luôn thẳng hàng.
+   Thuộc tính gap tạo khoảng cách đều giữa icon và chữ. */
+.app-navbar .navbar-nav .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 9px;                       /* khoảng cách icon <-> chữ */
+    padding: 9px 14px;
+    margin: 2px 1px;
+    border-radius: 8px;
+    color: var(--admin-nav-text);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.app-navbar .navbar-nav .nav-link i {
+    color: var(--admin-nav-icon);
+    font-size: 0.95rem;
+    transition: color 0.18s ease;
+}
+
+/* Di chuột: nền sáng lên nhẹ + icon đổi sang màu nhấn */
+.app-navbar .navbar-nav .nav-link:hover,
+.app-navbar .navbar-nav .nav-link:focus {
+    background-color: var(--admin-nav-hover-bg);
+    color: var(--admin-nav-hover-text);
+}
+
+.app-navbar .navbar-nav .nav-link:hover i,
+.app-navbar .navbar-nav .nav-link:focus i {
+    color: var(--admin-nav-hover-icon);
+}
+
+/* Trang đang mở: nền đặc màu nhấn */
+.app-navbar .navbar-nav .nav-link.is-active {
+    background-color: var(--admin-nav-active-bg);
+    color: var(--admin-nav-active-text);
+}
+
+.app-navbar .navbar-nav .nav-link.is-active i {
+    color: var(--admin-nav-active-text);
+}
+
+/* ==========================================================================
+   3. FOOTER
+   ========================================================================== */
+
+.app-footer {
+    position: relative;
+    background-color: var(--admin-footer-bg);
+    color: var(--admin-footer-text);
+}
+
+/* Dải màu nhấn mảnh chạy ngang phía trên footer, nối liền với tông header */
+.app-footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--admin-header-from), var(--admin-accent));
+}
+
+/* ---------- Cột 1: logo + tên hệ thống ---------- */
+
+.app-footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.app-footer-logo {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(99, 102, 241, 0.16);
+    border: 1px solid rgba(99, 102, 241, 0.30);
+    color: var(--admin-nav-hover-icon);
+}
+
+.app-footer-title {
+    margin: 0;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--admin-footer-heading);
+}
+
+.app-footer-desc {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: var(--admin-footer-text);
+}
+
+/* ---------- Tiêu đề từng cột ---------- */
+
+.app-footer-heading {
+    margin-bottom: 14px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--admin-footer-heading);
+}
+
+/* ---------- Danh sách liên kết ---------- */
+
+.app-footer-links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.app-footer-links li + li {
+    margin-top: 9px;
+}
+
+.app-footer-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 0.85rem;
+    color: var(--admin-footer-text);
+    text-decoration: none;
+    transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.app-footer-links a i {
+    width: 15px;
+    font-size: 0.8rem;
+    text-align: center;
+    color: #64748B;
+    transition: color 0.18s ease;
+}
+
+/* Di chuột: chữ và icon cùng sáng lên màu nhấn, nhích nhẹ sang phải */
+.app-footer-links a:hover,
+.app-footer-links a:focus {
+    color: var(--admin-nav-hover-icon);
+    transform: translateX(2px);
+}
+
+.app-footer-links a:hover i,
+.app-footer-links a:focus i {
+    color: var(--admin-nav-hover-icon);
+}
+
+/* ---------- Cột liên hệ ---------- */
+
+.app-footer-contact {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.app-footer-contact li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+}
+
+.app-footer-contact li:last-child {
+    margin-bottom: 0;
+}
+
+.app-footer-contact i {
+    width: 16px;
+    text-align: center;
+    color: var(--admin-nav-hover-icon);
+}
+
+/* ---------- Dòng cuối: bản quyền + mạng xã hội ---------- */
+
+.app-footer-line {
+    margin: 32px 0 22px;
+    border: 0;
+    border-top: 1px solid var(--admin-footer-line);
+    opacity: 1;
+}
+
+.app-footer-copy {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--admin-footer-text);
+}
+
+.app-footer-social {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(148, 163, 184, 0.10);
+    border: 1px solid var(--admin-footer-line);
+    color: var(--admin-footer-text);
+    text-decoration: none;
+    transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+.app-footer-social:hover,
+.app-footer-social:focus {
+    background-color: var(--admin-accent);
+    border-color: var(--admin-accent);
+    color: #FFFFFF;
+}
+
+/* ==========================================================================
+   4. MÀN HÌNH NHỎ
+   ========================================================================== */
+
+@media (max-width: 991.98px) {
+    /* Menu xổ dọc: các mục xếp thành cột, bỏ bo góc cho gọn */
+    .app-navbar .navbar-nav .nav-link {
+        margin: 0;
+        border-radius: 0;
+        padding: 11px 4px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .app-header {
+        padding: 14px 0;
+    }
+
+    .app-header-title {
+        font-size: 1rem;
+    }
+
+    .app-header-logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        font-size: 1rem;
+    }
+
+    /* Trên điện thoại: ẩn chip ngày cho đỡ chật */
+    .app-header-chip {
+        display: none;
+    }
+
+    /* Footer: giảm khoảng cách cho gọn */
+    .app-footer .container {
+        padding-top: 34px;
+        padding-bottom: 26px;
+    }
+
+    .app-footer-line {
+        margin: 24px 0 18px;
+    }
+}

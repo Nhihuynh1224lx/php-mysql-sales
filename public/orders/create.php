@@ -306,8 +306,8 @@ foreach ($lines as $line) {
     }
 }
 
-require_once '/var/www/src/includes/header.php';
-require_once '/var/www/src/includes/navbar.php';
+require_once '/var/www/src/includes/admin/header.php';
+require_once '/var/www/src/includes/admin/navbar.php';
 
 ?>
 
@@ -317,7 +317,7 @@ require_once '/var/www/src/includes/navbar.php';
 
         <div>
             <h2 class="page-title">
-                <i class="bi bi-receipt"></i>
+                <i class="fa-solid fa-receipt"></i>
                 Tạo đơn hàng
             </h2>
             <p class="page-subtitle">
@@ -328,7 +328,7 @@ require_once '/var/www/src/includes/navbar.php';
         <div class="page-head-actions">
 
             <a href="/orders/" class="btn btn-secondary">
-                <i class="bi bi-arrow-left"></i>
+                <i class="fa-solid fa-arrow-left"></i>
                 Quay lại danh sách
             </a>
 
@@ -339,7 +339,7 @@ require_once '/var/www/src/includes/navbar.php';
     <?php if ($errors !== []): ?>
 
         <div class="alert alert-danger">
-            <i class="bi bi-exclamation-triangle-fill"></i>
+            <i class="fa-solid fa-triangle-exclamation"></i>
 
             <div>
                 <?php foreach ($errors as $error): ?>
@@ -354,7 +354,7 @@ require_once '/var/www/src/includes/navbar.php';
     <?php if ($customers === [] || $employees === [] || $shippers === []): ?>
 
         <div class="alert alert-warning">
-            <i class="bi bi-info-circle-fill"></i>
+            <i class="fa-solid fa-circle-info"></i>
             <div>
                 Cần có ít nhất một khách hàng, một nhân viên và một đơn vị
                 vận chuyển trước khi tạo đơn hàng.
@@ -368,7 +368,7 @@ require_once '/var/www/src/includes/navbar.php';
         <div class="form-section">
 
             <div class="form-section-title">
-                <i class="bi bi-info-circle"></i>
+                <i class="fa-solid fa-circle-info"></i>
                 Thông tin đơn hàng
             </div>
 
@@ -501,7 +501,7 @@ require_once '/var/www/src/includes/navbar.php';
         <div class="form-section">
 
             <div class="form-section-title">
-                <i class="bi bi-box-seam"></i>
+                <i class="fa-solid fa-box-open"></i>
                 Mặt hàng trong đơn
             </div>
 
@@ -604,7 +604,7 @@ require_once '/var/www/src/includes/navbar.php';
                                     class="btn btn-sm btn-outline-danger remove-item"
                                     title="Xóa dòng"
                                 >
-                                    <i class="bi bi-x-lg"></i>
+                                    <i class="fa-solid fa-xmark"></i>
                                 </button>
 
                             </td>
@@ -626,7 +626,7 @@ require_once '/var/www/src/includes/navbar.php';
                     class="btn btn-outline-primary btn-sm"
                     id="addItem"
                 >
-                    <i class="bi bi-plus-lg"></i>
+                    <i class="fa-solid fa-plus"></i>
                     Thêm dòng
                 </button>
 
@@ -640,7 +640,7 @@ require_once '/var/www/src/includes/navbar.php';
             </div>
 
             <p class="form-text mt-2">
-                <i class="bi bi-info-circle"></i>
+                <i class="fa-solid fa-circle-info"></i>
                 Đơn giá được lấy theo giá hiện tại của sản phẩm và
                 được hệ thống tính lại khi lưu.
             </p>
@@ -650,12 +650,12 @@ require_once '/var/www/src/includes/navbar.php';
         <div class="form-actions-inline">
 
             <button type="submit" class="btn btn-primary">
-                <i class="bi bi-check-lg"></i>
+                <i class="fa-solid fa-check"></i>
                 Tạo đơn hàng
             </button>
 
             <a href="/orders/" class="btn btn-secondary">
-                <i class="bi bi-x-lg"></i>
+                <i class="fa-solid fa-xmark"></i>
                 Hủy
             </a>
 
@@ -719,7 +719,7 @@ require_once '/var/www/src/includes/navbar.php';
                 class="btn btn-sm btn-outline-danger remove-item"
                 title="Xóa dòng"
             >
-                <i class="bi bi-x-lg"></i>
+                <i class="fa-solid fa-xmark"></i>
             </button>
 
         </td>
@@ -732,6 +732,6 @@ require_once '/var/www/src/includes/navbar.php';
 
 <?php
 
-require_once '/var/www/src/includes/footer.php';
+require_once '/var/www/src/includes/admin/footer.php';
 
 $conn->close();

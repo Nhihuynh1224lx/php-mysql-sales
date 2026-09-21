@@ -62,8 +62,8 @@ $sql = "
 
 $result = $conn->query($sql);
 
-require_once '/var/www/src/includes/header.php';
-require_once '/var/www/src/includes/navbar.php';
+require_once '/var/www/src/includes/admin/header.php';
+require_once '/var/www/src/includes/admin/navbar.php';
 
 ?>
 
@@ -73,7 +73,7 @@ require_once '/var/www/src/includes/navbar.php';
 
         <div>
             <h2 class="page-title">
-                <i class="bi bi-receipt"></i>
+                <i class="fa-solid fa-receipt"></i>
                 Quản lý đơn hàng
             </h2>
             <p class="page-subtitle">
@@ -84,7 +84,7 @@ require_once '/var/www/src/includes/navbar.php';
         <div class="page-head-actions">
 
             <a href="/orders/create.php" class="btn btn-primary">
-                <i class="bi bi-plus-lg"></i>
+                <i class="fa-solid fa-plus"></i>
                 Tạo đơn hàng
             </a>
 
@@ -99,7 +99,7 @@ require_once '/var/www/src/includes/navbar.php';
             <div class="stat-top">
                 <span class="stat-label">Tổng đơn hàng</span>
                 <span class="stat-icon is-success">
-                    <i class="bi bi-receipt"></i>
+                    <i class="fa-solid fa-receipt"></i>
                 </span>
             </div>
 
@@ -108,7 +108,7 @@ require_once '/var/www/src/includes/navbar.php';
             </div>
 
             <div class="stat-meta">
-                <i class="bi bi-box-seam"></i>
+                <i class="fa-solid fa-box-open"></i>
                 <?= format_quantity($totalItems) ?> mặt hàng đã bán
             </div>
 
@@ -119,7 +119,7 @@ require_once '/var/www/src/includes/navbar.php';
             <div class="stat-top">
                 <span class="stat-label">Doanh thu</span>
                 <span class="stat-icon is-success">
-                    <i class="bi bi-cash-coin"></i>
+                    <i class="fa-solid fa-money-bill-wave"></i>
                 </span>
             </div>
 
@@ -128,7 +128,7 @@ require_once '/var/www/src/includes/navbar.php';
             </div>
 
             <div class="stat-meta">
-                <i class="bi bi-graph-up"></i>
+                <i class="fa-solid fa-chart-line"></i>
                 Trên toàn bộ đơn hàng
             </div>
 
@@ -139,7 +139,7 @@ require_once '/var/www/src/includes/navbar.php';
             <div class="stat-top">
                 <span class="stat-label">Giá trị trung bình</span>
                 <span class="stat-icon is-info">
-                    <i class="bi bi-calculator"></i>
+                    <i class="fa-solid fa-calculator"></i>
                 </span>
             </div>
 
@@ -148,7 +148,7 @@ require_once '/var/www/src/includes/navbar.php';
             </div>
 
             <div class="stat-meta">
-                <i class="bi bi-percent"></i>
+                <i class="fa-solid fa-percent"></i>
                 Mỗi đơn hàng
             </div>
 
@@ -222,7 +222,7 @@ require_once '/var/www/src/includes/navbar.php';
                                 class="btn btn-sm btn-outline-primary"
                                 title="Xem chi tiết"
                             >
-                                <i class="bi bi-eye"></i>
+                                <i class="fa-solid fa-eye"></i>
                                 Xem
                             </a>
 
@@ -231,7 +231,7 @@ require_once '/var/www/src/includes/navbar.php';
                                 class="btn btn-sm btn-outline-primary"
                                 title="Sửa đơn hàng"
                             >
-                                <i class="bi bi-pencil"></i>
+                                <i class="fa-solid fa-pen"></i>
                                 Sửa
                             </a>
 
@@ -252,7 +252,7 @@ require_once '/var/www/src/includes/navbar.php';
                                     class="btn btn-sm btn-outline-danger"
                                     title="Xóa đơn hàng"
                                 >
-                                    <i class="bi bi-trash"></i>
+                                    <i class="fa-solid fa-trash"></i>
                                     Xóa
                                 </button>
                             </form>
@@ -270,10 +270,10 @@ require_once '/var/www/src/includes/navbar.php';
                     <td colspan="8" class="empty-cell">
 
                         <div class="empty-state">
-                            <i class="bi bi-receipt"></i>
+                            <i class="fa-solid fa-receipt"></i>
                             <p>Chưa có đơn hàng nào trong hệ thống.</p>
                             <a href="/orders/create.php" class="btn btn-primary btn-sm">
-                                <i class="bi bi-plus-lg"></i>
+                                <i class="fa-solid fa-plus"></i>
                                 Tạo đơn hàng đầu tiên
                             </a>
                         </div>
@@ -294,6 +294,6 @@ require_once '/var/www/src/includes/navbar.php';
 
 <?php
 
-require_once '/var/www/src/includes/footer.php';
+require_once '/var/www/src/includes/admin/footer.php';
 
 $conn->close();

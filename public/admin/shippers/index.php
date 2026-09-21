@@ -1,20 +1,16 @@
 <?php
 
-$pageTitle = 'Quản lý khách hàng';
+$pageTitle = 'Quản lý nhân viên giao hàng';
 
 require_once '/var/www/src/config/database.php';
 
 $sql = "
     SELECT
-        CustomerID,
-        CustomerName,
-        ContactName,
-        Address,
-        City,
-        PostalCode,
-        Country
-    FROM customers
-    ORDER BY CustomerID
+        ShipperID,
+        ShipperName,
+        Phone
+    FROM shippers
+    ORDER BY ShipperID
 ";
 
 $result = $conn->query($sql);
@@ -28,10 +24,10 @@ require_once '/var/www/src/includes/admin/navbar.php';
 
     <div class="d-flex justify-content-between align-items-center mb-3">
 
-        <h2>Quản lý khách hàng</h2>
+        <h2>Quản lý nhân viên giao hàng</h2>
 
-        <a href="/customers/create.php" class="btn btn-primary">
-            Thêm khách hàng
+        <a href="/admin/shippers/create.php" class="btn btn-primary">
+            Thêm nhân viên giao hàng
         </a>
 
     </div>
@@ -44,13 +40,9 @@ require_once '/var/www/src/includes/admin/navbar.php';
 
                 <tr>
                     <th>ID</th>
-                 <th>Tên khách hàng</th>
-                 <th>Người liên hệ</th>
-                 <th>Địa chỉ</th>
-                <th>Thành phố</th>
-                <th>Mã bưu điện</th>
-                <th>Quốc gia</th>
-        <th>Thao tác</th>
+                    <th>Tên nhân viên giao hàng</th>
+                    <th>Số điện thoại</th>
+                    <th>Thao tác</th>
                 </tr>
 
             </thead>
@@ -59,58 +51,42 @@ require_once '/var/www/src/includes/admin/navbar.php';
 
                 <?php if ($result && $result->num_rows > 0): ?>
 
-                    <?php while ($customer = $result->fetch_assoc()): ?>
+                    <?php while ($shipper = $result->fetch_assoc()): ?>
 
                         <tr>
 
                             <td>
-                                <?= htmlspecialchars($customer['CustomerID']) ?>
+                                <?= htmlspecialchars($shipper['ShipperID']) ?>
                             </td>
 
                             <td>
-                                <?= htmlspecialchars($customer['CustomerName']) ?>
+                                <?= htmlspecialchars($shipper['ShipperName']) ?>
                             </td>
 
                             <td>
-                                <?= htmlspecialchars($customer['ContactName'] ?? '') ?>
-                            </td>
-
-                            <td>
-                                <?= htmlspecialchars($customer['Address'] ?? '') ?>
-                            </td>
-
-                            <td>
-                                <?= htmlspecialchars($customer['City'] ?? '') ?>
-                            </td>
-
-                            <td>
-                                <?= htmlspecialchars($customer['PostalCode'] ?? '') ?>
-                            </td>
-
-                            <td>
-                                <?= htmlspecialchars($customer['Country'] ?? '') ?>
+                                <?= htmlspecialchars($shipper['Phone'] ?? '') ?>
                             </td>
 
                             <td>
 
                                 <a
-                                    href="/customers/edit.php?id=<?= $customer['CustomerID'] ?>"
+                                    href="/admin/shippers/edit.php?id=<?= $shipper['ShipperID'] ?>"
                                     class="btn btn-sm btn-warning"
                                 >
                                     Sửa
                                 </a>
 
                                 <form
-                                    action="/customers/delete.php"
+                                    action="/admin/shippers/delete.php"
                                     method="post"
                                     class="d-inline"
-                                    onsubmit="return confirm('Bạn có chắc muốn xóa khách hàng này?');"
+                                    onsubmit="return confirm('Bạn có chắc muốn xóa nhân viên giao hàng này?');"
                                 >
 
                                     <input
                                         type="hidden"
                                         name="id"
-                                        value="<?= $customer['CustomerID'] ?>"
+                                        value="<?= $shipper['ShipperID'] ?>"
                                     >
 
                                     <button
@@ -133,7 +109,7 @@ require_once '/var/www/src/includes/admin/navbar.php';
                     <tr>
 
                         <td colspan="4" class="text-center">
-                            Chưa có khách hàng.
+                            Chưa có nhân viên giao hàng.
                         </td>
 
                     </tr>

@@ -104,8 +104,8 @@ while ($row = $details->fetch_assoc()) {
 
 $stmtDetails->close();
 
-require_once '/var/www/src/includes/header.php';
-require_once '/var/www/src/includes/navbar.php';
+require_once '/var/www/src/includes/admin/header.php';
+require_once '/var/www/src/includes/admin/navbar.php';
 
 ?>
 
@@ -115,7 +115,7 @@ require_once '/var/www/src/includes/navbar.php';
 
         <div>
             <h2 class="page-title">
-                <i class="bi bi-receipt"></i>
+                <i class="fa-solid fa-receipt"></i>
                 Đơn hàng #<?= (int) $order['OrderID'] ?>
             </h2>
             <p class="page-subtitle">
@@ -131,12 +131,12 @@ require_once '/var/www/src/includes/navbar.php';
                 href="/orders/edit.php?id=<?= (int) $order['OrderID'] ?>"
                 class="btn btn-primary"
             >
-                <i class="bi bi-pencil"></i>
+                <i class="fa-solid fa-pen"></i>
                 Sửa đơn hàng
             </a>
 
             <a href="/orders/" class="btn btn-secondary">
-                <i class="bi bi-arrow-left"></i>
+                <i class="fa-solid fa-arrow-left"></i>
                 Danh sách
             </a>
 
@@ -153,7 +153,7 @@ require_once '/var/www/src/includes/navbar.php';
                 >
 
                 <button type="submit" class="btn btn-outline-danger">
-                    <i class="bi bi-trash"></i>
+                    <i class="fa-solid fa-trash"></i>
                     Xóa đơn
                 </button>
             </form>
@@ -165,7 +165,7 @@ require_once '/var/www/src/includes/navbar.php';
     <?php if (isset($_GET['updated']) && $_GET['updated'] === '1'): ?>
 
         <div class="alert alert-success">
-            <i class="bi bi-check-circle-fill"></i>
+            <i class="fa-solid fa-circle-check"></i>
             <div>Đã cập nhật đơn hàng thành công.</div>
         </div>
 
@@ -179,7 +179,7 @@ require_once '/var/www/src/includes/navbar.php';
 
                 <div>
                     <h3 class="panel-title">
-                        <i class="bi bi-box-seam"></i>
+                        <i class="fa-solid fa-box-open"></i>
                         Mặt hàng trong đơn
                     </h3>
                     <p class="panel-sub">
@@ -233,7 +233,7 @@ require_once '/var/www/src/includes/navbar.php';
                                                 class="thumb d-grid"
                                                 style="place-items: center; color: #b6bccb;"
                                             >
-                                                <i class="bi bi-image"></i>
+                                                <i class="fa-solid fa-image"></i>
                                             </span>
 
                                         <?php endif; ?>
@@ -286,13 +286,13 @@ require_once '/var/www/src/includes/navbar.php';
                             <td colspan="4" class="empty-cell">
 
                                 <div class="empty-state">
-                                    <i class="bi bi-inbox"></i>
+                                    <i class="fa-solid fa-inbox"></i>
                                     <p>Đơn hàng này chưa có mặt hàng nào.</p>
                                     <a
                                         href="/orders/edit.php?id=<?= (int) $order['OrderID'] ?>"
                                         class="btn btn-primary btn-sm"
                                     >
-                                        <i class="bi bi-plus-lg"></i>
+                                        <i class="fa-solid fa-plus"></i>
                                         Thêm mặt hàng
                                     </a>
                                 </div>
@@ -334,7 +334,7 @@ require_once '/var/www/src/includes/navbar.php';
 
                     <div>
                         <h3 class="panel-title">
-                            <i class="bi bi-person"></i>
+                            <i class="fa-solid fa-user"></i>
                             Khách hàng
                         </h3>
                     </div>
@@ -382,7 +382,7 @@ require_once '/var/www/src/includes/navbar.php';
 
                     <div>
                         <h3 class="panel-title">
-                            <i class="bi bi-truck"></i>
+                            <i class="fa-solid fa-truck"></i>
                             Xử lý &amp; vận chuyển
                         </h3>
                     </div>
@@ -436,6 +436,6 @@ require_once '/var/www/src/includes/navbar.php';
 
 <?php
 
-require_once '/var/www/src/includes/footer.php';
+require_once '/var/www/src/includes/admin/footer.php';
 
 $conn->close();
