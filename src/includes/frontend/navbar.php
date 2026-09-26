@@ -1,4 +1,24 @@
 <?php
+/*
+ * MENU NGANG của giao diện cửa hàng.
+ *
+ * BỐ CỤC (3 phần rõ ràng, không chồng chéo):
+ *   - Bên trái : thương hiệu (chữ lồng HN + tên cửa hàng)
+ *   - Ở giữa   : menu điều hướng chính (Trang chủ, Sản phẩm, Giới thiệu,
+ *                Tin tức, Liên hệ)
+ *   - Bên phải : nhóm tiện ích (Giỏ hàng (n), tài khoản, Quản trị)
+ *
+ * LƯU Ý VỀ "GIỎ HÀNG": mục này CHỈ nằm ở nhóm tiện ích bên phải (kèm số
+ * lượng). Trước đây nó vừa nằm trong menu chính vừa nằm bên phải nên vừa
+ * trùng lặp vừa chiếm chỗ, làm menu bị chen chúc và bẻ chữ thành 2 dòng.
+ * Vì vậy KHÔNG thêm lại "Giỏ hàng" vào danh sách menu chính bên dưới.
+ *
+ * NGƯỠNG XỔ NGANG: thẻ <nav> dùng class "navbar-expand" (KHÔNG kèm mức lg/xl/xxl).
+ * Ngưỡng thật được quyết định trong storefront.css (mục 14) là 1320px, vì đo
+ * thực tế cho thấy phải tới ~1320px thì 5 mục menu + 4 nút tiện ích mới vừa.
+ * Bootstrap chỉ có lg (992) / xl (1200) / xxl (1400) — không mức nào khớp.
+ * Đổi ngưỡng thì sửa @media trong CSS, KHÔNG sửa class ở đây.
+ */
 
 require_once '/var/www/src/config/brand.php';
 
@@ -32,8 +52,6 @@ if ($currentPath === '/' || $currentPath === '/index.php') {
 } elseif (strpos($currentPath, '/products.php') === 0
     || strpos($currentPath, '/product-detail.php') === 0) {
     $activeMenu = 'products';
-} elseif (strpos($currentPath, '/cart.php') === 0) {
-    $activeMenu = 'cart';
 } elseif (strpos($currentPath, '/gioi-thieu.php') === 0) {
     $activeMenu = 'about';
 } elseif (strpos($currentPath, '/tin-tuc') === 0) {
@@ -44,9 +62,47 @@ if ($currentPath === '/' || $currentPath === '/index.php') {
     $activeMenu = '';
 }
 
+/*
+ * Menu chính, khai báo tập trung để dễ thêm/bớt.
+ * Thứ tự trong mảng chính là thứ tự hiển thị trên thanh menu.
+ * KHÔNG khai báo 'cart' ở đây — xem ghi chú đầu file.
+ */
+$mainMenu = [
+    [
+        'key'   => 'home',
+        'href'  => '/',
+        'label' => 'Trang chủ',
+        'icon'  => 'fa-solid fa-house',
+    ],
+    [
+        'key'   => 'products',
+        'href'  => '/products.php',
+        'label' => 'Sản phẩm',
+        'icon'  => 'fa-solid fa-layer-group',
+    ],
+    [
+        'key'   => 'about',
+        'href'  => '/gioi-thieu.php',
+        'label' => 'Giới thiệu',
+        'icon'  => 'fa-solid fa-circle-info',
+    ],
+    [
+        'key'   => 'news',
+        'href'  => '/tin-tuc.php',
+        'label' => 'Tin tức',
+        'icon'  => 'fa-regular fa-newspaper',
+    ],
+    [
+        'key'   => 'contact',
+        'href'  => '/lien-he.php',
+        'label' => 'Liên hệ',
+        'icon'  => 'fa-solid fa-envelope-open-text',
+    ],
+];
+
 ?>
 
-<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+<nav class="navbar navbar-expand bg-dark navbar-dark">
 
     <div class="container">
 
@@ -74,96 +130,40 @@ if ($currentPath === '/' || $currentPath === '/index.php') {
             id="frontendNavbar"
         >
 
-            <ul class="navbar-nav">
+            <!-- ================= MENU CHÍNH ================= -->
+            <!--
+                me-auto đẩy nhóm tiện ích sang tận bên phải, tạo hai khối
+                tách bạch thay vì dồn hết vào một cụm chật chội.
+            -->
+            <ul class="navbar-nav me-auto">
 
-                <li class="nav-item">
-                    <a
-                        class="nav-link <?=
-                            $activeMenu === 'home'
-                                ? 'active'
-                                : ''
-                        ?>"
-                        href="/"
-                    >
-                        <i class="fa-solid fa-house"></i>
-                        Trang chủ
-                    </a>
-                </li>
+                <?php foreach ($mainMenu as $item): ?>
 
-                <li class="nav-item">
-                    <a
-                        class="nav-link <?=
-                            $activeMenu === 'products'
-                                ? 'active'
-                                : ''
-                        ?>"
-                        href="/products.php"
-                    >
-                        <i class="fa-solid fa-layer-group"></i>
-                        Sản phẩm
-                    </a>
-                </li>
+                    <li class="nav-item">
 
-                <li class="nav-item">
-                    <a
-                        class="nav-link <?=
-                            $activeMenu === 'about'
-                                ? 'active'
-                                : ''
-                        ?>"
-                        href="/gioi-thieu.php"
-                    >
-                        <i class="fa-solid fa-circle-info"></i>
-                        Giới thiệu
-                    </a>
-                </li>
+                        <a
+                            class="nav-link <?=
+                                $activeMenu === $item['key']
+                                    ? 'active'
+                                    : ''
+                            ?>"
+                            href="<?= htmlspecialchars($item['href']) ?>"
+                            <?= $activeMenu === $item['key']
+                                    ? 'aria-current="page"'
+                                    : '' ?>
+                        >
+                            <i class="<?= htmlspecialchars($item['icon']) ?>"></i>
+                            <?= htmlspecialchars($item['label']) ?>
+                        </a>
 
-                <li class="nav-item">
-                    <a
-                        class="nav-link <?=
-                            $activeMenu === 'news'
-                                ? 'active'
-                                : ''
-                        ?>"
-                        href="/tin-tuc.php"
-                    >
-                        <i class="fa-regular fa-newspaper"></i>
-                        Tin tức
-                    </a>
-                </li>
+                    </li>
 
-                <li class="nav-item">
-                    <a
-                        class="nav-link <?=
-                            $activeMenu === 'contact'
-                                ? 'active'
-                                : ''
-                        ?>"
-                        href="/lien-he.php"
-                    >
-                        <i class="fa-solid fa-envelope-open-text"></i>
-                        Liên hệ
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a
-                        class="nav-link <?=
-                            $activeMenu === 'cart'
-                                ? 'active'
-                                : ''
-                        ?>"
-                        href="/cart.php"
-                    >
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        Giỏ hàng
-                    </a>
-                </li>
+                <?php endforeach; ?>
 
             </ul>
 
-            <!-- Nhóm tiện ích bên phải: tài khoản + giỏ + lối vào quản trị -->
-            <div class="d-flex align-items-center gap-2 ms-auto mt-3 mt-lg-0">
+            <!-- ============== NHÓM TIỆN ÍCH BÊN PHẢI ============== -->
+            <div class="navbar-tools d-flex align-items-center gap-2 mt-3 mt-xl-0">
 
                 <a
                     class="btn btn-outline-light btn-sm"

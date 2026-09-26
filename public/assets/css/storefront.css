@@ -1305,8 +1305,18 @@ p.fs-3.fw-bold {
 /* ==========================================================================
    14. NAVBAR — CHI TIẾT BỔ SUNG
    --------------------------------------------------------------------------
-   Chỉ bổ sung những phần navbar mới cần (icon, trạng thái active, dropdown).
-   Các quy tắc nền của navbar vẫn nằm ở mục 2.
+   Bố cục navbar được chia làm 3 khối tách bạch:
+     [thương hiệu] ..... [menu chính] ......... [nhóm tiện ích]
+   Menu chính nằm trong <ul class="navbar-nav me-auto">, nhóm tiện ích nằm
+   trong <div class="navbar-tools">. "me-auto" đẩy nhóm tiện ích sang phải.
+
+   BỐ CỤC NÀY TỪNG BỊ LỖI (đã sửa):
+     - Mục "Giỏ hàng" bị khai báo 2 lần (trong menu chính VÀ ở nhóm tiện ích),
+       vừa trùng lặp vừa chiếm bề rộng.
+     - Thiếu white-space: nowrap nên chữ tự bẻ thành 2 dòng ("Trang chủ" ->
+       "Trang" / "chủ") khi không đủ chỗ.
+     - Ngưỡng navbar-expand-lg (992px) quá sớm: từ 992-1199px, 6 mục menu
+       cộng 4 nút tiện ích không đủ chỗ nên bị dồn ép.
    ========================================================================== */
 
 .navbar-brand {
@@ -1315,6 +1325,9 @@ p.fs-3.fw-bold {
     gap: 10px;
     font-weight: 800;
     letter-spacing: -0.01em;
+    /* Tên thương hiệu không được bẻ dòng */
+    white-space: nowrap;
+    flex: 0 0 auto;
 }
 
 .navbar-brand i {
@@ -1322,10 +1335,89 @@ p.fs-3.fw-bold {
     color: #A5B4FC;
 }
 
+/* Từ ngưỡng xổ ngang trở lên, nhóm tiện ích không được co lại làm vỡ nút */
+.navbar-tools {
+    flex: 0 0 auto;
+}
+
+/* ------------------------------------------------------------------
+ * NGƯỠNG XỔ NGANG RIÊNG (thay cho navbar-expand-* của Bootstrap)
+ * ------------------------------------------------------------------
+ * Đo thực tế: ở 1200 / 1240 / 1280 px thì nút cuối nhóm tiện ích vẫn tràn
+ * ra ngoài (right > clientWidth); mãi tới ~1320 px mới vừa. Bootstrap chỉ
+ * có lg (992) và xl (1200) rồi nhảy luôn lên xxl (1400) — không mức nào
+ * khớp 1320. Vì vậy thẻ <nav> dùng class "navbar-expand" (luôn xổ ngang
+ * theo mặc định của Bootstrap, không kèm @media) và ta tự quyết định
+ * ngưỡng ở đây.
+ *
+ * Dưới 1320px: menu thu thành nút ☰ (ẩn .navbar-collapse, hiện nút).
+ * Từ 1320px  : menu xổ ngang như bình thường.
+ * ------------------------------------------------------------------ */
+
+@media (max-width: 1319.98px) {
+
+    .navbar-expand > .container {
+        flex-wrap: wrap;
+    }
+
+    .navbar-expand .navbar-toggler {
+        display: block;
+    }
+
+    /*
+     * BẮT BUỘC dùng !important ở đây.
+     *
+     * Bootstrap 5.3 khai báo:
+     *     .navbar-expand .navbar-collapse { display: flex !important; }
+     * (đã kiểm chứng trực tiếp trong bootstrap.min.css của bản 5.3.8).
+     * Không có !important thì rule đó luôn thắng và menu dọc KHÔNG BAO GIỜ
+     * ẩn được — đo được lúc nào .navbar-collapse cũng display:flex, khiến
+     * navbar cao 282px trên điện thoại dù chưa bấm nút ☰.
+     */
+    .navbar-expand > .container > .navbar-collapse {
+        display: none !important;
+        flex-basis: 100%;
+        flex-grow: 1;
+    }
+
+    /*
+     * Bootstrap tự thêm class .show khi bấm nút ☰. Cũng phải !important để
+     * thắng rule ngay trên (xem giải thích ở mục 14).
+     */
+    .navbar-expand > .container > .navbar-collapse.show {
+        display: block !important;
+    }
+}
+
+@media (min-width: 1320px) {
+
+    .navbar-expand {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+    }
+
+    .navbar-expand .navbar-toggler {
+        display: none;
+    }
+
+    /*
+     * Trạng thái xổ ngang. !important để cân bằng với rule thu gọn ở trên
+     * (cả hai đều phải !important vì Bootstrap cũng dùng !important).
+     * Hai @media loại trừ nhau (max 1319.98px / min 1320px) nên không xung đột.
+     */
+    .navbar-expand .navbar-collapse {
+        display: flex !important;
+        flex-basis: auto;
+        flex-grow: 1;
+    }
+}
+
 .navbar-dark .navbar-nav .nav-link {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    /* BẮT BUỘC: không có dòng này thì nhãn menu tự bẻ thành 2 dòng khi chật */
+    white-space: nowrap;
     /* Gạch chân trong suốt để khi active không làm nhảy bố cục */
     border-bottom: 2px solid transparent;
     transition: color var(--sf-t-fast), border-color var(--sf-t-fast);
@@ -1382,6 +1474,13 @@ p.fs-3.fw-bold {
     color: var(--sf-primary);
 }
 
+/* Các nút trong nhóm tiện ích: giữ nhãn trên một dòng, không bẻ chữ */
+.navbar-tools .btn {
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+}
+
 .navbar .dropdown-divider {
     margin: 5px 6px;
     border-color: var(--sf-line);
@@ -1393,41 +1492,77 @@ p.fs-3.fw-bold {
    15. RESPONSIVE CHO TRANG CHỦ + NAVBAR MỚI
    ========================================================================== */
 
-@media (max-width: 991.98px) {
+/* ------------------------------------------------------------------
+ * 15.1 Menu thu thành nút ☰  (dưới 1320px)
+ * ------------------------------------------------------------------
+ * Ngưỡng này PHẢI khớp với @media trong mục 14 (ngưỡng xổ ngang 1320px).
+ * Đây là style CHO TRẠNG THÁI ĐÃ THU GỌN — chỉ áp dụng khi menu đang là
+ * menu dọc, nên đặt ở ngưỡng nào cũng phải trùng với ngưỡng xổ ngang.
+ */
+@media (max-width: 1319.98px) {
 
-    .hero {
-        padding: 56px 0 64px;
+    /*
+     * QUAN TRỌNG: khi menu bung ra, nó vẫn nằm trong .container đang là
+     * flex-wrap: wrap. Nếu không ép .navbar-collapse về width:100% và cho
+     * các khối con co lại, menu dọc sẽ giữ nguyên bề rộng "tự nhiên" theo
+     * nội dung -> đo được scrollWidth 1271px trong khi clientWidth chỉ 380px
+     * (tràn ngang rất nặng trên điện thoại).
+     */
+    .navbar-expand .navbar-collapse {
+        width: 100%;
+        min-width: 0;
+        flex-basis: 100%;
     }
 
-    .hero-text {
-        max-width: 100%;
+    /* Menu dọc: xếp từng mục một, mỗi mục chiếm trọn bề ngang cho dễ bấm */
+    .navbar-expand .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+        min-width: 0;
     }
 
-    /* Lưới số liệu xuống dưới phần chữ, thu gọn khoảng cách */
-    .hero-stats {
-        margin-top: 8px;
+    .navbar-expand .navbar-nav .nav-item {
+        width: 100%;
+        min-width: 0;
     }
 
-    .hero-stat {
-        padding: 16px 12px;
-    }
-
-    .hero-stat-value {
-        font-size: 1.5rem;
-    }
-
-    /* Menu xổ xuống: bỏ gạch chân, dùng nền nhạt để đánh dấu mục đang mở */
+    /* Bỏ gạch chân, dùng vạch bên trái để đánh dấu mục đang mở */
     .navbar-dark .navbar-nav .nav-link {
         border-bottom: 0;
         border-left: 3px solid transparent;
         border-radius: 0 6px 6px 0;
         padding-left: 12px;
+        width: 100%;
+        min-width: 0;
     }
 
     .navbar-dark .navbar-nav .nav-link:hover,
     .navbar-dark .navbar-nav .nav-link.active {
         border-left-color: #A5B4FC;
         background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Khi thu gọn, menu chính và nhóm tiện ích xếp dọc, cách nhau một nhịp */
+    .navbar-expand .navbar-collapse {
+        padding-top: 10px;
+        padding-bottom: 6px;
+    }
+
+    /* Nhóm tiện ích: cho phép xuống dòng và không được rộng quá khung */
+    .navbar-tools {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        flex-wrap: wrap;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    /* Nút dài (vd "Giỏ hàng (0)") phải được phép co, nếu không sẽ đẩy tràn */
+    .navbar-tools .btn,
+    .navbar-tools .dropdown {
+        max-width: 100%;
+        min-width: 0;
     }
 
     .navbar .dropdown-menu {
@@ -1452,6 +1587,30 @@ p.fs-3.fw-bold {
 
     .navbar .dropdown-divider {
         border-color: rgba(255, 255, 255, 0.15);
+    }
+}
+
+@media (max-width: 991.98px) {
+
+    .hero {
+        padding: 56px 0 64px;
+    }
+
+    .hero-text {
+        max-width: 100%;
+    }
+
+    /* Lưới số liệu xuống dưới phần chữ, thu gọn khoảng cách */
+    .hero-stats {
+        margin-top: 8px;
+    }
+
+    .hero-stat {
+        padding: 16px 12px;
+    }
+
+    .hero-stat-value {
+        font-size: 1.5rem;
     }
 
     .cta-band {
