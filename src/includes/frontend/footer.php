@@ -1,3 +1,9 @@
+<?php
+
+require_once '/var/www/src/config/brand.php';
+
+?>
+
 <footer class="site-footer">
 
     <div class="container">
@@ -7,32 +13,32 @@
             <div class="col-lg-4">
 
                 <a class="site-footer-brand" href="/">
-                    <i class="fa-solid fa-circle-dot"></i>
-                    Sales Management
+                    <span class="brand-mark">
+                        <?= htmlspecialchars($brand['initials']) ?>
+                    </span>
+                    <?= htmlspecialchars($brand['name']) ?>
                 </a>
 
                 <p class="site-footer-text">
-                    Hệ thống quản lý bán hàng và cửa hàng dụng cụ bida
-                    trực tuyến: bàn bida, cơ, bao cơ, lơ và phụ kiện
-                    chính hãng.
+                    <?= htmlspecialchars($brand['about']) ?>
                 </p>
 
                 <div class="site-footer-social">
 
-                    <a href="/" aria-label="Facebook">
+                    <a href="<?= htmlspecialchars($brand['facebook']) ?>" aria-label="Facebook">
                         <i class="fa-brands fa-facebook-f"></i>
                     </a>
 
-                    <a href="/" aria-label="Instagram">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-
-                    <a href="/" aria-label="YouTube">
+                    <a href="<?= htmlspecialchars($brand['youtube']) ?>" aria-label="YouTube">
                         <i class="fa-brands fa-youtube"></i>
                     </a>
 
-                    <a href="/" aria-label="Email">
+                    <a href="mailto:<?= htmlspecialchars($brand['email']) ?>" aria-label="Email">
                         <i class="fa-solid fa-envelope"></i>
+                    </a>
+
+                    <a href="<?= htmlspecialchars($brand['phone']) ?>" aria-label="Điện thoại">
+                        <i class="fa-solid fa-phone"></i>
                     </a>
 
                 </div>
@@ -54,11 +60,12 @@
 
             <div class="col-6 col-lg-2">
 
-                <h6 class="site-footer-heading">Tài khoản</h6>
+                <h6 class="site-footer-heading">Giới thiệu</h6>
 
                 <ul class="site-footer-list">
-                    <li><a href="/login.php">Đăng nhập</a></li>
-                    <li><a href="/register.php">Đăng ký</a></li>
+                    <li><a href="/gioi-thieu.php">Về chúng tôi</a></li>
+                    <li><a href="/tin-tuc.php">Tin tức</a></li>
+                    <li><a href="/lien-he.php">Liên hệ</a></li>
                     <li><a href="/admin/">Quản trị</a></li>
                 </ul>
 
@@ -71,19 +78,19 @@
                 <ul class="site-footer-list site-footer-contact">
                     <li>
                         <i class="fa-solid fa-location-dot"></i>
-                        <span>123 Đường 3 Tháng 2, Quận 10, TP. Hồ Chí Minh</span>
+                        <span><?= htmlspecialchars($brand['address']) ?></span>
                     </li>
                     <li>
                         <i class="fa-solid fa-phone"></i>
-                        <span>0909 123 456</span>
+                        <span><?= htmlspecialchars($brand['phone']) ?></span>
                     </li>
                     <li>
                         <i class="fa-solid fa-envelope"></i>
-                        <span>lienhe@salesmanagement.vn</span>
+                        <span><?= htmlspecialchars($brand['email']) ?></span>
                     </li>
                     <li>
                         <i class="fa-solid fa-clock"></i>
-                        <span>Thứ 2 – Chủ nhật: 8:00 – 21:00</span>
+                        <span><?= htmlspecialchars($brand['hours']) ?></span>
                     </li>
                 </ul>
 
@@ -98,8 +105,9 @@
         <div class="container">
 
             <span>
-                &copy; <?= date('Y') ?> Sales Management —
-                Hệ thống quản lý bán hàng.
+                &copy; <?= date('Y') ?>
+                <?= htmlspecialchars($brand['name']) ?> —
+                <?= htmlspecialchars($brand['tagline']) ?>.
             </span>
 
             <span class="site-footer-tech">

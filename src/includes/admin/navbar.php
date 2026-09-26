@@ -92,7 +92,17 @@ if (!function_exists('nav_is_active')) {
 
     <div class="app-sidebar-head">
 
-        <p class="app-sidebar-label">Quản lý</p>
+        <p class="app-sidebar-label">
+            <?php
+            /*
+             * Tên cửa hàng lấy từ src/config/brand.php — cùng nguồn với
+             * giao diện bên ngoài nên đổi một chỗ là đổi cả hai bên.
+             */
+            require_once '/var/www/src/config/brand.php';
+
+            echo htmlspecialchars($brand['name']);
+            ?>
+        </p>
 
         <!--
             Nút đóng menu. Chỉ hiện trên màn hình nhỏ, khi menu trượt ra

@@ -1,3 +1,8 @@
+<?php
+
+require_once '/var/www/src/config/brand.php';
+
+?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -5,7 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>
-        <?= htmlspecialchars($pageTitle ?? 'Sales Management') ?>
+        <?= htmlspecialchars($pageTitle ?? $brand['name']) ?>
+        — <?= htmlspecialchars($brand['name']) ?>
     </title>
 
     <link

@@ -21,8 +21,15 @@
  */
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 
-$appName = 'Hệ thống quản lý bán hàng';
-$appSubtitle = 'Bán hàng và phân phối phụ kiện bida Hoàng Nhi';
+/*
+ * Thông tin thương hiệu (tên cửa hàng, địa chỉ, điện thoại...) được khai báo
+ * tập trung tại src/config/brand.php — dùng chung cho cả cửa hàng và admin.
+ * Muốn đổi tên hay địa chỉ thì sửa ở đó, KHÔNG sửa rải rác trong các file này.
+ */
+require_once '/var/www/src/config/brand.php';
+
+$appName = $brand['name'];
+$appSubtitle = $brand['tagline'];
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -115,7 +122,7 @@ $appSubtitle = 'Bán hàng và phân phối phụ kiện bida Hoàng Nhi';
 
             <div class="app-header-brand">
                 <span class="app-header-logo">
-                    <i class="fa-solid fa-store"></i>
+                    <?= htmlspecialchars($brand['initials']) ?>
                 </span>
 
                 <div>

@@ -90,6 +90,11 @@
     background: rgba(255, 255, 255, 0.12);
     border: 1px solid rgba(255, 255, 255, 0.16);
     font-size: 1.15rem;
+    /* Chữ lồng viết tắt của thương hiệu (ví dụ "HN") hiển thị trong ô này */
+    color: #FFFFFF;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    line-height: 1;
 }
 
 .app-header-title {
@@ -398,6 +403,10 @@
     background: rgba(99, 102, 241, 0.16);
     border: 1px solid rgba(99, 102, 241, 0.30);
     color: var(--admin-nav-hover-icon);
+    /* Chữ lồng viết tắt của thương hiệu (ví dụ "HN") hiển thị trong ô này */
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    line-height: 1;
 }
 
 .app-footer-title {

@@ -4,7 +4,11 @@
  *
  * CÁCH CHỈNH SỬA: mọi liên kết nằm trong mảng bên dưới, thêm/xoá chỉ cần sửa 1 dòng.
  * Màu sắc của footer nằm trong public/assets/css/admin.css (khối :root).
+ *
+ * Thông tin thương hiệu (tên, địa chỉ, điện thoại, email) lấy từ
+ * src/config/brand.php để dùng chung với giao diện cửa hàng.
  */
+require_once '/var/www/src/config/brand.php';
 
 /* Hai cột liên kết. Mỗi mục gồm: href (đường dẫn), label (chữ), icon (FontAwesome) */
 $footerColumns = [
@@ -28,11 +32,11 @@ $footerColumns = [
     ],
 ];
 
-/* Cột thông tin liên hệ */
+/* Cột thông tin liên hệ — lấy trực tiếp từ src/config/brand.php */
 $footerContacts = [
-    ['icon' => 'fa-envelope',     'text' => 'support@quanlybanhang.com'],
-    ['icon' => 'fa-phone',        'text' => '0123 456 789'],
-    ['icon' => 'fa-location-dot', 'text' => 'Việt Nam'],
+    ['icon' => 'fa-envelope',     'text' => $brand['email']],
+    ['icon' => 'fa-phone',        'text' => $brand['phone']],
+    ['icon' => 'fa-location-dot', 'text' => $brand['address']],
 ];
 ?>
 
@@ -47,15 +51,15 @@ $footerContacts = [
 
                 <div class="app-footer-brand">
                     <span class="app-footer-logo">
-                        <i class="fa-solid fa-store"></i>
+                        <?= htmlspecialchars($brand['initials']) ?>
                     </span>
-                    <h5 class="app-footer-title">Quản lý bán hàng</h5>
+                    <h5 class="app-footer-title">
+                        <?= htmlspecialchars($brand['name']) ?>
+                    </h5>
                 </div>
 
                 <p class="app-footer-desc">
-                    Hệ thống quản lý bán hàng hỗ trợ quản lý sản phẩm, khách hàng,
-                    nhà cung cấp, nhân viên giao hàng và đơn hàng một cách nhanh
-                    chóng và hiệu quả.
+                    <?= htmlspecialchars($brand['about']) ?>
                 </p>
 
             </div>
@@ -107,7 +111,7 @@ $footerContacts = [
 
             <div class="col-md-6 text-center text-md-start">
                 <p class="app-footer-copy">
-                    © 2026 Nhihuynh1224lx. All rights reserved.
+                    © 2026 <?= htmlspecialchars($brand['name']) ?>. All rights reserved.
                 </p>
             </div>
 

@@ -130,3 +130,33 @@ CREATE TABLE orderdetail (
         FOREIGN KEY (ProductID) REFERENCES products(ProductID)
 ) CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
+
+-- ---------------------------------------------------------------------------
+-- Hai bang duoi day phuc vu trang Tin tuc va trang Lien he cua cua hang.
+-- Khong co khoa ngoai: bai viet va tin nhan lien he doc lap voi cac bang khac.
+-- ---------------------------------------------------------------------------
+
+CREATE TABLE news (
+    NewsID INT AUTO_INCREMENT PRIMARY KEY,
+    Title VARCHAR(255) NOT NULL,
+    Summary VARCHAR(500),
+    Content TEXT NOT NULL,
+    ImageFile VARCHAR(255) NULL,
+    Category VARCHAR(100) NOT NULL DEFAULT 'Tin tức',
+    Author VARCHAR(100) NULL,
+    IsPublished TINYINT(1) NOT NULL DEFAULT 1,
+    PublishedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+CREATE TABLE contact_messages (
+    ContactID INT AUTO_INCREMENT PRIMARY KEY,
+    FullName VARCHAR(100) NOT NULL,
+    Email VARCHAR(255) NOT NULL,
+    Phone VARCHAR(20) NOT NULL,
+    Subject VARCHAR(150) NOT NULL,
+    Message TEXT NOT NULL,
+    IsRead TINYINT(1) NOT NULL DEFAULT 0,
+    CreatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;

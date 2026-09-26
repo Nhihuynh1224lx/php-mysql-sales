@@ -1,5 +1,7 @@
 <?php
 
+require_once '/var/www/src/config/brand.php';
+
 /* ------------------------------------------------------------------
  * Tổng số lượng sản phẩm đang có trong giỏ.
  * array_sum() cộng tất cả "Số lượng" trong $_SESSION['cart'],
@@ -32,6 +34,12 @@ if ($currentPath === '/' || $currentPath === '/index.php') {
     $activeMenu = 'products';
 } elseif (strpos($currentPath, '/cart.php') === 0) {
     $activeMenu = 'cart';
+} elseif (strpos($currentPath, '/gioi-thieu.php') === 0) {
+    $activeMenu = 'about';
+} elseif (strpos($currentPath, '/tin-tuc') === 0) {
+    $activeMenu = 'news';
+} elseif (strpos($currentPath, '/lien-he.php') === 0) {
+    $activeMenu = 'contact';
 } else {
     $activeMenu = '';
 }
@@ -43,8 +51,10 @@ if ($currentPath === '/' || $currentPath === '/index.php') {
     <div class="container">
 
         <a class="navbar-brand" href="/">
-            <i class="fa-solid fa-circle-dot"></i>
-            Sales Management
+            <span class="brand-mark">
+                <?= htmlspecialchars($brand['initials']) ?>
+            </span>
+            <?= htmlspecialchars($brand['name']) ?>
         </a>
 
         <button
@@ -91,6 +101,48 @@ if ($currentPath === '/' || $currentPath === '/index.php') {
                     >
                         <i class="fa-solid fa-layer-group"></i>
                         Sản phẩm
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link <?=
+                            $activeMenu === 'about'
+                                ? 'active'
+                                : ''
+                        ?>"
+                        href="/gioi-thieu.php"
+                    >
+                        <i class="fa-solid fa-circle-info"></i>
+                        Giới thiệu
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link <?=
+                            $activeMenu === 'news'
+                                ? 'active'
+                                : ''
+                        ?>"
+                        href="/tin-tuc.php"
+                    >
+                        <i class="fa-regular fa-newspaper"></i>
+                        Tin tức
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link <?=
+                            $activeMenu === 'contact'
+                                ? 'active'
+                                : ''
+                        ?>"
+                        href="/lien-he.php"
+                    >
+                        <i class="fa-solid fa-envelope-open-text"></i>
+                        Liên hệ
                     </a>
                 </li>
 
