@@ -31,6 +31,10 @@ $averageOrder = $totalOrders > 0
 /*
  * Danh sách đơn hàng kèm tổng tiền.
  * LEFT JOIN để đơn chưa có mặt hàng vẫn hiển thị.
+ *
+ * employees và shippers cũng phải LEFT JOIN: đơn khách tự đặt online
+ * chưa có nhân viên xử lý và người giao hàng (EmployeeID/ShipperID = NULL),
+ * dùng INNER JOIN sẽ làm những đơn đó biến mất khỏi danh sách.
  */
 $sql = "
     SELECT
@@ -44,9 +48,9 @@ $sql = "
     FROM orders AS o
     INNER JOIN customers AS cu
         ON cu.CustomerID = o.CustomerID
-    INNER JOIN employees AS e
+    LEFT JOIN employees AS e
         ON e.EmployeeID = o.EmployeeID
-    INNER JOIN shippers AS sh
+    LEFT JOIN shippers AS sh
         ON sh.ShipperID = o.ShipperID
     LEFT JOIN orderdetail AS od
         ON od.OrderID = o.OrderID
@@ -189,7 +193,7 @@ require_once '/var/www/src/includes/admin/navbar.php';
 
                         <td>
                             <?= htmlspecialchars(
-                                format_date($order['OrderDate'])
+                                format_datetime($order['OrderDate'])
                             ) ?>
                         </td>
 
@@ -198,11 +202,11 @@ require_once '/var/www/src/includes/admin/navbar.php';
                         </td>
 
                         <td>
-                            <?= htmlspecialchars($order['EmployeeName']) ?>
+                            <?= htmlspecialchars($order['EmployeeName'] ?? '—') ?>
                         </td>
 
                         <td>
-                            <?= htmlspecialchars($order['ShipperName']) ?>
+                            <?= htmlspecialchars($order['ShipperName'] ?? '—') ?>
                         </td>
 
                         <td class="text-end">

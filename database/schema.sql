@@ -88,10 +88,18 @@ CREATE TABLE product_images (
 
 CREATE TABLE orders (
     OrderID INT AUTO_INCREMENT PRIMARY KEY,
-    OrderDate DATE NOT NULL,
+
+    OrderDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    TotalAmount DECIMAL(12,2) NOT NULL DEFAULT 0,
+    Status VARCHAR(30) NOT NULL DEFAULT 'Pending',
+
     CustomerID INT NOT NULL,
-    EmployeeID INT NOT NULL,
-    ShipperID INT NOT NULL,
+    EmployeeID INT,
+    ShipperID INT,
+
+    CONSTRAINT chk_orders_total
+        CHECK (TotalAmount >= 0),
 
     CONSTRAINT fk_orders_customer
         FOREIGN KEY (CustomerID) REFERENCES customers(CustomerID),

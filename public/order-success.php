@@ -2,19 +2,9 @@
 
 require_once '/var/www/src/config/session.php';
 require_once '/var/www/src/config/database.php';
+require_once '/var/www/src/includes/helpers.php';
 
 $pageTitle = 'Đặt hàng thành công';
-
-/* ------------------------------------------------------------------
- * ĐIỀU CHỈNH SO VỚI TÀI LIỆU HANDS-ON 12
- * ------------------------------------------------------------------
- * Bảng `orders` hiện tại không có cột TotalAmount và Status, nên:
- *   - Tổng tiền của đơn được tính lại bằng SUM(Quantity * UnitPrice)
- *     từ bảng orderdetail.
- *   - Trạng thái hiển thị nhãn cố định "Chờ xử lý" vì đơn mới tạo
- *     chưa được xử lý.
- * Phần còn lại giữ nguyên như tài liệu.
- */
 
 $orderID = isset($_GET['id'])
     ? (int) $_GET['id']
@@ -29,6 +19,8 @@ $sqlOrder = "
     SELECT
         o.OrderID,
         o.OrderDate,
+        o.TotalAmount,
+        o.Status,
         c.CustomerName,
         c.Phone,
         c.Address
@@ -71,7 +63,6 @@ $stmtDetail->execute();
 $detailResult = $stmtDetail->get_result();
 
 $orderItems = [];
-$orderTotal = 0;
 
 while ($row = $detailResult->fetch_assoc()) {
 
@@ -79,16 +70,11 @@ while ($row = $detailResult->fetch_assoc()) {
         (float) $row['UnitPrice']
         * (int) $row['Quantity'];
 
-    $orderTotal += $row['Subtotal'];
-
     $orderItems[] = $row;
 }
 
 $detailResult->free();
 $stmtDetail->close();
-
-/* Đơn mới tạo luôn ở trạng thái chờ xử lý */
-$orderStatus = 'Chờ xử lý';
 
 require_once '/var/www/src/includes/frontend/header.php';
 require_once '/var/www/src/includes/frontend/navbar.php';
@@ -128,12 +114,12 @@ require_once '/var/www/src/includes/frontend/navbar.php';
 
             <p>
                 <strong>Ngày đặt:</strong>
-                <?= htmlspecialchars($order['OrderDate']) ?>
+                <?= htmlspecialchars(format_datetime($order['OrderDate'])) ?>
             </p>
 
             <p class="mb-0">
                 <strong>Trạng thái:</strong>
-                <?= htmlspecialchars($orderStatus) ?>
+                <?= htmlspecialchars($order['Status']) ?>
             </p>
 
         </div>
@@ -208,7 +194,7 @@ require_once '/var/www/src/includes/frontend/navbar.php';
                             </th>
                             <th class="text-end">
                                 <?= number_format(
-                                    (float) $orderTotal,
+                                    (float) $order['TotalAmount'],
                                     0,
                                     ',',
                                     '.'

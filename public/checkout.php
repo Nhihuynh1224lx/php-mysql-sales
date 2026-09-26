@@ -5,32 +5,6 @@ require_once '/var/www/src/config/database.php';
 
 $pageTitle = 'Đặt hàng';
 
-/* ------------------------------------------------------------------
- * ĐIỀU CHỈNH SO VỚI TÀI LIỆU HANDS-ON 12
- * ------------------------------------------------------------------
- * Bảng `orders` trong database hiện tại chỉ có 5 cột:
- *
- *     OrderID, OrderDate (DATE), CustomerID, EmployeeID, ShipperID
- *
- * Tài liệu giả định bảng đã được ALTER để có thêm TotalAmount, Status,
- * OrderDate kiểu DATETIME và EmployeeID/ShipperID cho phép NULL.
- * Dự án này giữ nguyên cấu trúc database, nên code thích ứng như sau:
- *
- *   1. Không lưu TotalAmount  -> trang xác nhận tự tính lại bằng
- *      SUM(Quantity * UnitPrice) từ bảng orderdetail.
- *   2. Không lưu Status       -> trang xác nhận hiển thị nhãn cố định
- *      "Chờ xử lý" cho đơn vừa tạo.
- *   3. OrderDate là DATE và không có giá trị mặc định -> phải truyền
- *      ngày đặt hàng vào câu INSERT.
- *   4. EmployeeID và ShipperID là NOT NULL -> đơn của khách vãng lai
- *      được gán tạm nhân viên và nhân viên giao hàng đầu tiên, admin
- *      sẽ phân công lại sau.
- *
- * Phần nghiệp vụ quan trọng vẫn giữ nguyên như tài liệu:
- * transaction, SELECT ... FOR UPDATE, kiểm tra tồn kho, trừ tồn kho,
- * rollback khi lỗi và chỉ xóa giỏ hàng sau khi commit thành công.
- */
-
 $cart = $_SESSION['cart'] ?? [];
 
 if (empty($cart)) {
@@ -143,6 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
             $conn->begin_transaction();
 
             $orderItems = [];
+            $orderTotal = 0;
 
             /* ------------------------------------------------------
              * Bước 1: kiểm tra lại sản phẩm và tồn kho
@@ -200,10 +175,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
                     );
                 }
 
+                $unitPrice = (float) $product['Price'];
+                $subtotal = $unitPrice * $quantity;
+
+                $orderTotal += $subtotal;
+
                 $orderItems[] = [
                     'ProductID' => $productID,
                     'Quantity' => $quantity,
-                    'UnitPrice' => (float) $product['Price']
+                    'UnitPrice' => $unitPrice
                 ];
             }
 
@@ -234,57 +214,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
             /* ------------------------------------------------------
              * Bước 3: lưu đơn hàng
              * ------------------------------------------------------
-             * Bảng orders không có cột TotalAmount và Status nên chỉ
-             * lưu được ngày đặt, khách hàng, nhân viên và shipper.
+             * OrderDate không truyền vào: cột đã có giá trị mặc định
+             * CURRENT_TIMESTAMP nên MySQL tự ghi ngày giờ hiện tại.
+             *
+             * Đơn của khách vãng lai chưa có nhân viên xử lý và người
+             * giao hàng nên để NULL, admin sẽ phân công sau.
              */
 
-            $sqlDefaultEmployee = "
-                SELECT
-                    MIN(EmployeeID) AS EmployeeID
-                FROM employees
-            ";
-
-            $employeeResult = $conn->query($sqlDefaultEmployee);
-            $employeeRow = $employeeResult->fetch_assoc();
-            $employeeResult->free();
-
-            $defaultEmployeeID = (int) ($employeeRow['EmployeeID'] ?? 0);
-
-            $sqlDefaultShipper = "
-                SELECT
-                    MIN(ShipperID) AS ShipperID
-                FROM shippers
-            ";
-
-            $shipperResult = $conn->query($sqlDefaultShipper);
-            $shipperRow = $shipperResult->fetch_assoc();
-            $shipperResult->free();
-
-            $defaultShipperID = (int) ($shipperRow['ShipperID'] ?? 0);
-
-            if ($defaultEmployeeID <= 0 || $defaultShipperID <= 0) {
-                throw new Exception(
-                    'Chưa có nhân viên hoặc nhân viên giao hàng '
-                    . 'để gán cho đơn hàng.'
-                );
-            }
-
-            /* Cột OrderDate kiểu DATE và không có mặc định */
-            $orderDate = date('Y-m-d');
+            $status = 'Pending';
 
             $sqlOrder = "
                 INSERT INTO orders
-                    (OrderDate, CustomerID, EmployeeID, ShipperID)
-                VALUES (?, ?, ?, ?)
+                    (TotalAmount, Status, CustomerID)
+                VALUES (?, ?, ?)
             ";
 
             $stmtOrder = $conn->prepare($sqlOrder);
             $stmtOrder->bind_param(
-                'siii',
-                $orderDate,
-                $customerID,
-                $defaultEmployeeID,
-                $defaultShipperID
+                'dsi',
+                $orderTotal,
+                $status,
+                $customerID
             );
             $stmtOrder->execute();
 

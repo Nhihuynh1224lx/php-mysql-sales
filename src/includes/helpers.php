@@ -34,6 +34,23 @@ if (!function_exists('format_date')) {
     }
 }
 
+if (!function_exists('format_datetime')) {
+    /**
+     * Đổi ngày giờ ISO (Y-m-d H:i:s) sang d/m/Y H:i.
+     * Dùng cho các cột kiểu DATETIME, ví dụ orders.OrderDate.
+     */
+    function format_datetime(?string $datetime): string
+    {
+        if ($datetime === null || $datetime === '') {
+            return '';
+        }
+
+        $timestamp = strtotime($datetime);
+
+        return $timestamp === false ? '' : date('d/m/Y H:i', $timestamp);
+    }
+}
+
 if (!function_exists('format_quantity')) {
     /**
      * Định dạng số lượng: bỏ phần thập phân không cần thiết.
