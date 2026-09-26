@@ -541,6 +541,281 @@
 }
 
 /* ==========================================================================
+   3. THÀNH PHẦN NỘI DUNG DÙNG CHUNG CHO MỌI MODULE
+   --------------------------------------------------------------------------
+   Phần này bổ sung nét hiện đại cho những thành phần xuất hiện ở CẢ 7 module:
+   thẻ thống kê, bảng danh sách, form thêm/sửa, nút thao tác, nhãn trạng thái.
+
+   Tất cả đều dùng biến trong :root nên đổi tông màu chỉ cần sửa một chỗ.
+   ========================================================================== */
+
+/* ---------- 3.1 Nền vùng nội dung ---------- */
+
+.app-content {
+    background-color: #F1F5F9;
+}
+
+/* Tiêu đề trang (h2) trong vùng nội dung */
+.app-content h2 {
+    color: #0F172A;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+/* ---------- 3.2 Thẻ thống kê (row g-3 > .card) ---------- */
+
+/* Thẻ số liệu ở đầu mỗi trang danh sách */
+.app-content .card {
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.app-content .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -8px rgba(15, 23, 42, 0.14);
+    border-color: #CBD5E1;
+}
+
+.app-content .card-body {
+    padding: 18px 20px;
+}
+
+/* Nhãn nhỏ mô tả chỉ số */
+.app-content .card-body .text-muted,
+.app-content .card-body .text-uppercase {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #64748B !important;
+}
+
+/* Con số lớn của thẻ thống kê */
+.app-content .card-body .fs-3,
+.app-content .card-body .fs-4 {
+    font-weight: 750;
+    letter-spacing: -0.025em;
+    color: #1E1B4B;
+    line-height: 1.15;
+}
+
+/* ---------- 3.3 Bảng danh sách ---------- */
+
+/* Bọc bảng trong khung bo góc, đổ bóng nhẹ */
+.app-content .table-responsive {
+    /* overflow-y: hidden để không cắt mất cột thao tác trên màn hình nhỏ */
+    overflow-x: auto;
+    overflow-y: hidden;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+}
+
+.app-content .table-responsive > .table {
+    margin-bottom: 0;
+}
+
+/* Ghi đè .table-dark của Bootstrap bằng tông sáng, dễ đọc hơn trên nền trắng */
+.app-content .table > thead.table-dark > tr > th {
+    background-color: #1E293B;
+    color: #E2E8F0;
+    border-color: #1E293B;
+    font-size: 0.78rem;
+    font-weight: 650;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    vertical-align: middle;
+}
+
+.app-content .table > tbody > tr > td {
+    padding-top: 13px;
+    padding-bottom: 13px;
+    vertical-align: middle;
+    color: #334155;
+    border-color: #F1F5F9;
+}
+
+/* Di chuột vào dòng: nền sáng lên để dễ theo dõi ngang */
+.app-content .table > tbody > tr {
+    transition: background-color 0.15s ease;
+}
+
+.app-content .table > tbody > tr:hover > * {
+    background-color: #F8FAFC;
+}
+
+/* Ảnh thu nhỏ trong bảng sản phẩm */
+.app-content .table img {
+    border-radius: 8px;
+    border: 1px solid #E2E8F0;
+    background-color: #FFFFFF;
+    object-fit: contain;
+}
+
+/* Cột thao tác: giữ các nút cùng một dòng */
+.app-content .table th.text-nowrap,
+.app-content .table td.text-nowrap {
+    white-space: nowrap;
+}
+
+/* ---------- 3.4 Form thêm / sửa ---------- */
+
+.app-content .form-label {
+    font-weight: 600;
+    font-size: 0.86rem;
+    color: #334155;
+    margin-bottom: 0.3rem;
+}
+
+.app-content .form-control,
+.app-content .form-select {
+    border: 1.5px solid #E2E8F0;
+    border-radius: 9px;
+    padding: 0.52rem 0.78rem;
+    font-size: 0.92rem;
+    color: #0F172A;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.app-content .form-control:focus,
+.app-content .form-select:focus {
+    border-color: var(--admin-accent);
+    box-shadow: 0 0 0 3.5px rgba(99, 102, 241, 0.15);
+    outline: none;
+}
+
+.app-content .form-control::placeholder {
+    color: #94A3B8;
+}
+
+/* Ô chỉ đọc: nhìn rõ là không sửa được */
+.app-content .form-control[readonly] {
+    background-color: #F1F5F9;
+    border-style: dashed;
+    cursor: not-allowed;
+}
+
+/* ---------- 3.5 Nút bấm ---------- */
+
+.app-content .btn {
+    border-radius: 9px;
+    font-weight: 550;
+    transition: transform 0.15s ease, box-shadow 0.15s ease,
+                background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.app-content .btn-primary {
+    background-color: var(--admin-accent);
+    border-color: var(--admin-accent);
+}
+
+.app-content .btn-primary:hover,
+.app-content .btn-primary:focus {
+    background-color: #4F46E5;
+    border-color: #4F46E5;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px -6px rgba(99, 102, 241, 0.5);
+}
+
+.app-content .btn-outline-secondary:hover {
+    transform: translateY(-1px);
+}
+
+.app-content .btn-outline-danger:hover {
+    transform: translateY(-1px);
+}
+
+/* Khi bấm: hạ xuống nhẹ tạo cảm giác "ấn được" */
+.app-content .btn:active {
+    transform: translateY(0);
+}
+
+/* ---------- 3.6 Nhãn trạng thái (badge đơn hàng) ---------- */
+
+.app-content .badge {
+    font-weight: 600;
+    font-size: 0.76rem;
+    letter-spacing: 0.01em;
+    padding: 0.42em 0.72em;
+    border-radius: 999px;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+/* ---------- 3.7 Thông báo (alert) ---------- */
+
+.app-content .alert {
+    border-radius: 12px;
+    border-left-width: 4px;
+    font-size: 0.92rem;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+}
+
+/* ---------- 3.8 Phân trang ---------- */
+
+.app-content .pagination {
+    gap: 6px;
+    --bs-pagination-border-width: 0;
+}
+
+.app-content .page-link {
+    border-radius: 8px !important;
+    border: 1px solid #E2E8F0;
+    color: #334155;
+    font-weight: 550;
+    min-width: 38px;
+    text-align: center;
+    transition: background-color 0.15s ease, color 0.15s ease,
+                border-color 0.15s ease;
+}
+
+.app-content .page-link:hover {
+    background-color: #EEF2FF;
+    border-color: #C7D2FE;
+    color: #4338CA;
+}
+
+.app-content .page-item.active .page-link {
+    background-color: var(--admin-accent);
+    border-color: var(--admin-accent);
+    color: #FFFFFF;
+}
+
+/* ---------- 3.9 Thanh cuộn trong vùng nội dung ---------- */
+
+.app-sidebar::-webkit-scrollbar,
+.app-content ::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+}
+
+.app-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.35);
+    border-radius: 999px;
+}
+
+.app-sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.6);
+}
+
+.app-content ::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+    border-radius: 999px;
+}
+
+.app-content ::-webkit-scrollbar-thumb:hover {
+    background: #94A3B8;
+}
+
+/* ==========================================================================
    4. MÀN HÌNH NHỎ
    ========================================================================== */
 
