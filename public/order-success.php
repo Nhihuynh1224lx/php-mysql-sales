@@ -2,7 +2,6 @@
 
 require_once '/var/www/src/config/session.php';
 require_once '/var/www/src/config/database.php';
-require_once '/var/www/src/includes/helpers.php';
 
 $pageTitle = 'Đặt hàng thành công';
 
@@ -114,7 +113,7 @@ require_once '/var/www/src/includes/frontend/navbar.php';
 
             <p>
                 <strong>Ngày đặt:</strong>
-                <?= htmlspecialchars(format_datetime($order['OrderDate'])) ?>
+                <?= htmlspecialchars($order['OrderDate']) ?>
             </p>
 
             <p class="mb-0">

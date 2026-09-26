@@ -219,33 +219,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      */
     if ($errors === []) {
 
-        /*
-         * Chốt tổng tiền ngay tại thời điểm tạo đơn để cột orders.TotalAmount
-         * luôn khớp với tổng các dòng trong orderdetail.
-         */
-        $orderTotal = 0.0;
-
-        foreach ($orderLines as $line) {
-            $orderTotal += $line['quantity'] * $line['unit_price'];
-        }
-
         try {
 
             $conn->begin_transaction();
 
             $sqlOrder = "
                 INSERT INTO orders
-                    (OrderDate, TotalAmount, CustomerID, EmployeeID, ShipperID)
+                    (OrderDate, CustomerID, EmployeeID, ShipperID)
                 VALUES
-                    (?, ?, ?, ?, ?)
+                    (?, ?, ?, ?)
             ";
 
             $stmtOrder = $conn->prepare($sqlOrder);
 
             $stmtOrder->bind_param(
-                'sdiii',
+                'siii',
                 $form['order_date'],
-                $orderTotal,
                 $customerId,
                 $employeeId,
                 $shipperId

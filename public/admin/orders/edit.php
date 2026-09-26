@@ -130,11 +130,7 @@ if ($lines === []) {
 $errors = [];
 
 $form = [
-    /*
-     * OrderDate là DATETIME nên phải cắt lấy phần ngày (Y-m-d);
-     * input type="date" sẽ bỏ trống nếu nhận chuỗi có kèm giờ.
-     */
-    'order_date'  => substr((string) $order['OrderDate'], 0, 10),
+    'order_date'  => $order['OrderDate'],
     'customer_id' => (string) $order['CustomerID'],
     'employee_id' => (string) $order['EmployeeID'],
     'shipper_id'  => (string) $order['ShipperID']
@@ -268,26 +264,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      */
     if ($errors === []) {
 
-        /*
-         * Tính lại tổng tiền theo danh sách dòng mới để orders.TotalAmount
-         * không lệch với orderdetail sau khi sửa đơn.
-         */
-        $orderTotal = 0.0;
-
-        foreach ($orderLines as $line) {
-            $orderTotal += $line['quantity'] * $line['unit_price'];
-        }
-
-        /*
-         * Form chỉ nhập được ngày (Y-m-d). Nếu ngày không đổi thì giữ
-         * nguyên giờ phút đã lưu, tránh xoá mất thời điểm khách đặt hàng.
-         */
-        $orderDateValue = $form['order_date'];
-
-        if ($orderDateValue === substr((string) $order['OrderDate'], 0, 10)) {
-            $orderDateValue = $order['OrderDate'];
-        }
-
         try {
 
             $conn->begin_transaction();
@@ -296,7 +272,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 UPDATE orders
                 SET
                     OrderDate = ?,
-                    TotalAmount = ?,
                     CustomerID = ?,
                     EmployeeID = ?,
                     ShipperID = ?
@@ -306,9 +281,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmtUpdate = $conn->prepare($sqlUpdate);
 
             $stmtUpdate->bind_param(
-                'sdiiii',
-                $orderDateValue,
-                $orderTotal,
+                'siiii',
+                $form['order_date'],
                 $customerId,
                 $employeeId,
                 $shipperId,

@@ -11,9 +11,6 @@ if ($orderID <= 0) {
 
 /*
  * Thông tin chung của đơn hàng.
- * employees và shippers dùng LEFT JOIN vì đơn khách tự đặt online
- * chưa có nhân viên xử lý và người giao hàng (EmployeeID/ShipperID = NULL);
- * INNER JOIN sẽ khiến trang chi tiết báo "Không tìm thấy đơn hàng.".
  */
 $sqlOrder = "
     SELECT
@@ -34,9 +31,9 @@ $sqlOrder = "
     FROM orders AS o
     INNER JOIN customers AS cu
         ON cu.CustomerID = o.CustomerID
-    LEFT JOIN employees AS e
+    INNER JOIN employees AS e
         ON e.EmployeeID = o.EmployeeID
-    LEFT JOIN shippers AS sh
+    INNER JOIN shippers AS sh
         ON sh.ShipperID = o.ShipperID
     WHERE o.OrderID = ?
 ";
@@ -107,13 +104,6 @@ while ($row = $details->fetch_assoc()) {
 
 $stmtDetails->close();
 
-/*
- * Đơn khách tự đặt online chưa được phân công nên nhân viên và
- * đơn vị vận chuyển có thể NULL -> hiển thị dấu gạch ngang.
- */
-$employeeName = trim(($order['LastName'] ?? '') . ' ' . ($order['FirstName'] ?? ''));
-$shipperName  = trim($order['ShipperName'] ?? '');
-
 require_once '/var/www/src/includes/admin/header.php';
 require_once '/var/www/src/includes/admin/navbar.php';
 
@@ -160,7 +150,7 @@ require_once '/var/www/src/includes/admin/navbar.php';
     </div>
 
     <p class="text-muted">
-        Đặt ngày <?= htmlspecialchars(format_datetime($order['OrderDate'])) ?>
+        Đặt ngày <?= htmlspecialchars(format_date($order['OrderDate'])) ?>
         · <?= count($detailRows) ?> mặt hàng
         · <?= format_quantity($totalQuantity) ?> sản phẩm
     </p>
@@ -346,18 +336,20 @@ require_once '/var/www/src/includes/admin/navbar.php';
                     <tr>
                         <th>Ngày đặt</th>
                         <td><?= htmlspecialchars(
-                            format_datetime($order['OrderDate'])
+                            format_date($order['OrderDate'])
                         ) ?></td>
                     </tr>
 
                     <tr>
                         <th>Nhân viên</th>
-                        <td><?= htmlspecialchars($employeeName !== '' ? $employeeName : '—') ?></td>
+                        <td><?= htmlspecialchars(
+                            $order['LastName'] . ' ' . $order['FirstName']
+                        ) ?></td>
                     </tr>
 
                     <tr>
                         <th>Đơn vị vận chuyển</th>
-                        <td><?= htmlspecialchars($shipperName !== '' ? $shipperName : '—') ?></td>
+                        <td><?= htmlspecialchars($order['ShipperName']) ?></td>
                     </tr>
 
                     <tr>

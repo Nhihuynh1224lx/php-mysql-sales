@@ -12,13 +12,6 @@ if (empty($cart)) {
     exit;
 }
 
-/* ------------------------------------------------------------------
- * Lấy thông tin sản phẩm trong giỏ để HIỂN THỊ
- * ------------------------------------------------------------------
- * Chỉ đọc ProductID và số lượng từ Session, còn tên, giá, tồn kho
- * đều truy vấn lại từ MySQL.
- */
-
 function getCartItems($conn, $cart)
 {
     $items = [];
@@ -46,7 +39,6 @@ function getCartItems($conn, $cart)
     $stmt = $conn->prepare($sql);
 
     foreach ($cart as $productID => $quantity) {
-
         $productID = (int) $productID;
         $quantity = (int) $quantity;
 
@@ -56,7 +48,6 @@ function getCartItems($conn, $cart)
 
         $stmt->bind_param('i', $productID);
         $stmt->execute();
-
         $result = $stmt->get_result();
         $product = $result->fetch_assoc();
         $result->free();
@@ -85,7 +76,6 @@ $cartData = getCartItems($conn, $cart);
 $cartItems = $cartData['items'];
 $total = $cartData['total'];
 
-/* Giỏ có ProductID nhưng sản phẩm đã ngừng bán -> quay về giỏ */
 if (empty($cartItems)) {
     header('Location: /cart.php');
     exit;
@@ -113,21 +103,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
     } else {
 
         try {
-
             $conn->begin_transaction();
 
             $orderItems = [];
             $orderTotal = 0;
-
-            /* ------------------------------------------------------
-             * Bước 1: kiểm tra lại sản phẩm và tồn kho
-             * ------------------------------------------------------
-             * FOR UPDATE khóa các bản ghi vừa đọc cho tới khi
-             * transaction kết thúc, nhờ vậy giữa lúc kiểm tra tồn kho
-             * và lúc trừ tồn kho không có transaction khác chen vào.
-             *
-             * Giá cũng đọc lại từ MySQL chứ không lấy từ trình duyệt.
-             */
 
             $sqlProduct = "
                 SELECT
@@ -144,7 +123,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
             $stmtProduct = $conn->prepare($sqlProduct);
 
             foreach ($cart as $productID => $quantity) {
-
                 $productID = (int) $productID;
                 $quantity = (int) $quantity;
 
@@ -156,7 +134,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
 
                 $stmtProduct->bind_param('i', $productID);
                 $stmtProduct->execute();
-
                 $productResult = $stmtProduct->get_result();
                 $product = $productResult->fetch_assoc();
                 $productResult->free();
@@ -189,10 +166,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
 
             $stmtProduct->close();
 
-            /* ------------------------------------------------------
-             * Bước 2: lưu khách hàng
-             * ------------------------------------------------------ */
-
             $sqlCustomer = "
                 INSERT INTO customers
                     (CustomerName, Address, Phone)
@@ -210,16 +183,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
 
             $customerID = $conn->insert_id;
             $stmtCustomer->close();
-
-            /* ------------------------------------------------------
-             * Bước 3: lưu đơn hàng
-             * ------------------------------------------------------
-             * OrderDate không truyền vào: cột đã có giá trị mặc định
-             * CURRENT_TIMESTAMP nên MySQL tự ghi ngày giờ hiện tại.
-             *
-             * Đơn của khách vãng lai chưa có nhân viên xử lý và người
-             * giao hàng nên để NULL, admin sẽ phân công sau.
-             */
 
             $status = 'Pending';
 
@@ -241,13 +204,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
             $orderID = $conn->insert_id;
             $stmtOrder->close();
 
-            /* ------------------------------------------------------
-             * Bước 4: lưu chi tiết đơn và trừ tồn kho
-             * ------------------------------------------------------
-             * UnitPrice lưu giá TẠI THỜI ĐIỂM ĐẶT HÀNG, vì giá sản
-             * phẩm có thể thay đổi về sau.
-             */
-
             $sqlDetail = "
                 INSERT INTO orderdetail
                     (Quantity, UnitPrice, OrderID, ProductID)
@@ -265,7 +221,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
             $stmtStock = $conn->prepare($sqlStock);
 
             foreach ($orderItems as $item) {
-
                 $quantity = $item['Quantity'];
                 $unitPrice = $item['UnitPrice'];
                 $productID = $item['ProductID'];
@@ -292,7 +247,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
 
             $conn->commit();
 
-            /* Chỉ xóa giỏ hàng SAU KHI commit thành công */
             $_SESSION['cart'] = [];
 
             header(
@@ -301,7 +255,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
             exit;
 
         } catch (Throwable $e) {
-
             $conn->rollback();
             $errorMessage = $e->getMessage();
         }
