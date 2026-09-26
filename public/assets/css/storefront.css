@@ -586,17 +586,186 @@ p.fs-3.fw-bold {
 
 /* ==========================================================================
    10. FOOTER
+   --------------------------------------------------------------------------
+   Footer 4 cột: thương hiệu + Mua sắm + Tài khoản + Liên hệ, và thanh bản
+   quyền bên dưới. Nền tối để tách khỏi phần nội dung sáng phía trên.
    ========================================================================== */
 
-footer.bg-dark {
-    background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%) !important;
-    border-top: 3px solid var(--sf-primary);
-    color: rgba(255, 255, 255, 0.72) !important;
+.site-footer {
+    margin-top: 64px;
+    background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+    color: rgba(255, 255, 255, 0.72);
     font-size: 0.92rem;
 }
 
-footer.bg-dark p {
-    margin-bottom: 0;
+/* Vạch màu thương hiệu phía trên footer */
+.site-footer::before {
+    content: "";
+    display: block;
+    height: 3px;
+    background: linear-gradient(
+        90deg,
+        var(--sf-primary) 0%,
+        var(--sf-accent) 100%
+    );
+}
+
+.site-footer-top {
+    padding: 52px 0 40px;
+}
+
+/* --- Cột thương hiệu --- */
+
+.site-footer-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    color: #FFFFFF;
+    font-size: 1.14rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+}
+
+.site-footer-brand i {
+    font-size: 0.8rem;
+    color: #A5B4FC;
+}
+
+.site-footer-brand:hover {
+    color: #A5B4FC;
+}
+
+.site-footer-text {
+    margin-bottom: 20px;
+    line-height: 1.7;
+}
+
+.site-footer-social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.site-footer-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.92rem;
+    text-decoration: none;
+    transition: background-color var(--sf-t-fast),
+                border-color var(--sf-t-fast),
+                color var(--sf-t-fast),
+                transform var(--sf-t-fast);
+}
+
+.site-footer-social a:hover {
+    transform: translateY(-2px);
+    border-color: var(--sf-primary);
+    background-color: var(--sf-primary);
+    color: #FFFFFF;
+}
+
+/* --- Tiêu đề cột + danh sách liên kết --- */
+
+.site-footer-heading {
+    margin-bottom: 16px;
+    color: #FFFFFF;
+    font-size: 0.83rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.site-footer-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.site-footer-list li + li {
+    margin-top: 10px;
+}
+
+.site-footer-list a {
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.72);
+    text-decoration: none;
+    transition: color var(--sf-t-fast), padding-left var(--sf-t-fast);
+}
+
+.site-footer-list a:hover {
+    padding-left: 4px;
+    color: #FFFFFF;
+}
+
+/* --- Cột liên hệ: icon + nội dung --- */
+
+.site-footer-contact li {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    line-height: 1.6;
+}
+
+.site-footer-contact i {
+    width: 16px;
+    margin-top: 3px;
+    flex: 0 0 auto;
+    text-align: center;
+    color: #A5B4FC;
+}
+
+/* --- Thanh bản quyền --- */
+
+.site-footer-bottom {
+    padding: 18px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.86rem;
+}
+
+.site-footer-bottom .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.site-footer-tech {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* --- Responsive footer --- */
+
+@media (max-width: 991.98px) {
+
+    .site-footer {
+        margin-top: 48px;
+    }
+
+    .site-footer-top {
+        padding: 40px 0 28px;
+    }
+}
+
+@media (max-width: 575.98px) {
+
+    .site-footer-top {
+        padding: 34px 0 22px;
+    }
+
+    .site-footer-bottom .container {
+        justify-content: center;
+        text-align: center;
+    }
 }
 
 /* ==========================================================================
