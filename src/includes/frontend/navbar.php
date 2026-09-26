@@ -1,3 +1,17 @@
+<?php
+
+/* ------------------------------------------------------------------
+ * Tổng số lượng sản phẩm đang có trong giỏ.
+ * array_sum() cộng tất cả "Số lượng" trong $_SESSION['cart'],
+ * nên đây là TỔNG SỐ SẢN PHẨM, không phải số dòng sản phẩm.
+ * ------------------------------------------------------------------ */
+
+$cartCount = array_sum(
+    $_SESSION['cart'] ?? []
+);
+
+?>
+
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
 
     <div class="container">
@@ -33,6 +47,25 @@
                     </a>
                 </li>
             </ul>
+
+            <!-- Nhóm tiện ích bên phải: giỏ hàng + lối vào trang quản trị -->
+            <div class="d-flex gap-2 ms-auto mt-3 mt-lg-0">
+
+                <a
+                    class="btn btn-outline-light btn-sm"
+                    href="/cart.php"
+                >
+                    Giỏ hàng (<?= (int) $cartCount ?>)
+                </a>
+
+                <a
+                    class="btn btn-outline-light btn-sm"
+                    href="/admin/"
+                >
+                    Quản trị
+                </a>
+
+            </div>
 
         </div>
 
