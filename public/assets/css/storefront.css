@@ -24,6 +24,7 @@
     10. Footer
     11. Tiện ích dùng chung + thông báo (alert)
     12. Responsive
+    13. Trang chủ (hero, cam kết, danh mục, CTA)
    ========================================================================== */
 
 :root {
@@ -776,5 +777,544 @@ footer.bg-dark p {
 
     .card:hover .bg-light img {
         transform: none;
+    }
+}
+
+/* ==========================================================================
+   13. TRANG CHỦ
+   --------------------------------------------------------------------------
+   Gồm 4 khối: hero giới thiệu, cam kết dịch vụ, lưới danh mục, dải CTA.
+   Toàn bộ màu lấy từ biến :root ở mục 1.
+   ========================================================================== */
+
+/* ---------------------------------------------------------------- 13.1 Hero */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    padding: 76px 0 84px;
+    background: linear-gradient(135deg, #312E81 0%, #4F46E5 55%, #0EA5E9 140%);
+    color: #FFFFFF;
+}
+
+/* Vệt sáng trang trí, không ảnh hưởng nội dung */
+.hero::after {
+    content: "";
+    position: absolute;
+    top: -160px;
+    right: -120px;
+    width: 460px;
+    height: 460px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.18) 0%,
+        rgba(255, 255, 255, 0) 70%
+    );
+    pointer-events: none;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    margin-bottom: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: var(--sf-radius-pill);
+    background-color: rgba(255, 255, 255, 0.12);
+    font-size: 0.83rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.hero-title {
+    font-size: clamp(1.9rem, 4.2vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.16;
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+}
+
+.hero-highlight {
+    /* Gạch chân kiểu "highlight" cho từ khoá chính */
+    background: linear-gradient(
+        to top,
+        rgba(250, 204, 21, 0.42) 0%,
+        rgba(250, 204, 21, 0.42) 38%,
+        transparent 38%
+    );
+    padding: 0 2px;
+}
+
+.hero-text {
+    max-width: 560px;
+    margin-bottom: 30px;
+    font-size: 1.03rem;
+    line-height: 1.72;
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.hero-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+}
+
+/* --- Lưới số liệu trong hero --- */
+
+.hero-stats {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-stat {
+    height: 100%;
+    padding: 20px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: var(--sf-radius);
+    background-color: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(6px);
+    text-align: center;
+    transition: background-color var(--sf-t), transform var(--sf-t);
+}
+
+.hero-stat:hover {
+    background-color: rgba(255, 255, 255, 0.18);
+    transform: translateY(-3px);
+}
+
+.hero-stat-value {
+    display: block;
+    font-size: 1.85rem;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.hero-stat-label {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.82rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+/* ------------------------------------------------- 13.2 Khối cam kết dịch vụ */
+
+.feature-card {
+    height: 100%;
+    padding: 26px 22px;
+    border: 1px solid var(--sf-line);
+    border-radius: var(--sf-radius);
+    background-color: var(--sf-surface);
+    box-shadow: var(--sf-shadow-sm);
+    transition: transform var(--sf-t), box-shadow var(--sf-t),
+                border-color var(--sf-t);
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--sf-primary-line);
+    box-shadow: var(--sf-shadow-lg);
+}
+
+.feature-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    margin-bottom: 16px;
+    border-radius: var(--sf-radius-sm);
+    background-color: var(--sf-primary-soft);
+    color: var(--sf-primary);
+    font-size: 1.35rem;
+    transition: background-color var(--sf-t), color var(--sf-t);
+}
+
+.feature-card:hover .feature-icon {
+    background-color: var(--sf-primary);
+    color: #FFFFFF;
+}
+
+.feature-title {
+    margin-bottom: 8px;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--sf-ink);
+}
+
+.feature-text {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--sf-muted);
+}
+
+/* ------------------------------------- 13.3 Tiêu đề khối dùng chung + danh mục */
+
+.section-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 26px;
+}
+
+.section-title {
+    margin-bottom: 6px;
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--sf-ink);
+}
+
+/* Gạch nhấn nhỏ dưới tiêu đề khối */
+.section-title::after {
+    content: "";
+    display: block;
+    width: 54px;
+    height: 4px;
+    margin-top: 10px;
+    border-radius: var(--sf-radius-pill);
+    background: linear-gradient(
+        90deg,
+        var(--sf-primary) 0%,
+        var(--sf-accent) 100%
+    );
+}
+
+.section-subtitle {
+    margin-bottom: 0;
+    font-size: 0.95rem;
+    color: var(--sf-muted);
+}
+
+.section-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 2px;
+    font-size: 0.93rem;
+    font-weight: 600;
+    color: var(--sf-primary);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: gap var(--sf-t-fast), color var(--sf-t-fast);
+}
+
+.section-link:hover {
+    gap: 12px;
+    color: var(--sf-primary-dark);
+}
+
+.category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 100%;
+    min-height: 96px;
+    padding: 20px 12px;
+    border: 1px solid var(--sf-line);
+    border-radius: var(--sf-radius);
+    background-color: var(--sf-surface);
+    color: var(--sf-ink);
+    text-align: center;
+    text-decoration: none;
+    box-shadow: var(--sf-shadow-sm);
+    transition: transform var(--sf-t), box-shadow var(--sf-t),
+                border-color var(--sf-t), background-color var(--sf-t);
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--sf-primary);
+    background-color: var(--sf-primary-soft);
+    color: var(--sf-primary-dark);
+    box-shadow: var(--sf-shadow-lg);
+}
+
+.category-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.category-count {
+    font-size: 0.8rem;
+    color: var(--sf-muted);
+}
+
+.category-card:hover .category-count {
+    color: var(--sf-primary);
+}
+
+/* Ảnh thu nhỏ dùng cho lưới sản phẩm trang chủ (cao 200px thay vì 260px) */
+.product-thumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    padding: 14px;
+    background-color: #F1F5F9;
+}
+
+.product-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform var(--sf-t);
+}
+
+.card:hover .product-thumb img {
+    transform: scale(1.05);
+}
+
+.product-thumb.is-empty {
+    color: var(--sf-muted);
+    font-size: 0.9rem;
+}
+
+/* --------------------------------------------------------------- 13.4 Dải CTA */
+
+.cta-band {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+    padding: 38px 40px;
+    border-radius: var(--sf-radius-lg);
+    background: linear-gradient(135deg, #312E81 0%, #4F46E5 100%);
+    color: #FFFFFF;
+    box-shadow: var(--sf-shadow-lg);
+}
+
+.cta-title {
+    margin-bottom: 6px;
+    font-size: 1.42rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.cta-text {
+    margin-bottom: 0;
+    color: rgba(255, 255, 255, 0.84);
+}
+
+.cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.cta-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+}
+
+/* ==========================================================================
+   14. NAVBAR — CHI TIẾT BỔ SUNG
+   --------------------------------------------------------------------------
+   Chỉ bổ sung những phần navbar mới cần (icon, trạng thái active, dropdown).
+   Các quy tắc nền của navbar vẫn nằm ở mục 2.
+   ========================================================================== */
+
+.navbar-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+
+.navbar-brand i {
+    font-size: 0.72rem;
+    color: #A5B4FC;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    /* Gạch chân trong suốt để khi active không làm nhảy bố cục */
+    border-bottom: 2px solid transparent;
+    transition: color var(--sf-t-fast), border-color var(--sf-t-fast);
+}
+
+.navbar-dark .navbar-nav .nav-link i {
+    font-size: 0.85em;
+    opacity: 0.85;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.active {
+    color: #FFFFFF;
+    border-bottom-color: #A5B4FC;
+}
+
+.navbar .btn i {
+    margin-right: 6px;
+    font-size: 0.85em;
+}
+
+/* Dropdown tài khoản */
+.navbar .dropdown-menu {
+    margin-top: 10px;
+    padding: 6px;
+    border: 1px solid var(--sf-line);
+    border-radius: var(--sf-radius-sm);
+    box-shadow: var(--sf-shadow-lg);
+}
+
+.navbar .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    color: var(--sf-ink-2);
+}
+
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus {
+    background-color: var(--sf-primary-soft);
+    color: var(--sf-primary-dark);
+}
+
+.navbar .dropdown-item i {
+    width: 16px;
+    text-align: center;
+    color: var(--sf-muted);
+}
+
+.navbar .dropdown-item:hover i {
+    color: var(--sf-primary);
+}
+
+.navbar .dropdown-divider {
+    margin: 5px 6px;
+    border-color: var(--sf-line);
+}
+
+/* (Kết thúc mục 14 — phần responsive của các khối này nằm ở mục 15) */
+
+/* ==========================================================================
+   15. RESPONSIVE CHO TRANG CHỦ + NAVBAR MỚI
+   ========================================================================== */
+
+@media (max-width: 991.98px) {
+
+    .hero {
+        padding: 56px 0 64px;
+    }
+
+    .hero-text {
+        max-width: 100%;
+    }
+
+    /* Lưới số liệu xuống dưới phần chữ, thu gọn khoảng cách */
+    .hero-stats {
+        margin-top: 8px;
+    }
+
+    .hero-stat {
+        padding: 16px 12px;
+    }
+
+    .hero-stat-value {
+        font-size: 1.5rem;
+    }
+
+    /* Menu xổ xuống: bỏ gạch chân, dùng nền nhạt để đánh dấu mục đang mở */
+    .navbar-dark .navbar-nav .nav-link {
+        border-bottom: 0;
+        border-left: 3px solid transparent;
+        border-radius: 0 6px 6px 0;
+        padding-left: 12px;
+    }
+
+    .navbar-dark .navbar-nav .nav-link:hover,
+    .navbar-dark .navbar-nav .nav-link.active {
+        border-left-color: #A5B4FC;
+        background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .navbar .dropdown-menu {
+        border: 0;
+        box-shadow: none;
+        background-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .navbar .dropdown-item {
+        color: rgba(255, 255, 255, 0.85);
+    }
+
+    .navbar .dropdown-item i {
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .navbar .dropdown-item:hover,
+    .navbar .dropdown-item:focus {
+        background-color: rgba(255, 255, 255, 0.12);
+        color: #FFFFFF;
+    }
+
+    .navbar .dropdown-divider {
+        border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .cta-band {
+        padding: 30px 26px;
+    }
+
+    .cta-title {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+
+    .hero {
+        padding: 44px 0 52px;
+    }
+
+    .hero-actions .btn,
+    .cta-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+    }
+
+    .section-title {
+        font-size: 1.35rem;
+    }
+
+    .cta-band {
+        padding: 26px 20px;
+    }
+
+    .feature-card {
+        padding: 22px 18px;
+    }
+
+    .product-thumb {
+        height: 160px;
     }
 }

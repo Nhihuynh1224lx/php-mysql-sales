@@ -15,6 +15,27 @@ $isLoggedIn = isset($_SESSION['customer_id']);
 $customerName =
     $_SESSION['customer_name'] ?? '';
 
+/* ------------------------------------------------------------------
+ * Xác định mục menu đang mở, dựa vào đường dẫn hiện tại, để tô đậm
+ * mục tương ứng trên thanh điều hướng.
+ * ------------------------------------------------------------------ */
+
+$currentPath = parse_url(
+    $_SERVER['REQUEST_URI'] ?? '/',
+    PHP_URL_PATH
+);
+
+if ($currentPath === '/' || $currentPath === '/index.php') {
+    $activeMenu = 'home';
+} elseif (strpos($currentPath, '/products.php') === 0
+    || strpos($currentPath, '/product-detail.php') === 0) {
+    $activeMenu = 'products';
+} elseif (strpos($currentPath, '/cart.php') === 0) {
+    $activeMenu = 'cart';
+} else {
+    $activeMenu = '';
+}
+
 ?>
 
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
@@ -22,6 +43,7 @@ $customerName =
     <div class="container">
 
         <a class="navbar-brand" href="/">
+            <i class="fa-solid fa-circle-dot"></i>
             Sales Management
         </a>
 
@@ -30,6 +52,9 @@ $customerName =
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#frontendNavbar"
+            aria-controls="frontendNavbar"
+            aria-expanded="false"
+            aria-label="Mở menu"
         >
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -42,54 +67,112 @@ $customerName =
             <ul class="navbar-nav">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/">
+                    <a
+                        class="nav-link <?=
+                            $activeMenu === 'home'
+                                ? 'active'
+                                : ''
+                        ?>"
+                        href="/"
+                    >
+                        <i class="fa-solid fa-house"></i>
                         Trang chủ
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" href="/products.php">
+                    <a
+                        class="nav-link <?=
+                            $activeMenu === 'products'
+                                ? 'active'
+                                : ''
+                        ?>"
+                        href="/products.php"
+                    >
+                        <i class="fa-solid fa-layer-group"></i>
                         Sản phẩm
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link <?=
+                            $activeMenu === 'cart'
+                                ? 'active'
+                                : ''
+                        ?>"
+                        href="/cart.php"
+                    >
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        Giỏ hàng
+                    </a>
+                </li>
+
             </ul>
 
-            <!-- Nhóm tiện ích bên phải: giỏ hàng + lối vào trang quản trị -->
-            <div class="d-flex gap-2 ms-auto mt-3 mt-lg-0">
+            <!-- Nhóm tiện ích bên phải: tài khoản + giỏ + lối vào quản trị -->
+            <div class="d-flex align-items-center gap-2 ms-auto mt-3 mt-lg-0">
 
                 <a
                     class="btn btn-outline-light btn-sm"
                     href="/cart.php"
                 >
+                    <i class="fa-solid fa-cart-shopping"></i>
                     Giỏ hàng (<?= (int) $cartCount ?>)
                 </a>
 
                 <?php if ($isLoggedIn): ?>
 
-                    <span class="text-light">
-                        <?= htmlspecialchars($customerName) ?>
-                    </span>
+                    <div class="dropdown">
 
-                    <a
-                        class="btn btn-outline-light btn-sm"
-                        href="/logout.php"
-                    >
-                        Đăng xuất
-                    </a>
+                        <button
+                            class="btn btn-outline-light btn-sm dropdown-toggle"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            <i class="fa-solid fa-user"></i>
+                            <?= htmlspecialchars($customerName) ?>
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+
+                            <li>
+                                <a class="dropdown-item" href="/cart.php">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                    Giỏ hàng của tôi
+                                </a>
+                            </li>
+
+                            <li><hr class="dropdown-divider"></li>
+
+                            <li>
+                                <a class="dropdown-item" href="/logout.php">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                    Đăng xuất
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
 
                 <?php else: ?>
 
                     <a
                         class="btn btn-outline-light btn-sm"
-                        href="/register.php"
+                        href="/login.php"
                     >
-                        Đăng ký
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        Đăng nhập
                     </a>
 
                     <a
-                        class="btn btn-outline-light btn-sm"
-                        href="/login.php"
+                        class="btn btn-light btn-sm"
+                        href="/register.php"
                     >
-                        Đăng nhập
+                        <i class="fa-solid fa-user-plus"></i>
+                        Đăng ký
                     </a>
 
                 <?php endif; ?>
@@ -98,6 +181,7 @@ $customerName =
                     class="btn btn-outline-light btn-sm"
                     href="/admin/"
                 >
+                    <i class="fa-solid fa-gauge-high"></i>
                     Quản trị
                 </a>
 
