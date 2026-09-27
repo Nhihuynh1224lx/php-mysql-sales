@@ -14,6 +14,23 @@ require_once '/var/www/src/config/brand.php';
         — <?= htmlspecialchars($brand['name']) ?>
     </title>
 
+    <!--
+        Phông chữ Inter (Google Fonts) — sans-serif hình học hiện đại, có đầy
+        đủ bộ ký tự tiếng Việt. Khai báo dạng biến thiên (wght 100..900) để
+        các mức đậm trung gian như 550 / 650 / 750 hiển thị chính xác, thay vì
+        bị làm tròn về mức gần nhất.
+
+        Hai dòng preconnect mở kết nối sớm tới máy chủ phông, giúp chữ hiện
+        nhanh hơn. Nếu mạng chậm hoặc không tải được, storefront.css vẫn có
+        danh sách phông hệ thống dự phòng nên trang không bị lỗi chữ.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+        rel="stylesheet"
+    >
+
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet"

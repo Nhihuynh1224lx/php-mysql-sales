@@ -36,26 +36,50 @@
    ========================================================================== */
 
 :root {
-    /* ---------- Màu thương hiệu ---------- */
-    /* Tông chính: Indigo — đồng bộ với khu vực quản trị để hai bên liền mạch */
-    --sf-primary: #4F46E5;                     /* Indigo 600 — màu nhấn chính */
-    --sf-primary-dark: #4338CA;                /* Indigo 700 — khi di chuột */
-    --sf-primary-soft: #EEF2FF;                /* Indigo 50 — nền nhạt */
-    --sf-primary-line: #C7D2FE;                /* Indigo 200 — viền nhạt */
+    /* ---------- Màu thương hiệu: xanh nỉ bàn bida ---------- */
+    /* Tông chính lấy từ màu nỉ xanh của bàn bida — hợp với mặt hàng kinh
+       doanh và đồng bộ với khu vực quản trị để hai bên liền mạch.
+       Muốn đổi tông chỉ cần sửa 4 biến --sf-primary* dưới đây. */
+    --sf-primary: #0F6B4F;                     /* Xanh nỉ đậm — màu nhấn chính */
+    --sf-primary-dark: #0A5440;                /* Đậm hơn — trạng thái di chuột */
+    --sf-primary-soft: #E8F4EF;                /* Nền xanh rất nhạt */
+    --sf-primary-line: #B5DCCB;                /* Viền xanh nhạt */
+    --sf-primary-light: #2E9E77;               /* Sáng hơn — icon trên nền tối */
 
-    /* Màu phụ trợ cho khối khuyến mãi / giá tiền */
-    --sf-accent: #0EA5E9;                      /* Sky 500 */
-    --sf-price: #DC2626;                       /* Đỏ — màu giá tiền */
-    --sf-success: #16A34A;                     /* Xanh lá */
-    --sf-warning: #F59E0B;                     /* Hổ phách */
+    /* ---------- Màu phụ trợ: đồng thau ---------- */
+    /* Gợi chi tiết kim loại của cơ bida và ban bida — dùng cho vạch nhấn,
+       viền và các điểm trang trí, KHÔNG dùng làm nền chữ dài. */
+    --sf-accent: #B98A1E;                      /* Đồng thau */
+    --sf-accent-soft: #FBF4DE;                 /* Nền đồng thau rất nhạt */
+    --sf-accent-line: #E8D49A;                 /* Viền đồng thau nhạt */
+
+    /* ---------- Màu theo ngữ nghĩa ---------- */
+    --sf-price: #C62828;                       /* Đỏ — giá tiền */
+    --sf-success: #047857;                     /* Xanh ngọc — trạng thái tích cực */
+    --sf-warning: #D97706;                     /* Hổ phách — cảnh báo */
+    --sf-info: #0369A1;                        /* Xanh dương — thông tin */
 
     /* ---------- Màu trung tính ---------- */
-    --sf-ink: #0F172A;                         /* Slate 900 — chữ chính */
-    --sf-ink-2: #334155;                       /* Slate 700 — chữ phụ đậm */
-    --sf-muted: #64748B;                       /* Slate 500 — chú thích */
-    --sf-line: #E2E8F0;                        /* Slate 200 — đường kẻ */
-    --sf-bg: #F8FAFC;                          /* Slate 50 — nền trang */
+    /* Ngả xanh rất nhẹ để hài hoà với tông chính, không dùng xám thuần */
+    --sf-ink: #10241D;                         /* Chữ chính */
+    --sf-ink-2: #33544A;                       /* Chữ phụ đậm */
+    --sf-muted: #64776F;                       /* Chú thích, chữ mờ */
+    --sf-line: #DDE7E3;                        /* Đường kẻ */
+    --sf-bg: #F7FAF9;                          /* Nền trang */
     --sf-surface: #FFFFFF;                     /* Nền thẻ, khối nội dung */
+
+    /* ---------- Chữ (typography) ---------- */
+    /* Inter: sans-serif hình học, có đầy đủ bộ ký tự tiếng Việt.
+       Vẫn để sẵn các phông hệ thống phía sau để chữ hiển thị đúng nếu
+       mạng chậm hoặc không tải được Google Fonts. */
+    --sf-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    /* Dãy cỡ chữ dùng chung — giữ nhịp điệu nhất quán giữa các trang */
+    --sf-fs-xs: 0.78rem;                       /* Nhãn nhỏ, chú thích */
+    --sf-fs-sm: 0.875rem;                      /* Chữ phụ */
+    --sf-fs-lg: 1.125rem;                      /* Dẫn nhập */
+    --sf-lh: 1.65;                             /* Giãn dòng nội dung */
+    --sf-lh-tight: 1.22;                       /* Giãn dòng tiêu đề */
 
     /* ---------- Bo góc ---------- */
     --sf-radius-sm: 8px;
@@ -64,13 +88,13 @@
     --sf-radius-pill: 999px;
 
     /* ---------- Bóng đổ (theo 3 mức) ---------- */
-    --sf-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06),
-                    0 1px 3px rgba(15, 23, 42, 0.08);
-    --sf-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.08),
-                 0 2px 4px -2px rgba(15, 23, 42, 0.06);
-    --sf-shadow-lg: 0 20px 25px -5px rgba(15, 23, 42, 0.10),
-                    0 8px 10px -6px rgba(15, 23, 42, 0.06);
-    --sf-shadow-primary: 0 8px 20px -6px rgba(79, 70, 229, 0.45);
+    --sf-shadow-sm: 0 1px 2px rgba(15, 35, 28, 0.06),
+                    0 1px 3px rgba(15, 35, 28, 0.08);
+    --sf-shadow: 0 4px 6px -1px rgba(15, 35, 28, 0.08),
+                 0 2px 4px -2px rgba(15, 35, 28, 0.06);
+    --sf-shadow-lg: 0 20px 25px -5px rgba(15, 35, 28, 0.10),
+                    0 8px 10px -6px rgba(15, 35, 28, 0.06);
+    --sf-shadow-primary: 0 8px 20px -6px rgba(15, 107, 79, 0.45);
 
     /* ---------- Chuyển động ---------- */
     --sf-t-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -85,12 +109,14 @@
    ========================================================================== */
 
 body {
+    font-family: var(--sf-font);
+    line-height: var(--sf-lh);
     background-color: var(--sf-bg);
     color: var(--sf-ink);
     /* Nền chuyển sắc rất nhạt ở đỉnh trang tạo chiều sâu mà không gây rối */
     background-image:
         radial-gradient(ellipse 80% 50% at 50% -10%,
-                        rgba(79, 70, 229, 0.07), transparent);
+                        rgba(15, 107, 79, 0.07), transparent);
     background-repeat: no-repeat;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -107,13 +133,13 @@ body::-webkit-scrollbar-track {
 }
 
 body::-webkit-scrollbar-thumb {
-    background: #CBD5E1;
+    background: #C3D2CD;
     border-radius: var(--sf-radius-pill);
     border: 2px solid var(--sf-bg);
 }
 
 body::-webkit-scrollbar-thumb:hover {
-    background: #94A3B8;
+    background: #8C9C96;
 }
 
 /* Tiêu đề dùng chữ đậm hơn và siết khoảng chữ một chút cho hiện đại */
@@ -137,7 +163,7 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-    outline: 3px solid rgba(79, 70, 229, 0.35);
+    outline: 3px solid rgba(15, 107, 79, 0.35);
     outline-offset: 2px;
 }
 
@@ -147,10 +173,10 @@ textarea:focus-visible {
 
 /* Ghi đè .bg-dark của Bootstrap bằng dải chuyển sắc thương hiệu */
 .navbar.bg-dark {
-    background: linear-gradient(135deg, #312E81 0%, #1E1B4B 100%) !important;
+    background: linear-gradient(135deg, #0B3D2E 0%, #07271C 100%) !important;
     padding-top: 10px;
     padding-bottom: 10px;
-    box-shadow: 0 4px 20px -6px rgba(15, 23, 42, 0.35);
+    box-shadow: 0 4px 20px -6px rgba(15, 35, 28, 0.35);
     /* Giữ navbar dính trên cùng khi cuộn — giúp điều hướng luôn trong tầm mắt */
     position: sticky;
     top: 0;
@@ -172,8 +198,8 @@ textarea:focus-visible {
     width: 9px;
     height: 9px;
     border-radius: 50%;
-    background: #818CF8;
-    box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.25);
+    background: #2E9E77;
+    box-shadow: 0 0 0 4px rgba(46, 158, 119, 0.25);
     flex: 0 0 auto;
 }
 
@@ -229,7 +255,7 @@ textarea:focus-visible {
 }
 
 .navbar-toggler:focus {
-    box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.4);
+    box-shadow: 0 0 0 3px rgba(46, 158, 119, 0.4);
 }
 
 /* ==========================================================================
@@ -254,7 +280,7 @@ main.container > h1:first-child + p.text-muted {
 
 /* Khung bao ảnh sản phẩm — markup dùng inline style height: 260px */
 .card .bg-light {
-    background-color: #F1F5F9 !important;
+    background-color: #EFF4F2 !important;
     border-bottom: 1px solid var(--sf-line);
     overflow: hidden;
     position: relative;
@@ -344,7 +370,7 @@ main.container > h1:first-child + p.text-muted {
 .col-lg-6 .bg-light {
     border-radius: var(--sf-radius);
     border: 1px solid var(--sf-line);
-    background-color: #F1F5F9 !important;
+    background-color: #EFF4F2 !important;
 }
 
 /* Giá lớn ở trang chi tiết sản phẩm.
@@ -368,7 +394,7 @@ p.fs-3.fw-bold {
 }
 
 .table-striped > tbody > tr:nth-of-type(odd) > * {
-    background-color: #F8FAFC;
+    background-color: #F7FAF9;
 }
 
 .table th {
@@ -396,7 +422,7 @@ p.fs-3.fw-bold {
 }
 
 .table-responsive > .table > thead > tr > th {
-    background-color: #F1F5F9;
+    background-color: #EFF4F2;
     border-bottom: 2px solid var(--sf-primary-line);
     color: var(--sf-ink-2);
     font-weight: 650;
@@ -466,17 +492,17 @@ p.fs-3.fw-bold {
 .form-control:focus,
 .form-select:focus {
     border-color: var(--sf-primary);
-    box-shadow: 0 0 0 3.5px rgba(79, 70, 229, 0.14);
+    box-shadow: 0 0 0 3.5px rgba(15, 107, 79, 0.14);
     outline: none;
 }
 
 .form-control::placeholder {
-    color: #94A3B8;
+    color: #8C9C96;
 }
 
 /* Ô ở chế độ chỉ đọc (Họ tên, Email khi đã đăng nhập) — nhìn rõ là "không sửa được" */
 .form-control[readonly] {
-    background-color: #F1F5F9;
+    background-color: #EFF4F2;
     border-style: dashed;
     color: var(--sf-ink-2);
     cursor: not-allowed;
@@ -587,8 +613,8 @@ p.fs-3.fw-bold {
 }
 
 .page-item.disabled .page-link {
-    color: #CBD5E1;
-    background-color: #F8FAFC;
+    color: #C3D2CD;
+    background-color: #F7FAF9;
     border-color: var(--sf-line);
 }
 
@@ -601,7 +627,7 @@ p.fs-3.fw-bold {
 
 .site-footer {
     margin-top: 64px;
-    background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+    background: linear-gradient(135deg, #14312A 0%, #10241D 100%);
     color: rgba(255, 255, 255, 0.72);
     font-size: 0.92rem;
 }
@@ -638,11 +664,11 @@ p.fs-3.fw-bold {
 
 .site-footer-brand i {
     font-size: 0.8rem;
-    color: #A5B4FC;
+    color: #7FD4B4;
 }
 
 .site-footer-brand:hover {
-    color: #A5B4FC;
+    color: #7FD4B4;
 }
 
 .site-footer-text {
@@ -728,7 +754,7 @@ p.fs-3.fw-bold {
     margin-top: 3px;
     flex: 0 0 auto;
     text-align: center;
-    color: #A5B4FC;
+    color: #7FD4B4;
 }
 
 /* --- Thanh bản quyền --- */
@@ -808,7 +834,7 @@ p.fs-3.fw-bold {
 
 .btn-success:hover {
     transform: translateY(-1px);
-    box-shadow: 0 8px 20px -6px rgba(22, 163, 74, 0.45);
+    box-shadow: 0 8px 20px -6px rgba(5, 150, 105, 0.45);
 }
 
 .btn-outline-primary {
@@ -842,7 +868,7 @@ p.fs-3.fw-bold {
 .alert-success {
     background-color: #F0FDF4;
     border-color: var(--sf-success);
-    color: #14532D;
+    color: #065F46;
 }
 
 .alert-danger {
@@ -859,7 +885,9 @@ p.fs-3.fw-bold {
 
 .alert-info {
     background-color: #F0F9FF;
-    border-color: var(--sf-accent);
+    /* Dùng --sf-info (xanh dương) chứ KHÔNG dùng --sf-accent (đồng thau):
+       đồng thau là màu trang trí của thương hiệu, không mang nghĩa "thông tin". */
+    border-color: var(--sf-info);
     color: #0C4A6E;
 }
 
@@ -970,11 +998,16 @@ p.fs-3.fw-bold {
     position: relative;
     overflow: hidden;
     padding: 76px 0 84px;
-    background: linear-gradient(135deg, #312E81 0%, #4F46E5 55%, #0EA5E9 140%);
+    /* Nền xanh nỉ ĐƠN SẮC: giữ được vẻ sang và tránh bị ngả màu ô-liu như khi
+       pha thẳng từ xanh sang đồng thau. Chút hơi ấm của đồng thau được đưa
+       vào vệt sáng ::after ngay bên dưới. */
+    background: linear-gradient(135deg, #0A3629 0%, #0E5C44 52%, #147A5B 100%);
     color: #FFFFFF;
 }
 
-/* Vệt sáng trang trí, không ảnh hưởng nội dung */
+/* Vệt sáng trang trí, không ảnh hưởng nội dung.
+   Dùng ánh đồng thau thay cho ánh trắng để tạo hơi ấm trên nền xanh nỉ —
+   gợi ánh đèn trên bàn bida. */
 .hero::after {
     content: "";
     position: absolute;
@@ -985,8 +1018,8 @@ p.fs-3.fw-bold {
     border-radius: 50%;
     background: radial-gradient(
         circle,
-        rgba(255, 255, 255, 0.18) 0%,
-        rgba(255, 255, 255, 0) 70%
+        rgba(217, 180, 74, 0.22) 0%,
+        rgba(217, 180, 74, 0) 70%
     );
     pointer-events: none;
 }
@@ -1014,12 +1047,15 @@ p.fs-3.fw-bold {
 }
 
 .hero-highlight {
-    /* Gạch chân kiểu "highlight" cho từ khoá chính */
+    /* Gạch chân màu đồng thau cho từ khoá chính.
+       Trước đây chỗ này là một mảng vàng mờ tô nền: trên nền xanh đậm, mảng
+       đó ngả màu ô-liu vừa xấu vừa nằm ngay sau chữ trắng nên làm chữ khó
+       đọc. Gạch chân không nằm sau chữ nên giữ nguyên độ tương phản. */
     background: linear-gradient(
         to top,
-        rgba(250, 204, 21, 0.42) 0%,
-        rgba(250, 204, 21, 0.42) 38%,
-        transparent 38%
+        #D9B44A 0%,
+        #D9B44A 11%,
+        transparent 11%
     );
     padding: 0 2px;
 }
@@ -1244,7 +1280,7 @@ p.fs-3.fw-bold {
     justify-content: center;
     height: 200px;
     padding: 14px;
-    background-color: #F1F5F9;
+    background-color: #EFF4F2;
 }
 
 .product-thumb img {
@@ -1273,7 +1309,7 @@ p.fs-3.fw-bold {
     gap: 22px;
     padding: 38px 40px;
     border-radius: var(--sf-radius-lg);
-    background: linear-gradient(135deg, #312E81 0%, #4F46E5 100%);
+    background: linear-gradient(135deg, #0B3D2E 0%, #0F6B4F 100%);
     color: #FFFFFF;
     box-shadow: var(--sf-shadow-lg);
 }
@@ -1332,7 +1368,7 @@ p.fs-3.fw-bold {
 
 .navbar-brand i {
     font-size: 0.72rem;
-    color: #A5B4FC;
+    color: #7FD4B4;
 }
 
 /* Từ ngưỡng xổ ngang trở lên, nhóm tiện ích không được co lại làm vỡ nút */
@@ -1344,17 +1380,30 @@ p.fs-3.fw-bold {
  * NGƯỠNG XỔ NGANG RIÊNG (thay cho navbar-expand-* của Bootstrap)
  * ------------------------------------------------------------------
  * Đo thực tế: ở 1200 / 1240 / 1280 px thì nút cuối nhóm tiện ích vẫn tràn
- * ra ngoài (right > clientWidth); mãi tới ~1320 px mới vừa. Bootstrap chỉ
+ * ra ngoài (right > clientWidth); mãi tới ~1350 px mới vừa. Bootstrap chỉ
  * có lg (992) và xl (1200) rồi nhảy luôn lên xxl (1400) — không mức nào
- * khớp 1320. Vì vậy thẻ <nav> dùng class "navbar-expand" (luôn xổ ngang
+ * khớp 1350. Vì vậy thẻ <nav> dùng class "navbar-expand" (luôn xổ ngang
  * theo mặc định của Bootstrap, không kèm @media) và ta tự quyết định
  * ngưỡng ở đây.
  *
- * Dưới 1320px: menu thu thành nút ☰ (ẩn .navbar-collapse, hiện nút).
- * Từ 1320px  : menu xổ ngang như bình thường.
+ * VÌ SAO 1360 chứ không phải 1320: ngưỡng cũ 1320 được đo khi trang còn
+ * dùng phông hệ thống. Sau khi chuyển sang Inter, nhãn menu rộng hơn nên
+ * từ 1320–1345 px menu xổ ngang vẫn tràn ~2–14 px. Đo lại bằng iframe ở
+ * từng mức 1320/1325/…/1360 thì 1350 là mức đầu tiên vừa khít; lấy 1360
+ * để chừa ~10 px dự phòng cho trình duyệt có thanh cuộn rộng hơn (Firefox
+ * không dùng ::-webkit-scrollbar nên thanh cuộn của nó dày hơn 10 px).
+ * Ngưỡng cao hơn chỉ khiến menu thu lại sớm hơn một chút — vô hại, trong
+ * khi ngưỡng thấp hơn sẽ gây tràn ngang.
+ *
+ * LƯU Ý: @media tính theo bề rộng viewport (đã gồm thanh cuộn), còn bố cục
+ * tính theo clientWidth (đã trừ thanh cuộn). Hai giá trị lệch nhau đúng
+ * bằng bề rộng thanh cuộn, nên ngưỡng phải cao hơn nhu cầu thật một chút.
+ *
+ * Dưới 1350px: menu thu thành nút ☰ (ẩn .navbar-collapse, hiện nút).
+ * Từ 1350px  : menu xổ ngang như bình thường.
  * ------------------------------------------------------------------ */
 
-@media (max-width: 1319.98px) {
+@media (max-width: 1359.98px) {
 
     .navbar-expand > .container {
         flex-wrap: wrap;
@@ -1389,7 +1438,7 @@ p.fs-3.fw-bold {
     }
 }
 
-@media (min-width: 1320px) {
+@media (min-width: 1360px) {
 
     .navbar-expand {
         flex-wrap: nowrap;
@@ -1403,7 +1452,7 @@ p.fs-3.fw-bold {
     /*
      * Trạng thái xổ ngang. !important để cân bằng với rule thu gọn ở trên
      * (cả hai đều phải !important vì Bootstrap cũng dùng !important).
-     * Hai @media loại trừ nhau (max 1319.98px / min 1320px) nên không xung đột.
+     * Hai @media loại trừ nhau (max 1359.98px / min 1360px) nên không xung đột.
      */
     .navbar-expand .navbar-collapse {
         display: flex !important;
@@ -1431,7 +1480,7 @@ p.fs-3.fw-bold {
 .navbar-dark .navbar-nav .nav-link:hover,
 .navbar-dark .navbar-nav .nav-link.active {
     color: #FFFFFF;
-    border-bottom-color: #A5B4FC;
+    border-bottom-color: #7FD4B4;
 }
 
 .navbar .btn i {
@@ -1493,13 +1542,13 @@ p.fs-3.fw-bold {
    ========================================================================== */
 
 /* ------------------------------------------------------------------
- * 15.1 Menu thu thành nút ☰  (dưới 1320px)
+ * 15.1 Menu thu thành nút ☰  (dưới 1360px)
  * ------------------------------------------------------------------
- * Ngưỡng này PHẢI khớp với @media trong mục 14 (ngưỡng xổ ngang 1320px).
+ * Ngưỡng này PHẢI khớp với @media trong mục 14 (ngưỡng xổ ngang 1360px).
  * Đây là style CHO TRẠNG THÁI ĐÃ THU GỌN — chỉ áp dụng khi menu đang là
  * menu dọc, nên đặt ở ngưỡng nào cũng phải trùng với ngưỡng xổ ngang.
  */
-@media (max-width: 1319.98px) {
+@media (max-width: 1359.98px) {
 
     /*
      * QUAN TRỌNG: khi menu bung ra, nó vẫn nằm trong .container đang là
@@ -1538,7 +1587,7 @@ p.fs-3.fw-bold {
 
     .navbar-dark .navbar-nav .nav-link:hover,
     .navbar-dark .navbar-nav .nav-link.active {
-        border-left-color: #A5B4FC;
+        border-left-color: #7FD4B4;
         background-color: rgba(255, 255, 255, 0.08);
     }
 
@@ -1673,14 +1722,14 @@ p.fs-3.fw-bold {
     width: 38px;
     height: 38px;
     border-radius: 11px;
-    background: linear-gradient(135deg, #6366F1 0%, #4F46E5 55%, #0EA5E9 140%);
+    background: linear-gradient(135deg, #2E9E77 0%, #0F6B4F 55%, #B98A1E 140%);
     color: #FFFFFF;
     font-size: 0.95rem;
     font-weight: 800;
     letter-spacing: 0.02em;
     line-height: 1;
     box-shadow:
-        0 4px 10px -2px rgba(79, 70, 229, 0.55),
+        0 4px 10px -2px rgba(15, 107, 79, 0.55),
         inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
@@ -1713,11 +1762,12 @@ p.fs-3.fw-bold {
     position: relative;
     overflow: hidden;
     padding: 54px 0 62px;
-    background: linear-gradient(135deg, #312E81 0%, #4F46E5 60%, #0EA5E9 145%);
+    /* Giống .hero ở mục 13: nền xanh nỉ đơn sắc cho sạch và sang */
+    background: linear-gradient(135deg, #0A3629 0%, #0E5C44 52%, #147A5B 100%);
     color: #FFFFFF;
 }
 
-/* Vệt sáng trang trí giống .hero::after ở mục 13 */
+/* Vệt sáng trang trí giống .hero::after ở mục 13 (ánh đồng thau) */
 .page-hero::after {
     content: "";
     position: absolute;
@@ -1728,8 +1778,8 @@ p.fs-3.fw-bold {
     border-radius: 50%;
     background: radial-gradient(
         circle,
-        rgba(255, 255, 255, 0.16) 0%,
-        rgba(255, 255, 255, 0) 70%
+        rgba(217, 180, 74, 0.20) 0%,
+        rgba(217, 180, 74, 0) 70%
     );
     pointer-events: none;
 }
@@ -2029,7 +2079,7 @@ a.contact-value:hover {
 .contact-form-card .form-control:focus,
 .contact-form-card .form-select:focus {
     border-color: var(--sf-primary);
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.14);
+    box-shadow: 0 0 0 3px rgba(15, 107, 79, 0.14);
 }
 
 .contact-form-card .alert {
@@ -2130,7 +2180,7 @@ a.contact-value:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #EEF2FF 0%, #E0F2FE 100%);
+    background: linear-gradient(135deg, #E8F4EF 0%, #FBF4DE 100%);
     color: var(--sf-primary);
     font-size: 3.2rem;
     opacity: 0.55;
@@ -2205,7 +2255,7 @@ a.contact-value:hover {
     justify-content: center;
     height: 180px;
     overflow: hidden;
-    background: linear-gradient(135deg, #EEF2FF 0%, #E0F2FE 100%);
+    background: linear-gradient(135deg, #E8F4EF 0%, #FBF4DE 100%);
     line-height: 0;
     text-decoration: none;
 }

@@ -1,7 +1,8 @@
 /* ==========================================================================
    ADMIN — Giao diện khu vực quản trị
    --------------------------------------------------------------------------
-   Tông màu: Indigo (xanh tím than) + Slate (xanh đen) — kiểu admin hiện đại.
+   Tông màu: xanh nỉ bàn bida (billiard felt green) + xám ngả xanh — đồng bộ
+   với giao diện cửa hàng để hai bên liền mạch.
 
    TOÀN BỘ MÀU SẮC được khai báo tập trung ở khối :root bên dưới.
    Muốn đổi tông màu chỉ cần sửa các biến này, KHÔNG phải sửa từng chỗ trong code.
@@ -10,38 +11,79 @@
    ========================================================================== */
 
 :root {
-    /* ---------- Header: dải màu chuyển sắc xanh tím than ---------- */
-    --admin-header-from: #312E81;              /* Indigo 900 - đầu dải màu */
-    --admin-header-to: #1E1B4B;                /* Indigo 950 - cuối dải màu */
+    /* ---------- Header: dải màu chuyển sắc xanh nỉ đậm ---------- */
+    --admin-header-from: #0B3D2E;              /* Xanh nỉ đậm - đầu dải màu */
+    --admin-header-to: #07271C;                /* Đậm gần như đen - cuối dải màu */
     --admin-header-text: #FFFFFF;              /* Chữ trên header */
     --admin-header-muted: rgba(255, 255, 255, 0.72); /* Chú thích mờ trên header */
 
     /* ---------- Thanh menu dọc ---------- */
     --admin-sidebar-w: 264px;                  /* Bề rộng thanh menu dọc khi mở */
     --admin-sidebar-w-collapsed: 76px;         /* Bề rộng khi thu gọn (chỉ còn icon) */
-    --admin-nav-bg: #0F172A;                   /* Slate 900 - nền menu */
-    --admin-nav-text: #CBD5E1;                 /* Slate 300 - chữ menu */
-    --admin-nav-icon: #94A3B8;                 /* Slate 400 - icon menu */
-    --admin-nav-group: #64748B;                /* Slate 500 - tiêu đề từng nhóm menu */
-    --admin-nav-line: rgba(148, 163, 184, 0.14); /* Đường kẻ ngăn header/menu */
+    --admin-nav-bg: #10241D;                   /* Nền menu */
+    --admin-nav-text: #C3D2CD;                 /* Chữ menu */
+    --admin-nav-icon: #8C9C96;                 /* Icon menu */
+    --admin-nav-group: #7F918B;                /* Tiêu đề từng nhóm menu */
+    --admin-nav-line: rgba(140, 156, 150, 0.14); /* Đường kẻ ngăn header/menu */
 
     /* ---------- Menu khi DI CHUỘT vào ---------- */
-    --admin-nav-hover-bg: rgba(99, 102, 241, 0.20); /* Nền indigo mờ */
+    --admin-nav-hover-bg: rgba(46, 158, 119, 0.20); /* Nền xanh nỉ mờ */
     --admin-nav-hover-text: #FFFFFF;                /* Chữ trắng */
-    --admin-nav-hover-icon: #A5B4FC;                /* Icon indigo sáng */
+    --admin-nav-hover-icon: #7FD4B4;                /* Icon xanh sáng */
 
     /* ---------- Menu của TRANG ĐANG MỞ ---------- */
-    --admin-nav-active-bg: #6366F1;            /* Indigo 500 */
+    /* Chọn #147A5B chứ không dùng màu sáng hơn: chữ trắng trên nền này đạt
+       5.30:1 (chuẩn AA) mà vẫn nổi rõ so với nền sidebar tối. */
+    --admin-nav-active-bg: #147A5B;            /* Xanh nỉ vừa */
     --admin-nav-active-text: #FFFFFF;
 
     /* ---------- Footer ---------- */
-    --admin-footer-bg: #0B1120;                 /* Nền footer - tối hơn menu một chút */
-    --admin-footer-heading: #E2E8F0;            /* Chữ tiêu đề các cột */
-    --admin-footer-text: #94A3B8;               /* Chữ thường trong footer */
-    --admin-footer-line: rgba(148, 163, 184, 0.14); /* Đường kẻ phân cách */
+    --admin-footer-bg: #061410;                 /* Nền footer - tối hơn menu một chút */
+    --admin-footer-heading: #DDE7E3;            /* Chữ tiêu đề các cột */
+    --admin-footer-text: #8C9C96;               /* Chữ thường trong footer */
+    --admin-footer-line: rgba(140, 156, 150, 0.14); /* Đường kẻ phân cách */
 
     /* ---------- Màu nhấn dùng chung ---------- */
-    --admin-accent: #6366F1;                   /* Indigo 500 */
+    /* Trùng với --sf-primary của cửa hàng: vừa làm nền nút (chữ trắng đạt
+       6.49:1) vừa làm màu chữ trên nền sáng (cũng 6.49:1) nên dùng được cả
+       hai vai trò mà không phải tách thêm biến. */
+    --admin-accent: #0F6B4F;                   /* Xanh nỉ đậm */
+
+    /* ---------- Màu theo ngữ nghĩa ---------- */
+    --admin-success: #059669;                  /* Xanh ngọc - trạng thái tích cực */
+    --admin-warning: #D97706;                  /* Hổ phách - cảnh báo */
+    --admin-danger: #C62828;                   /* Đỏ - nguy hiểm */
+    --admin-info: #0369A1;                     /* Xanh dương - thông tin */
+
+    /* ---------- Chữ (typography) ---------- */
+    /* Inter: sans-serif hình học, có đầy đủ bộ ký tự tiếng Việt. Kèm sẵn
+       phông hệ thống dự phòng để chữ vẫn đúng nếu không tải được Google Fonts. */
+    --admin-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+                  Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    --admin-lh: 1.6;                           /* Giãn dòng nội dung */
+    --admin-lh-tight: 1.25;                    /* Giãn dòng tiêu đề */
+}
+
+/* ==========================================================================
+   0. NỀN TẢNG CHUNG — phông chữ và nhịp điệu chữ cho toàn khu quản trị
+   ========================================================================== */
+
+body {
+    font-family: var(--admin-font);
+    line-height: var(--admin-lh);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Tiêu đề: đậm, siết khoảng chữ và giãn dòng chặt cho gọn gàng, hiện đại */
+h1, h2, h3, h4, h5 {
+    letter-spacing: -0.02em;
+    line-height: var(--admin-lh-tight);
+    font-weight: 700;
+}
+
+h1, h2 {
+    font-weight: 800;
 }
 
 /* ==========================================================================
@@ -316,7 +358,7 @@
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(15, 23, 42, 0.55);
+    background: rgba(15, 35, 28, 0.55);
     z-index: 1040;
 }
 
@@ -400,8 +442,8 @@
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    background: rgba(99, 102, 241, 0.16);
-    border: 1px solid rgba(99, 102, 241, 0.30);
+    background: rgba(46, 158, 119, 0.16);
+    border: 1px solid rgba(46, 158, 119, 0.30);
     color: var(--admin-nav-hover-icon);
     /* Chữ lồng viết tắt của thương hiệu (ví dụ "HN") hiển thị trong ô này */
     font-weight: 800;
@@ -460,7 +502,7 @@
     width: 15px;
     font-size: 0.8rem;
     text-align: center;
-    color: #64748B;
+    color: #64776F;
     transition: color 0.18s ease;
 }
 
@@ -535,7 +577,7 @@
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    background: rgba(148, 163, 184, 0.10);
+    background: rgba(140, 156, 150, 0.10);
     border: 1px solid var(--admin-footer-line);
     color: var(--admin-footer-text);
     text-decoration: none;
@@ -561,12 +603,12 @@
 /* ---------- 3.1 Nền vùng nội dung ---------- */
 
 .app-content {
-    background-color: #F1F5F9;
+    background-color: #EFF4F2;
 }
 
 /* Tiêu đề trang (h2) trong vùng nội dung */
 .app-content h2 {
-    color: #0F172A;
+    color: #10241D;
     font-weight: 700;
     letter-spacing: -0.02em;
 }
@@ -575,10 +617,10 @@
 
 /* Thẻ số liệu ở đầu mỗi trang danh sách */
 .app-content .card {
-    border: 1px solid #E2E8F0;
+    border: 1px solid #DDE7E3;
     border-radius: 14px;
     background-color: #FFFFFF;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    box-shadow: 0 1px 2px rgba(15, 35, 28, 0.05);
     transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1),
                 box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1),
                 border-color 0.22s cubic-bezier(0.4, 0, 0.2, 1);
@@ -586,8 +628,8 @@
 
 .app-content .card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 24px -8px rgba(15, 23, 42, 0.14);
-    border-color: #CBD5E1;
+    box-shadow: 0 12px 24px -8px rgba(15, 35, 28, 0.14);
+    border-color: #C3D2CD;
 }
 
 .app-content .card-body {
@@ -601,7 +643,7 @@
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: #64748B !important;
+    color: #64776F !important;
 }
 
 /* Con số lớn của thẻ thống kê */
@@ -609,7 +651,7 @@
 .app-content .card-body .fs-4 {
     font-weight: 750;
     letter-spacing: -0.025em;
-    color: #1E1B4B;
+    color: #07271C;
     line-height: 1.15;
 }
 
@@ -620,10 +662,10 @@
     /* overflow-y: hidden để không cắt mất cột thao tác trên màn hình nhỏ */
     overflow-x: auto;
     overflow-y: hidden;
-    border: 1px solid #E2E8F0;
+    border: 1px solid #DDE7E3;
     border-radius: 14px;
     background-color: #FFFFFF;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    box-shadow: 0 1px 2px rgba(15, 35, 28, 0.05);
 }
 
 .app-content .table-responsive > .table {
@@ -632,9 +674,9 @@
 
 /* Ghi đè .table-dark của Bootstrap bằng tông sáng, dễ đọc hơn trên nền trắng */
 .app-content .table > thead.table-dark > tr > th {
-    background-color: #1E293B;
-    color: #E2E8F0;
-    border-color: #1E293B;
+    background-color: #14312A;
+    color: #DDE7E3;
+    border-color: #14312A;
     font-size: 0.78rem;
     font-weight: 650;
     letter-spacing: 0.05em;
@@ -649,8 +691,10 @@
     padding-top: 13px;
     padding-bottom: 13px;
     vertical-align: middle;
-    color: #334155;
-    border-color: #F1F5F9;
+    color: #33544A;
+    border-color: #EFF4F2;
+    /* Chữ số đều nhau: giá tiền, số lượng, mã đơn thẳng cột, dễ so sánh */
+    font-variant-numeric: tabular-nums;
 }
 
 /* Di chuột vào dòng: nền sáng lên để dễ theo dõi ngang */
@@ -659,13 +703,13 @@
 }
 
 .app-content .table > tbody > tr:hover > * {
-    background-color: #F8FAFC;
+    background-color: #F7FAF9;
 }
 
 /* Ảnh thu nhỏ trong bảng sản phẩm */
 .app-content .table img {
     border-radius: 8px;
-    border: 1px solid #E2E8F0;
+    border: 1px solid #DDE7E3;
     background-color: #FFFFFF;
     object-fit: contain;
 }
@@ -681,34 +725,34 @@
 .app-content .form-label {
     font-weight: 600;
     font-size: 0.86rem;
-    color: #334155;
+    color: #33544A;
     margin-bottom: 0.3rem;
 }
 
 .app-content .form-control,
 .app-content .form-select {
-    border: 1.5px solid #E2E8F0;
+    border: 1.5px solid #DDE7E3;
     border-radius: 9px;
     padding: 0.52rem 0.78rem;
     font-size: 0.92rem;
-    color: #0F172A;
+    color: #10241D;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .app-content .form-control:focus,
 .app-content .form-select:focus {
     border-color: var(--admin-accent);
-    box-shadow: 0 0 0 3.5px rgba(99, 102, 241, 0.15);
+    box-shadow: 0 0 0 3.5px rgba(46, 158, 119, 0.15);
     outline: none;
 }
 
 .app-content .form-control::placeholder {
-    color: #94A3B8;
+    color: #8C9C96;
 }
 
 /* Ô chỉ đọc: nhìn rõ là không sửa được */
 .app-content .form-control[readonly] {
-    background-color: #F1F5F9;
+    background-color: #EFF4F2;
     border-style: dashed;
     cursor: not-allowed;
 }
@@ -729,10 +773,10 @@
 
 .app-content .btn-primary:hover,
 .app-content .btn-primary:focus {
-    background-color: #4F46E5;
-    border-color: #4F46E5;
+    background-color: #0F6B4F;
+    border-color: #0F6B4F;
     transform: translateY(-1px);
-    box-shadow: 0 8px 18px -6px rgba(99, 102, 241, 0.5);
+    box-shadow: 0 8px 18px -6px rgba(46, 158, 119, 0.5);
 }
 
 .app-content .btn-outline-secondary:hover {
@@ -756,7 +800,7 @@
     letter-spacing: 0.01em;
     padding: 0.42em 0.72em;
     border-radius: 999px;
-    border: 1px solid rgba(15, 23, 42, 0.08);
+    border: 1px solid rgba(15, 35, 28, 0.08);
 }
 
 /* ---------- 3.7 Thông báo (alert) ---------- */
@@ -765,7 +809,7 @@
     border-radius: 12px;
     border-left-width: 4px;
     font-size: 0.92rem;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    box-shadow: 0 1px 2px rgba(15, 35, 28, 0.05);
 }
 
 /* ---------- 3.8 Phân trang ---------- */
@@ -777,8 +821,8 @@
 
 .app-content .page-link {
     border-radius: 8px !important;
-    border: 1px solid #E2E8F0;
-    color: #334155;
+    border: 1px solid #DDE7E3;
+    color: #33544A;
     font-weight: 550;
     min-width: 38px;
     text-align: center;
@@ -787,9 +831,9 @@
 }
 
 .app-content .page-link:hover {
-    background-color: #EEF2FF;
-    border-color: #C7D2FE;
-    color: #4338CA;
+    background-color: #E8F4EF;
+    border-color: #B5DCCB;
+    color: #0A5440;
 }
 
 .app-content .page-item.active .page-link {
@@ -807,21 +851,21 @@
 }
 
 .app-sidebar::-webkit-scrollbar-thumb {
-    background: rgba(148, 163, 184, 0.35);
+    background: rgba(140, 156, 150, 0.35);
     border-radius: 999px;
 }
 
 .app-sidebar::-webkit-scrollbar-thumb:hover {
-    background: rgba(148, 163, 184, 0.6);
+    background: rgba(140, 156, 150, 0.6);
 }
 
 .app-content ::-webkit-scrollbar-thumb {
-    background: #CBD5E1;
+    background: #C3D2CD;
     border-radius: 999px;
 }
 
 .app-content ::-webkit-scrollbar-thumb:hover {
-    background: #94A3B8;
+    background: #8C9C96;
 }
 
 /* ==========================================================================
@@ -845,24 +889,24 @@
 
 .stat-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 22px -8px rgba(15, 23, 42, 0.22);
+    box-shadow: 0 10px 22px -8px rgba(15, 35, 28, 0.22);
 }
 
 /* Đổi màu vạch nhấn theo từng loại số liệu */
 .stat-card:has(.stat-card-icon--revenue) {
-    border-left-color: #16A34A;
+    border-left-color: #059669;
 }
 
 .stat-card:has(.stat-card-icon--order) {
-    border-left-color: #6366F1;
+    border-left-color: #2E9E77;
 }
 
 .stat-card:has(.stat-card-icon--product) {
-    border-left-color: #0EA5E9;
+    border-left-color: #B98A1E;
 }
 
 .stat-card:has(.stat-card-icon--customer) {
-    border-left-color: #F59E0B;
+    border-left-color: #D97706;
 }
 
 .stat-card-label {
@@ -871,7 +915,7 @@
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: #64748B;
+    color: #64776F;
 }
 
 .stat-card-value {
@@ -880,13 +924,13 @@
     font-weight: 800;
     line-height: 1.25;
     letter-spacing: -0.02em;
-    color: #0F172A;
+    color: #10241D;
 }
 
 .stat-card-hint {
     margin-bottom: 0;
     font-size: 0.82rem;
-    color: #64748B;
+    color: #64776F;
 }
 
 .stat-card-icon {
@@ -902,17 +946,17 @@
 
 .stat-card-icon--revenue {
     background-color: #DCFCE7;
-    color: #16A34A;
+    color: #059669;
 }
 
 .stat-card-icon--order {
-    background-color: #E0E7FF;
-    color: #4F46E5;
+    background-color: #DCEFE7;
+    color: #0F6B4F;
 }
 
 .stat-card-icon--product {
-    background-color: #E0F2FE;
-    color: #0284C7;
+    background-color: #FBF4DE;
+    color: #0369A1;
 }
 
 .stat-card-icon--customer {
@@ -929,19 +973,19 @@
 .status-row-label {
     font-size: 0.92rem;
     font-weight: 600;
-    color: #334155;
+    color: #33544A;
 }
 
 .status-row-count {
     font-size: 0.88rem;
     font-weight: 600;
-    color: #334155;
+    color: #33544A;
 }
 
 .status-bar {
     height: 9px;
     border-radius: 999px;
-    background-color: #F1F5F9;
+    background-color: #EFF4F2;
 }
 
 .status-bar .progress-bar {
@@ -956,10 +1000,10 @@
     gap: 10px;
     height: 100%;
     padding: 13px 14px;
-    border: 1px solid #E2E8F0;
+    border: 1px solid #DDE7E3;
     border-radius: 10px;
     background-color: #FFFFFF;
-    color: #334155;
+    color: #33544A;
     font-size: 0.88rem;
     font-weight: 600;
     text-decoration: none;
@@ -979,8 +1023,8 @@
 .quick-link:hover {
     transform: translateY(-2px);
     border-color: var(--admin-accent);
-    background-color: #EEF2FF;
-    color: #3730A3;
+    background-color: #E8F4EF;
+    color: #0A5440;
 }
 
 /* ---------------------------------------------- 5.4 Danh sách sắp hết hàng */
@@ -997,7 +1041,7 @@
     justify-content: space-between;
     gap: 12px;
     padding: 11px 0;
-    border-bottom: 1px solid #F1F5F9;
+    border-bottom: 1px solid #EFF4F2;
 }
 
 .lowstock-item:last-child {
@@ -1016,7 +1060,7 @@
 .lowstock-name {
     display: block;
     overflow: hidden;
-    color: #0F172A;
+    color: #10241D;
     font-size: 0.9rem;
     font-weight: 600;
     text-decoration: none;
@@ -1032,7 +1076,7 @@
     display: block;
     margin-top: 2px;
     font-size: 0.76rem;
-    color: #94A3B8;
+    color: #8C9C96;
 }
 
 .lowstock-item .badge {
