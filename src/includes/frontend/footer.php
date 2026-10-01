@@ -66,7 +66,6 @@ require_once '/var/www/src/config/brand.php';
                     <li><a href="/gioi-thieu.php">Về chúng tôi</a></li>
                     <li><a href="/tin-tuc.php">Tin tức</a></li>
                     <li><a href="/lien-he.php">Liên hệ</a></li>
-                    <li><a href="/admin/">Quản trị</a></li>
                 </ul>
 
             </div>

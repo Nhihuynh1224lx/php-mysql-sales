@@ -6,12 +6,19 @@
  *   - Bên trái : thương hiệu (chữ lồng HN + tên cửa hàng)
  *   - Ở giữa   : menu điều hướng chính (Trang chủ, Sản phẩm, Giới thiệu,
  *                Tin tức, Liên hệ)
- *   - Bên phải : nhóm tiện ích (Giỏ hàng (n), tài khoản, Quản trị)
+ *   - Bên phải : nhóm tiện ích (Giỏ hàng (n), tài khoản)
  *
  * LƯU Ý VỀ "GIỎ HÀNG": mục này CHỈ nằm ở nhóm tiện ích bên phải (kèm số
  * lượng). Trước đây nó vừa nằm trong menu chính vừa nằm bên phải nên vừa
  * trùng lặp vừa chiếm chỗ, làm menu bị chen chúc và bẻ chữ thành 2 dòng.
  * Vì vậy KHÔNG thêm lại "Giỏ hàng" vào danh sách menu chính bên dưới.
+ *
+ * LƯU Ý VỀ "QUẢN TRỊ": đã BỎ nút "Quản trị" khỏi thanh menu và khỏi footer
+ * theo yêu cầu — khách mua hàng không cần thấy lối vào khu quản trị.
+ * Quản trị viên truy cập thẳng bằng đường dẫn /admin/.
+ * KHÔNG thêm lại nút này vào đây.
+ * (Lưu ý: đây chỉ là ẩn lối vào cho gọn giao diện, KHÔNG phải cơ chế bảo mật
+ *  — bản thân khu vực /admin/ hiện chưa có kiểm tra đăng nhập.)
  *
  * NGƯỠNG XỔ NGANG: thẻ <nav> dùng class "navbar-expand" (KHÔNG kèm mức lg/xl/xxl).
  * Ngưỡng thật được quyết định trong storefront.css (mục 14) là 1320px, vì đo
@@ -228,14 +235,6 @@ $mainMenu = [
                     </a>
 
                 <?php endif; ?>
-
-                <a
-                    class="btn btn-outline-light btn-sm"
-                    href="/admin/"
-                >
-                    <i class="fa-solid fa-gauge-high"></i>
-                    Quản trị
-                </a>
 
             </div>
 
