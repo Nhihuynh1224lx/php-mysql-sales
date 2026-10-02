@@ -53,6 +53,12 @@
     --sf-accent-soft: #FBF4DE;                 /* Nền đồng thau rất nhạt */
     --sf-accent-line: #E8D49A;                 /* Viền đồng thau nhạt */
 
+    /* Đồng thau SÁNG — dùng làm MÀU CHỮ trên nền xanh đậm (hero, dải CTA).
+       --sf-accent ở trên quá tối để làm chữ trên nền xanh: đo thực tế chỉ đạt
+       3.75:1, dưới ngưỡng AA 4.5:1. Màu này nhạt hơn nên đạt 4.64:1 trở lên.
+       Sắc độ vẫn giữ đúng tông đồng thau nên hài hoà với --sf-accent. */
+    --sf-accent-bright: #F2C75C;               /* Đồng thau sáng — chữ trên nền tối */
+
     /* ---------- Màu theo ngữ nghĩa ---------- */
     --sf-price: #C62828;                       /* Đỏ — giá tiền */
     --sf-success: #047857;                     /* Xanh ngọc — trạng thái tích cực */
@@ -1044,13 +1050,20 @@ p.fs-3.fw-bold {
     line-height: 1.16;
     letter-spacing: -0.02em;
     margin-bottom: 18px;
+    /* Chữ đồng thau sáng thay cho màu trắng: nổi bật hơn trên nền xanh nỉ
+       và gợi đúng chất "kim loại" của mặt hàng bida.
+       Đo thực tế trên nền hero: 4.77:1 — đạt WCAG AA cho mọi cỡ chữ. */
+    color: var(--sf-accent-bright);
 }
 
 .hero-highlight {
-    /* Gạch chân màu đồng thau cho từ khoá chính.
+    /* Từ khoá "chính hãng" được nhấn bằng GẠCH CHÂN đồng thau.
        Trước đây chỗ này là một mảng vàng mờ tô nền: trên nền xanh đậm, mảng
-       đó ngả màu ô-liu vừa xấu vừa nằm ngay sau chữ trắng nên làm chữ khó
-       đọc. Gạch chân không nằm sau chữ nên giữ nguyên độ tương phản. */
+       đó ngả màu ô-liu vừa xấu vừa nằm ngay sau chữ nên làm chữ khó đọc.
+       Gạch chân không nằm sau chữ nên giữ nguyên độ tương phản.
+
+       Chữ ở đây KHÔNG đặt màu riêng — kế thừa màu đồng thau sáng của
+       .hero-title, để cả dòng tiêu đề liền một mạch. */
     background: linear-gradient(
         to top,
         #D9B44A 0%,
@@ -1319,6 +1332,9 @@ p.fs-3.fw-bold {
     font-size: 1.42rem;
     font-weight: 800;
     letter-spacing: -0.02em;
+    /* Đồng thau sáng thay cho màu trắng để câu hỏi nổi bật hơn trên nền xanh.
+       Đo thực tế trên nền dải CTA: 5.80:1 — đạt WCAG AA cho mọi cỡ chữ. */
+    color: var(--sf-accent-bright);
 }
 
 .cta-text {
