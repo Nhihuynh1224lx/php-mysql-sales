@@ -61,6 +61,18 @@ $navGroups = [
             ['href' => '/admin/shippers/',  'label' => 'Nhân viên giao hàng', 'icon' => 'fa-truck-fast'],
         ],
     ],
+    /*
+     * Nhóm "Nội dung" phục vụ trang Tin tức và trang Liên hệ bên ngoài.
+     * Hai mục này KHÔNG nằm trong luồng bán hàng: bài viết do nhân viên
+     * tự đăng, còn tin nhắn do khách gửi từ form Liên hệ.
+     */
+    [
+        'title' => 'Nội dung',
+        'items' => [
+            ['href' => '/admin/news/',     'label' => 'Tin tức',         'icon' => 'fa-newspaper'],
+            ['href' => '/admin/contacts/', 'label' => 'Hộp thư liên hệ', 'icon' => 'fa-envelope-open-text'],
+        ],
+    ],
 ];
 
 /*

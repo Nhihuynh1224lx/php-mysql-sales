@@ -1,18 +1,27 @@
 SET NAMES utf8mb4;
 
+-- =====================================================================
+-- Dữ liệu mẫu cho cửa hàng Bida Hoàng Nhi
+-- Thứ tự nạp tuân thủ ràng buộc khoá ngoại:
+--   categories -> suppliers -> customers -> employees -> shippers
+--   -> products -> product_images -> orders -> orderdetail
+-- =====================================================================
+
 INSERT INTO categories (CategoryName, Description)
 VALUES
-    ('Điện thoại', 'Các sản phẩm điện thoại di động'),
-    ('Máy tính', 'Máy tính xách tay và máy tính để bàn'),
-    ('Phụ kiện', 'Phụ kiện dành cho thiết bị công nghệ');
+    ('Bàn bida', 'Bàn bida các loại'),
+    ('Cơ bida', 'Cơ bida từ loại thường đến chuyên nghiệp'),
+    ('Bao cơ bida', 'Bao cơ các loại');
 
 INSERT INTO suppliers
     (SupplierName, ContactName, Address, City, PostalCode, Country, Phone)
 VALUES
-    ('Công ty Công nghệ ABC', 'Nguyễn Văn An',
-     '01 Nguyễn Huệ', 'TP. Hồ Chí Minh', '700000', 'Việt Nam', '0901234567'),
-    ('Công ty Thiết bị XYZ', 'Trần Minh Bình',
-     '25 Lê Lợi', 'Đà Nẵng', '550000', 'Việt Nam', '0912345678');
+    ('Thế giới Bida Hoàng Royal', 'Nguyễn Văn An',
+     'Số D17/4A Đinh Đức Thiện, Ấp 4, Xã Bình Chánh, Huyện Bình Chánh',
+     'TP. Hồ Chí Minh', '700000', 'Việt Nam', '0901234567'),
+    ('Xưởng chuyên Cung cấp cơ bida', 'Trần Minh Bình',
+     '22 Lý Chiêu Hoàng, Phường 10, Quận 6',
+     'TP. Hồ Chí Minh', '550000', 'Việt Nam', '0912345678');
 
 INSERT INTO customers
     (CustomerName, ContactName, Address, City, PostalCode, Country)
@@ -39,33 +48,35 @@ INSERT INTO products
     (ProductCode, ProductName, Description, Unit, Price,
      StockQuantity, IsActive, SupplierID, CategoryID)
 VALUES
-    ('SP001', 'Điện thoại Smartphone A',
-     'Điện thoại thông minh màn hình lớn, phù hợp nhu cầu sử dụng hằng ngày.',
-     'Chiếc', 8500000.00, 20, TRUE, 1, 1),
-    ('SP002', 'Laptop B',
-     'Máy tính xách tay phục vụ học tập và làm việc.',
-     'Chiếc', 18500000.00, 10, TRUE, 2, 2),
-    ('SP003', 'Chuột không dây C',
-     'Chuột không dây nhỏ gọn, kết nối ổn định.',
-     'Chiếc', 450000.00, 50, TRUE, 2, 3);
+    ('SP001', 'Bàn bida A9022 Việt',
+     'Kích thước 1m53x2.8\nMàu sắc: Trắng xám, Đen, Xám tất\n* Giá bao gồm thi công lắp đặt *',
+     'Cái', 14000000.00, 6, TRUE, 1, 1),
+    ('BANTND-01', 'Bàn Tonardo 9017',
+     'Kích thước bì: 2m9x1m65\nKích thước lòng bàn: chuẩn 2m55x1m57\nĐá 3 tấm TaiWan phẳng đến 99%',
+     'Chiếc', 30000000.00, 15, TRUE, 1, 1),
+    ('JOSSI-01', 'Gậy Joss I',
+     'Ngọn: Thuần mộc\nSize ngọn: 13mm',
+     'Chiếc', 990000.00, 48, TRUE, 2, 2);
 
 INSERT INTO product_images
     (ProductID, ImageFile, AltText, IsPrimary, SortOrder)
 VALUES
-    (1, 'phone-a-1.jpg', 'Điện thoại Smartphone A - ảnh chính', TRUE, 1),
-    (1, 'phone-a-2.jpg', 'Điện thoại Smartphone A - mặt sau', FALSE, 2),
-    (2, 'laptop-b-1.jpg', 'Laptop B - ảnh chính', TRUE, 1),
-    (3, 'mouse-c-1.png', 'Chuột không dây C - ảnh chính', TRUE, 1);
+    (1, 'product-b8e86f5b7624404c.png', 'Bàn bida A9022 Việt - ảnh chính', TRUE, 1),
+    (1, 'product-211292520a4d1c2b.png', 'Bàn bida A9022 Việt - ảnh 2', FALSE, 2),
+    (2, 'product-8da576828a947e86.png', 'Bàn Tonardo 9017 - ảnh chính', TRUE, 1),
+    (2, 'product-edf065a9fc3973e6.png', 'Bàn Tonardo 9017 - ảnh 2', FALSE, 2),
+    (3, 'product-e0a33e59ec18a036.png', 'Gậy Joss I - ảnh chính', TRUE, 1),
+    (3, 'product-0369b1b065d2289b.png', 'Gậy Joss I - ảnh 2', FALSE, 2);
 
-INSERT INTO orders (OrderDate, CustomerID, EmployeeID, ShipperID)
+INSERT INTO orders (OrderDate, TotalAmount, Status, CustomerID, EmployeeID, ShipperID)
 VALUES
-    ('2026-08-10', 1, 1, 1),
-    ('2026-08-11', 2, 2, 2),
-    ('2026-08-12', 3, 1, 1);
+    ('2026-08-10', 15980000.00, 'Completed', 1, 1, 1),
+    ('2026-08-11', 30000000.00, 'Shipping',  2, 2, 2),
+    ('2026-08-12',  1980000.00, 'Pending',   3, 1, 1);
 
 INSERT INTO orderdetail (Quantity, UnitPrice, OrderID, ProductID)
 VALUES
-    (1, 8500000.00, 1, 1),
-    (2, 450000.00, 1, 3),
-    (1, 18500000.00, 2, 2),
-    (2, 450000.00, 3, 3);
+    (1, 14000000.00, 1, 1),
+    (2,   990000.00, 1, 3),
+    (1, 30000000.00, 2, 2),
+    (2,   990000.00, 3, 3);
